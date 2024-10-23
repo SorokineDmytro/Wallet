@@ -1,0 +1,644 @@
+*, html body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.green {
+    background-color: #16a18c;
+}
+
+.red {
+    background-color: #ee3939;
+}
+
+.blue {
+    background-color: #377cf6;
+}
+
+.color-green {
+    color: #16a18c;
+}
+
+.color-red {
+    color: #ee3939;
+}
+
+.color-blue {
+    color: #377cf6;
+}
+
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: 
+    "aside header"
+    "aside main";
+    grid-template-rows: 10vh 90vh;
+    grid-template-columns: 15vw 85vw;
+    color: #201f23;
+}
+/* ============================================================ASIDE MENU==================================================  */
+aside {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-right: 1px solid #e6e6e6;
+    grid-area: aside;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav {
+    width: 100%;
+    height: 90%;
+}
+
+nav ul {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.nav-list_item {
+    margin: 5px 0;
+    padding: 20px 15px;
+    border-radius: 7px;
+    transition: 500ms;
+}
+.nav-list_item:hover {
+    background-color: #377cf6;
+    transition: 500ms;
+    cursor: pointer;
+    padding-left: 25px;
+}
+
+.nav-list_item a svg {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.nav-list_item a {
+    color: #9d9ea2;
+    font-size: 1.1vw;
+    font-weight: 500;
+}
+.nav-list_item:hover a {
+    color: #fff;
+    font-weight: 700;   
+}
+
+.logout {
+    font-size: 14px;
+    color: #201f23;
+    cursor: pointer;
+}
+.logout svg {
+    margin-right: 5px;
+}
+
+/* ============================================================HEADER==================================================  */
+
+header {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 10px 40px;
+    border-bottom: 1px solid #e6e6e6;
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-right {
+    min-width: 330px;
+    width: 20vw;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification {
+    height: 40px;
+    width: 40px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 200ms;
+}
+.notification:hover {
+    background-color: #377cf6;
+    transition: 200ms;
+    cursor: pointer;
+}
+.notification:hover svg {
+    color: #fff;
+}
+
+.notification svg {
+    color: #9d9ea2;
+    font-size: 18px;
+}
+
+.separator {
+    border: 1px solid #f3f3f3;
+    height: 20px;
+    width: 1px;
+}
+
+.person {
+    display: grid;
+    height:75%;
+    grid-template-areas: 
+    "image name"
+    "image mail";
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 2fr 7fr;
+    column-gap: 10px;
+}
+
+.photo {
+    grid-area: image;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-image: url(../img/photo.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: auto 0;
+}
+
+.name {
+    grid-area: name;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+}
+
+.mail {
+    grid-area: mail;
+    display: inline-block;
+    font-size: 12px;
+    color: #9d9ea2;
+    display: flex;
+    align-items: center;
+}
+
+/* ============================================================HEADER==================================================  */
+
+main {
+    grid-area: main;
+    background-color: #f6f6f6;
+    padding: 30px 40px;
+    height: fit-content;
+    min-height: 100%;
+}
+
+.block {
+    background-color: #fff;
+    min-height: 70px;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    transition: 500ms;
+}
+
+.block:hover {
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    transition: 500ms;
+}
+
+.main-conatainer {
+    display: grid;
+    grid-template-areas: 
+        "widget"
+        "statistic"
+        "operation";
+    grid-template-rows: 10vw 20vw max-content;
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+}
+
+
+/*=================================================MAIN WIDGETS TOP====================================*/
+.main-widgets {
+    display: grid;
+    grid-area: widget;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 2%;
+
+}
+
+.widget {
+    display: grid;
+    grid-template-areas: 
+        "top" 
+        "middle"
+        "bottom";
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr repeat(2, 2fr);
+    row-gap: 10px;
+    padding: 20px;
+}
+
+.widget:hover .widget-title {
+    color: #201f23;
+    padding-left: 10px;
+    transition: 500ms;
+}
+
+.widget-title {
+    grid-area: top;
+    color: #9d9ea2;
+    /* font-size: 16px; */
+    font-size: 1.1vw;
+    font-weight: 500;
+    transition: 500ms;
+}
+
+.widget-title svg {
+    margin-right: 10px;
+}
+
+.widget-middle {
+    display: flex;
+    justify-content: flex-start;
+    column-gap: 10px;
+    align-items: center;
+    grid-area: middle;
+    font-size: 1.6vw;
+    font-weight: 600;
+}
+
+.widget-circle {
+    grid-area: middle;
+    width: 2.8vw;
+    height: 1.4vw;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.7vw;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.3vw;
+}
+
+.widget-secondary-amount {
+    grid-area: bottom;
+    font-size: 0.8vw;
+}
+/*=================================================MAIN STATISTIC MIDDLE====================================*/
+.main-statistic {
+    display: grid;
+    grid-area: statistic;
+    grid-template-columns: 5fr 3fr;
+    grid-template-rows: 1fr;
+    column-gap: 2%;
+}
+
+.statistics {
+    padding: 1.8vw 1.5vw;
+}
+
+/*=================================================MAIN ACCOUNTS MIDDLE====================================*/
+.accounts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-rows: 3fr repeat(2, 2fr); */
+    grid-auto-rows: 7.5vw;
+    row-gap: 20px;
+    column-gap: 20px;
+    padding: 1.8vw 1.5vw;
+}
+
+.account {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* border: solid 2px #9d9ea2; */
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    border-radius: 20px;
+    padding: 10px;
+    transition: 500ms;
+}
+
+.account:hover {
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    transition: 500ms;
+}
+
+.account-img {
+    width: 2vw;
+    height: 2vw;
+    border-radius: 10px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.actions {
+    display: none;
+}
+
+.account:hover .actions {
+    display: block;
+    position: absolute;
+    top: 0.5vw;
+    right: 1vw;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #fff;
+    color: #9d9ea2;
+    font-size: 18px;
+    cursor: pointer;
+}
+.account:hover .account-title {
+    color: #201f23;
+    transition: 500ms;
+}
+.account:hover .account-amount {
+    font-size: 1.35vw;
+    transition: 500ms;
+}
+
+.account-title {
+    margin: 0.8vw 0;
+    color: #9d9ea2;
+    font-weight: 1vw;
+    transition: 300ms;
+}
+
+.account-amount {
+    font-size: 1.3vw;
+    font-weight: 700;
+    transition: 500ms;
+}
+
+.add-account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-account:hover div {
+    transform: rotate(90deg);
+    transition: 200ms;
+}
+
+.add-account:hover span {
+    color: #201f23;
+    transition: 300ms;
+} 
+
+.add-account div {
+    width: 2.5vw;
+    height: 2.5vw;
+    font-size: 1.5vw;
+    text-align: center;
+    padding:  0;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 300ms;
+}
+
+.add-account span {
+    color: #9d9ea2;
+    font-size: 1vw;
+    font-weight: 700;
+    margin-top: 5px;
+    justify-self: end;
+    transition: 200ms;
+
+}
+
+/*=================================================MAIN OPERATIONS====================================*/
+.operations {
+    width: 100%;
+    padding: 1.8vw 1.5vw;
+    display: grid;
+    grid-template-areas: 
+        "title"
+        "operations";
+    grid-template-columns: 1fr;
+    grid-template-rows: 30px 1fr;
+    row-gap: 20px;
+}
+
+.operations-title {
+    grid-area: title;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.operations-title h2 {
+    font-size: 1.3vw;
+}
+
+.operations-list {
+    grid-area: operations;
+}
+
+.operation-date {
+    padding: 1vw;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    transition: 500ms;
+}
+
+.operation-date:hover {
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    transition: 500ms;
+}
+
+.operation-date h3 {
+    padding-left: 1vw;
+    margin-bottom: 10px;
+}
+
+/*=================================================OPERATION EACH ITEM STYLES====================================*/
+.operation-item {   
+    padding: 0.5vw;
+    border: solid 1px #9d9ea2;
+    border-radius: 10px;
+    display: grid;
+    align-items: center;
+    grid-template-areas: "checkbox image categorie account time amount buttons";
+    grid-template-columns: 5% 10% 20% 20% 10% 10% 25%;
+    margin-bottom: 10px;
+}
+
+.operation-item_circle {
+    width: 2vw;
+    height: 2vw;
+    border: #201f23 solid 2px;
+    border-radius: 50%;
+}
+.operation-item_circle svg{
+    width: 100%;
+    height: 100%;
+    color: #ee3939;
+    
+}
+
+.operation-item_categorie {
+
+}
+
+.operation-item_account {
+
+}
+
+.operation-item_time {
+
+}
+
+.operation-item_amount {
+
+}
+
+.buttons {
+
+}
+
+.btn-modify {
+
+}
+
+.btn-delete {
+
+}
+
+
+
+
+/*=================================================OLD STYLES FOR THE FIRST FORM====================================*/
+/* .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 300px;
+    height: 500px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+}
+
+.container-output {
+    width: 50%;
+    height: fit-content;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+.totalAmount {
+    text-align: right;
+}
+
+.date {
+    margin-left: 5px;
+}
+
+ul {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 50px;
+}
+
+li div {
+    width: 20%;
+}
+
+.action-btn {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: #1e88e5;
+    color: #fff;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.green {
+    color: #16a085;
+}
+
+.red {
+    color: #ff5858;
+} */
