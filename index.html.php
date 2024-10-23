@@ -28,14 +28,15 @@
                     <li class="nav-list_item"><a href=""><i class="fas fa-moon"></i>Apparence</a></li>
                 </ul>
             </nav>
-            <a class="logout"><i class="fas fa-arrow-right-from-bracket"></i>Se déconnecter</a>
         </aside>
         <header>
             <div class="header-left">
                 <h2>Aperçu</h2>
             </div>
             <div class="header-right">
-                <div class="notification"><i class="fas fa-bell"></i></div>
+                <a class="menu-btn"><i class="fas fa-bell"></i></a>
+                <div class="separator"></div>
+                <a class="menu-btn"><i class="fas fa-door-open"></i></a>
                 <div class="separator"></div>
                 <div class="person">
                     <div class="photo"></div>
@@ -118,43 +119,96 @@
                 <div class="main-operations">
                     <div class="block operations">
                         <div class="operations-title">
-                            <h2>Liste d'operations</h2>
+                            <h2>Liste de transactions</h2>
+                            <button class="operation-add blue"><div class="white"><i class="fas fa-plus"></i></div><span>Transaction</span></button>
                         </div>
                         <ul class="operation-list">
                             <li class="operation-date">
                                 <h3>23 OCTOBRE</h3>
                                 <ul>
                                     <li class="operation-item">
-                                    <input type="checkbox" name="choix" id="choix">
-                                        <div class="operation-item_circle"><i class="fas fa-circle-question"></i></div>
+                                        <input type="checkbox" name="choix" id="choix">
+                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
+                                        <div class="operation-item_type">Depense</div>
                                         <span class="operation-item_categorie">Divers</span>
                                         <span class="operation-item_account">Général de Dmytro</span>
                                         <span class="operation-item_time">15:00</span>
-                                        <span class="operation-item_amount">-150.00 €</span>
-                                        <div class="buttons">
-                                            <button class="btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                            <button class="btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                        <span class="operation-item_amount color-red">-150.00 €</span>
+                                        <div class="operation-buttons">
+                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
                                         </div>
                                     </li>
                                     <li class="operation-item">
                                         <input type="checkbox" name="choix" id="choix">
-                                        <div class="operation-item_circle"><i class="fas fa-circle-question"></i></div>
+                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
+                                        <div class="operation-item_type">Depense</div>
                                         <span class="operation-item_categorie">Divers</span>
                                         <span class="operation-item_account">Général de Dmytro</span>
                                         <span class="operation-item_time">15:00</span>
-                                        <span class="operation-item_amount">-150.00 €</span>
-                                        <div class="buttons">
-                                            <button class="btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                            <button class="btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                        <span class="operation-item_amount color-red">-150.00 €</span>
+                                        <div class="operation-buttons">
+                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
                                         </div>
                                     </li>
+                                    <li class="operation-item">
+                                        <input type="checkbox" name="choix" id="choix">
+                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
+                                        <div class="operation-item_type">Depense</div>
+                                        <span class="operation-item_categorie">Divers</span>
+                                        <span class="operation-item_account">Général de Dmytro</span>
+                                        <span class="operation-item_time">15:00</span>
+                                        <span class="operation-item_amount color-red">-150.00 €</span>
+                                        <div class="operation-buttons">
+                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                        </div>
+                                    </li>
+                                    <li class="operation-item">
+                                        <input type="checkbox" name="choix" id="choix">
+                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
+                                        <div class="operation-item_type">Depense</div>
+                                        <span class="operation-item_categorie">Divers</span>
+                                        <span class="operation-item_account">Général de Dmytro</span>
+                                        <span class="operation-item_time">15:00</span>
+                                        <span class="operation-item_amount color-red">-150.00 €</span>
+                                        <div class="operation-buttons">
+                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                        </div>
+                                    </li>
+                                    <li class="operation-item">
+                                        <input type="checkbox" name="choix" id="choix">
+                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
+                                        <div class="operation-item_type">Depense</div>
+                                        <span class="operation-item_categorie">Divers</span>
+                                        <span class="operation-item_account">Général de Dmytro</span>
+                                        <span class="operation-item_time">15:00</span>
+                                        <span class="operation-item_amount color-red">-150.00 €</span>
+                                        <div class="operation-buttons">
+                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                        </div>
+                                    </li>
+                                   
                                 </ul>
                             </li>
                             <li class="operation-date">
-                                <h3>24 OCTOBRE</h3>
+                                <h3>25 OCTOBRE</h3>
                                 <ul>
-                                    <li class="operation-item">
-
+                                <li class="operation-item">
+                                        <input type="checkbox" name="choix" id="choix">
+                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-green"></i></div>
+                                        <div class="operation-item_type">Revenue</div>
+                                        <span class="operation-item_categorie">Salaire</span>
+                                        <span class="operation-item_account">Général de Dmytro</span>
+                                        <span class="operation-item_time">15:00</span>
+                                        <span class="operation-item_amount color-green">+1 500.00 €</span>
+                                        <div class="operation-buttons">
+                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                        </div>
                                     </li>
                                 </ul>
                             </li>

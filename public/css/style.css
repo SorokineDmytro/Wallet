@@ -43,6 +43,10 @@ h3 {
     background-color: #377cf6;
 }
 
+.white {
+    background-color: #fff;
+}
+
 .color-green {
     color: #16a18c;
 }
@@ -119,15 +123,6 @@ nav ul {
     font-weight: 700;   
 }
 
-.logout {
-    font-size: 14px;
-    color: #201f23;
-    cursor: pointer;
-}
-.logout svg {
-    margin-right: 5px;
-}
-
 /* ============================================================HEADER==================================================  */
 
 header {
@@ -143,7 +138,7 @@ header {
 }
 
 .header-right {
-    min-width: 330px;
+    min-width: 400px;
     width: 20vw;
     height: 100%;
     display: flex;
@@ -151,7 +146,7 @@ header {
     align-items: center;
 }
 
-.notification {
+.menu-btn {
     height: 40px;
     width: 40px;
     background-color: #fafafa;
@@ -161,16 +156,16 @@ header {
     justify-content: center;
     transition: 200ms;
 }
-.notification:hover {
+.menu-btn:hover {
     background-color: #377cf6;
     transition: 200ms;
     cursor: pointer;
 }
-.notification:hover svg {
+.menu-btn:hover svg {
     color: #fff;
 }
 
-.notification svg {
+.menu-btn svg {
     color: #9d9ea2;
     font-size: 18px;
 }
@@ -221,7 +216,7 @@ header {
     align-items: center;
 }
 
-/* ============================================================HEADER==================================================  */
+/* ============================================================MAIN GENERAL==================================================  */
 
 main {
     grid-area: main;
@@ -477,7 +472,37 @@ main {
 }
 
 .operations-title h2 {
-    font-size: 1.3vw;
+    margin-left: 2%;
+    /* font-size: 1.3vw; */
+}
+
+.operation-add {
+    width: 130px;
+    margin-right: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.operation-add:hover div {
+    transform: rotate(90deg);
+    transition: 300ms;
+}
+
+.operation-add div {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #377cf6;
+    transition: 300ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .operations-list {
@@ -505,54 +530,96 @@ main {
 /*=================================================OPERATION EACH ITEM STYLES====================================*/
 .operation-item {   
     padding: 0.5vw;
-    border: solid 1px #9d9ea2;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
     border-radius: 10px;
     display: grid;
     align-items: center;
-    grid-template-areas: "checkbox image categorie account time amount buttons";
-    grid-template-columns: 5% 10% 20% 20% 10% 10% 25%;
-    margin-bottom: 10px;
+    grid-template-areas: 
+    "checkbox image type account time amount buttons"
+    "checkbox image categorie account time amount buttons";
+    grid-template-columns: 5% 5% 25% 20% 10% 15% 20%;
+    margin-bottom: 5px;
+    transition: 500ms;
+}
+.operation-item:hover {
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    transition: 500ms;
+}
+
+.operation-item input {
+    grid-area: checkbox;
+    grid-row: span 2;
+    cursor: pointer;
 }
 
 .operation-item_circle {
+    grid-area: image;
     width: 2vw;
     height: 2vw;
-    border: #201f23 solid 2px;
     border-radius: 50%;
+    margin: 0 auto;
 }
 .operation-item_circle svg{
     width: 100%;
     height: 100%;
-    color: #ee3939;
-    
+}
+
+.operation-item_type {
+    grid-area: type;
+    font-size: 14px;
 }
 
 .operation-item_categorie {
-
+    grid-area: categorie;
+    color: #201f23;
 }
 
 .operation-item_account {
-
+    grid-area: account;
+    grid-row: span 2;
 }
 
 .operation-item_time {
-
+    grid-area: time;
+    grid-row: span 2;
+    text-align: center;
 }
 
 .operation-item_amount {
-
+    grid-area: amount;
+    grid-row: span 2;
+    font-weight: 700;
+    text-align: center;
 }
 
-.buttons {
-
+.operation-buttons {
+    grid-area: buttons;
+    grid-row: span 2;
+    display: flex;
+    justify-content: space-around;
 }
 
-.btn-modify {
-
+.btn-action {
+    background-color: #fff;
+    border: none;
+    font-size: 14px;
+    color: #9d9ea2;
+    cursor: pointer;
+    transition: 300ms;
+}
+.btn-action svg {
+    padding-right: 5px;
+}
+.btn-action:hover {
+    transition: 300ms;
 }
 
-.btn-delete {
+.btn-modify:hover {
+    color: #377cf6;
+}
 
+.btn-delete:hover {
+    color: #ee3939;
 }
 
 
