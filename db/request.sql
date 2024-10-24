@@ -26,6 +26,17 @@ CREATE TABLE Client (
 );
 -- pour inserer le client utilise la fonction insertClient dans process.php qui va hasher le MDP avec BCRYPT
 
+-- Création de la table TypeCompte
+CREATE TABLE typecompte (
+    id SERIAL PRIMARY KEY,
+    designation VARCHAR(20) NOT NULL
+);
+----
+INSERT INTO typecompte (designation) VALUES 
+('General'),
+('Epargne'),
+('Credit');
+
 
 -- Création de la table Compte
 CREATE TABLE Compte (
@@ -35,7 +46,18 @@ CREATE TABLE Compte (
     FOREIGN KEY (client_id) REFERENCES Client(id) ON DELETE CASCADE
 );
 -----
-INSERT INTO compte (client_id, numCompte) VALUES (1, 'Principal de Dmytro');
+INSERT INTO compte (client_id, numCompte, typeCompte_id) VALUES (1, 'Principal de Dmytro', 1, 2550.50);
+
+---Ajouter une colonne typecompte
+ALTER TABLE Compte
+ADD COLUMN typecompte_id INTEGER,
+ADD FOREIGN KEY (typecompte_id) REFERENCES typecompte(id) ON DELETE CASCADE;
+
+---Ajouter une colonne montant_initial
+ALTER TABLE Compte
+ADD COLUMN montant_initial DECIMAL (12, 2);
+
+
 
 
 -- Création de la table Type
