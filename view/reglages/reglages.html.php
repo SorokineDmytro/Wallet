@@ -1,0 +1,1 @@
+<h1>La page reglages est en cours de preparation!</h1>
