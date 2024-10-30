@@ -46,7 +46,20 @@
                         
                     </div>
                     <div class="block accounts">
-                        <div class="account">
+                        <?php foreach($accounts as $account) :?>
+                            <div class="account">
+                                <?php if($account['type'] == 1) :?>
+                                    <div class="account-img green"><i class="fas fa-credit-card"></i></div>
+                                    <?php else:?>
+                                    <div class="account-img blue"><i class="fas fa-piggy-bank"></i></div>
+                                <?php endif ;?>
+                                <button class="actions">...</button>
+                                <h5 class="account-title"><?=$account['name']?></h5>
+                                <span class="account-amount"><?=$account['amount']?></span>
+                            </div>
+                        <?php endforeach;?>
+
+                        <!-- <div class="account">
                             <div class="account-img green"><i class="fas fa-credit-card"></i></div>
                             <button class="actions">...</button>
                             <h5 class="account-title">Général de Dmytro</h5>
@@ -63,7 +76,7 @@
                             <button class="actions">...</button>
                             <h5 class="account-title">Épargne de Dmytro</h5>
                             <span class="account-amount">2000.00€</span>
-                        </div>
+                        </div> -->
                         <div class="account add-account">
                             <div class="blue"><i class="fas fa-plus"></i></div>
                             <span>Ajouter un compte</span>
