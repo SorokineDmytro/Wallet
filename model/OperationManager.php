@@ -95,4 +95,10 @@
             return $totalExpense;
         }
 
+        // function to retrieve the operations by account
+        public function getOperationsByAccount($accountId) {
+            $operations = $this->findAll(['compte_id' => $accountId], 'object', 'order by timestamp desc');
+            return $operations;
+        }
+
     }

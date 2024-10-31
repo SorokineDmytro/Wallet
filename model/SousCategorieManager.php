@@ -75,4 +75,9 @@
             $this->deleteTable($table,$id);
         }
 
+        public function getSousCategorieNameById($sousCategorieId) {
+            $sousCategorieName = $this->findOne(['id' => $sousCategorieId], 'object');
+            return $sousCategorieName->getDescription();
+        }
+
     }

@@ -90,78 +90,49 @@
                             <button class="operation-add blue"><div class="white"><i class="fas fa-plus"></i></div><span>Transaction</span></button>
                         </div>
                         <ul class="operation-list">
-                            <li class="operation-date">
-                                <h3>23 OCTOBRE</h3>
-                                <ul>
-                                    <li class="operation-item">
-                                        <input type="checkbox" name="choix" id="choix">
-                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
-                                        <div class="operation-item_type">Depense</div>
-                                        <span class="operation-item_categorie">Divers</span>
-                                        <span class="operation-item_account">Général de Dmytro</span>
-                                        <span class="operation-item_time">15:00</span>
-                                        <span class="operation-item_amount color-red">-150.00 €</span>
-                                        <div class="operation-buttons">
-                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
-                                        </div>
-                                    </li>
-                                    <li class="operation-item">
-                                        <input type="checkbox" name="choix" id="choix">
-                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
-                                        <div class="operation-item_type">Depense</div>
-                                        <span class="operation-item_categorie">Divers</span>
-                                        <span class="operation-item_account">Général de Dmytro</span>
-                                        <span class="operation-item_time">15:00</span>
-                                        <span class="operation-item_amount color-red">-150.00 €</span>
-                                        <div class="operation-buttons">
-                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
-                                        </div>
-                                    </li>
-                                    <li class="operation-item">
-                                        <input type="checkbox" name="choix" id="choix">
-                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
-                                        <div class="operation-item_type">Depense</div>
-                                        <span class="operation-item_categorie">Divers</span>
-                                        <span class="operation-item_account">Général de Dmytro</span>
-                                        <span class="operation-item_time">15:00</span>
-                                        <span class="operation-item_amount color-red">-150.00 €</span>
-                                        <div class="operation-buttons">
-                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
-                                        </div>
-                                    </li>
-                                    <li class="operation-item">
-                                        <input type="checkbox" name="choix" id="choix">
-                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
-                                        <div class="operation-item_type">Depense</div>
-                                        <span class="operation-item_categorie">Divers</span>
-                                        <span class="operation-item_account">Général de Dmytro</span>
-                                        <span class="operation-item_time">15:00</span>
-                                        <span class="operation-item_amount color-red">-150.00 €</span>
-                                        <div class="operation-buttons">
-                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
-                                        </div>
-                                    </li>
-                                    <li class="operation-item">
-                                        <input type="checkbox" name="choix" id="choix">
-                                        <div class="operation-item_circle"><i class="fas fa-circle-question color-red"></i></div>
-                                        <div class="operation-item_type">Depense</div>
-                                        <span class="operation-item_categorie">Divers</span>
-                                        <span class="operation-item_account">Général de Dmytro</span>
-                                        <span class="operation-item_time">15:00</span>
-                                        <span class="operation-item_amount color-red">-150.00 €</span>
-                                        <div class="operation-buttons">
-                                            <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
-                                        </div>
-                                    </li>
-                                   
-                                </ul>
-                            </li>
-                            <li class="operation-date">
+                            <?php foreach($operationsByDate as $date => $operations):?>
+                                <li class="operation-date">
+                                    <h3><?=date('d F Y', strtotime($date))?></h3>
+                                    <ul>
+                                        <?php foreach ($operations as $operation) :?>
+                                        <li class="operation-item">
+                                            <input type="checkbox" name="choix" id="choix">
+                                            <div class="operation-item_circle"><i class="fas fa-circle-question color-green"></i></div>
+                                            <div class="operation-item_type">
+                                                <?php 
+                                                    switch($operation['op_type']) {
+                                                        case 1:
+                                                            echo 'Dépense';
+                                                            break;
+                                                        case 2:
+                                                            echo 'Revenu';
+                                                            break;
+                                                        case 3:
+                                                            echo 'Transfert';
+                                                            break;
+                                                    } 
+                                                ?>
+                                            </div>
+                                            <span class="operation-item_categorie"><?= htmlspecialchars($operation['op_souscategorie']) ?></span>
+                                            <span class="operation-item_account"><?= $operation['op_account'] ?></span>
+                                            <span class="operation-item_time"><?= $operation['op_time'] ?></span>
+                                            <?php if($operation['op_type'] == 1) :?>
+                                                <span class="operation-item_amount color-red">-<?=$operation['op_amount']?></span>
+                                            <?php elseif($operation['op_type'] == 2) :?>
+                                                <span class="operation-item_amount color-green">+<?=$operation['op_amount']?></span>
+                                            <?php else :?>
+                                                <span class="operation-item_amount"><?=$operation['op_amount']?></span>
+                                            <?php endif ;?>
+                                            <div class="operation-buttons">
+                                                <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                                <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                            </div>
+                                        </li>
+                                        <?php endforeach;?>
+                                    </ul>
+                                </li>
+                            <?php endforeach;?>
+                            <!-- <li class="operation-date">
                                 <h3>25 OCTOBRE</h3>
                                 <ul>
                                 <li class="operation-item">
@@ -178,8 +149,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </li>
-
+                            </li> -->
                         </ul>
                     </div>
                 </div>

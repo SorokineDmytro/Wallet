@@ -190,4 +190,6 @@ CREATE TABLE Operation (
 INSERT INTO operation (compte_id, timestamp, montant, type_id, categorie_id, souscategorie_id) VALUES 
 (1, CURRENT_TIMESTAMP, 250.00, 1, 1, 2),
 (1, CURRENT_TIMESTAMP, 1950.00, 2, 10, 56),
-(1, CURRENT_TIMESTAMP, 550.00, 1, 3, 1);
+(1, CURRENT_TIMESTAMP, 550.00, 1, 3, 13),
+(2, CURRENT_TIMESTAMP, 100.00, 1, 5, 24);
+
