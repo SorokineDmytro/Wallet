@@ -46,7 +46,9 @@ CREATE TABLE Compte (
     FOREIGN KEY (client_id) REFERENCES Client(id) ON DELETE CASCADE
 );
 -----
-INSERT INTO compte (client_id, numCompte, typeCompte_id) VALUES (1, 'Principal de Dmytro', 1, 2550.50);
+INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial) VALUES (1, 'Principal de Dmytro', 1, 2550.50),
+INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial) VALUES (1, 'Secondaire de Dmytro', 1, 1750.75),
+INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial) VALUES (1, 'Épargne de Dmytro', 2, 3500.00);
 
 ---Ajouter une colonne typecompte
 ALTER TABLE Compte
@@ -184,3 +186,10 @@ CREATE TABLE Operation (
     FOREIGN KEY (categorie_id) REFERENCES Categorie(id),
     FOREIGN KEY (souscategorie_id) REFERENCES Souscategorie(id)
 );
+-----
+INSERT INTO operation (compte_id, timestamp, montant, type_id, categorie_id, souscategorie_id) VALUES 
+(1, CURRENT_TIMESTAMP, 250.00, 1, 1, 2),
+(1, CURRENT_TIMESTAMP, 1950.00, 2, 10, 56),
+(1, CURRENT_TIMESTAMP, 550.00, 1, 3, 13),
+(2, CURRENT_TIMESTAMP, 100.00, 1, 5, 24);
+

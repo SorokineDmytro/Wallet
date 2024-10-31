@@ -75,4 +75,8 @@
             $this->deleteTable($table,$id);
         }
 
+        public function getAccountNameByAccountId($accountId) {
+            $accountName = $this->findOne(['id' => $accountId], 'object');
+            return $accountName->getNumcompte();
+        }
     }
