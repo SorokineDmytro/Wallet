@@ -1,8 +1,10 @@
 <?php
-    class SousCategorie extends SousCategorieManager {
+    namespace App\Model;
+    use App\Model\EntityManager;
+    class Categorie extends EntityManager {
 
         private $id;
-        private $categorie_id;
+        private $type_id;
         private $description;
 
         public function __construct($data = []) { // for exemple $data = ['id' => 1, 'numProduit' => 'BB0001' ... ]
@@ -15,7 +17,6 @@
                 }
             }
         }
-
 
         /**
          * Get the value of id
@@ -38,21 +39,21 @@
         }
 
         /**
-         * Get the value of categorie_id
+         * Get the value of type_id
          */ 
-        public function getCategorie_id()
+        public function getType_id()
         {
-                return $this->categorie_id;
+                return $this->type_id;
         }
 
         /**
-         * Set the value of categorie_id
+         * Set the value of type_id
          *
          * @return  self
          */ 
-        public function setCategorie_id($categorie_id)
+        public function setType_id($type_id)
         {
-                $this->categorie_id = $categorie_id;
+                $this->type_id = $type_id;
 
                 return $this;
         }

@@ -1,12 +1,14 @@
 <?php
-    class EpargneController extends Manager {
+    namespace App\Controller;
+    use App\Model\Manager;
+    class StatistiqueController extends Manager {
         public function __construct() {
-            $page = "epargne";
+            $page = "statistique";
             extract($_GET);
             switch($page) {
-                case "epargne" :
-                    $file = "view/epargne/epargne.html.php";
-                    $title = "Épargne";
+                case "statistique" :
+                    $file = "view/statistique/statistique.html.php";
+                    $title = "statistique";
                     $variables = [
                         "title" => $title,
                     ];
@@ -15,5 +17,3 @@
             }
         }
     }
-
-

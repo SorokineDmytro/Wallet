@@ -1,4 +1,6 @@
 <?php
+    namespace App\Controller;
+    use App\Model\Manager;
     class ReglagesController extends Manager {
         public function __construct() {
            $page = "reglages";

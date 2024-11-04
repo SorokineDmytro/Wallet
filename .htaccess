@@ -1,0 +1,9 @@
+# Activer la réecriture de l'url
+RewriteEngine On
+# N'execute pas la Réecriture si l'url contient un fichier
+RewriteCond %{REQUEST_FILENAME} !-f
+# N'execute pas la Réecriture si l'url contient un directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# .*   tous caratére autorisés 
+# ^ = debut  $= fin   ^(z) (.*)$     
+RewriteRule ^(.*)$ index.php?url=$1

@@ -3,3 +3,4 @@
     const DBNAME = "wallet";
     const USER = "postgres";
     const PASSWORD = "160717";
+    const PREFIXE = "";

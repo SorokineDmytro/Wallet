@@ -1,4 +1,5 @@
 <?php 
+namespace App\Model;
 require_once("config/parametre.php");
 class Manager {
     
@@ -6,9 +7,9 @@ class Manager {
     function getConnexion($host = HOST, $dbname = DBNAME, $user = USER, $password = PASSWORD) {
         $dsn = "pgsql:host=$host;dbname=$dbname;options='--client_encoding=UTF8'";
         try{
-            $connexion = new PDO($dsn, $user, $password);
+            $connexion = new \PDO($dsn, $user, $password);
             return $connexion;
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             echo "<h1 style='color:red; text-align:center;'>Impossible de se connecter à la base de données!</h1>";
             die;
         } 
@@ -41,7 +42,7 @@ class Manager {
         $sql="select * from $table where id=?";
         $stmt=$connexion->prepare($sql);
         $stmt->execute([$id]);
-        $resultat=$stmt->fetch(PDO::FETCH_ASSOC);
+        $resultat=$stmt->fetch(\PDO::FETCH_ASSOC);
         return $resultat;
     }
     
@@ -65,7 +66,7 @@ class Manager {
         // print_r($values) ;die;
         $stmt=$connexion->prepare($sql);
         $stmt->execute($values);
-        $resultats=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        $resultats=$stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $resultats;
     }   
 
@@ -87,7 +88,7 @@ class Manager {
         $sql="select * from $table where $columns $order";
         $stmt=$connexion->prepare($sql);
         $stmt->execute($values);
-        $resultat=$stmt->fetch(PDO::FETCH_ASSOC);
+        $resultat=$stmt->fetch(\PDO::FETCH_ASSOC);
         return $resultat;
     }     
 
@@ -119,7 +120,7 @@ class Manager {
         $sql="select * from $table where $condition";
         $stmt=$connexion->prepare($sql);
         $stmt->execute($values);
-        $rows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows=$stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $rows;
 
     } 
@@ -195,7 +196,7 @@ class Manager {
 
     // Function who changes the date in format FR from US
     function dateFrs($cdate) { //cdate = chaine de characteres
-        $date = new DateTime($cdate);
+        $date = new \DateTime($cdate);
         $dateFrs = $date->format("d-m-Y");
         return $dateFrs;
     }

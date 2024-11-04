@@ -1,5 +1,7 @@
 <?php
-    class Compte extends CompteManager {
+    namespace App\Model;
+    use App\Model\EntityManager;
+    class Compte extends EntityManager {
 
         private $id;
         private $client_id;

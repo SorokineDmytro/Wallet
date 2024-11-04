@@ -1,5 +1,7 @@
 <?php
-    class Operation extends OperationManager {
+    namespace App\Model;
+    use App\Model\EntityManager;
+    class Operation extends EntityManager {
 
         private $id;
         private $compte_id;
@@ -180,4 +182,6 @@
 
                 return $this;
         }
+
+        
     }
