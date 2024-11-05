@@ -622,7 +622,11 @@ main {
     color: #ee3939;
 }
 
-
+.opperaton-message {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
 
 
 /*=================================================OLD STYLES FOR THE FIRST FORM====================================*/

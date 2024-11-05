@@ -11,7 +11,7 @@
             <span class="widget-secondary-amount"><span class="color-green">-100.00 €</span> par rapport au dernier mois</span>
         </div>
         <div class="block widget">
-            <h4 class="widget-title"><i class="fas fa-cart-shopping"></i>Dépences</h4>
+            <h4 class="widget-title"><i class="fas fa-cart-shopping"></i>Dépenses</h4>
             <div class="widget-middle">
                 <span class="widget-main-amount">2 500.00 €</span>
                 <div class="widget-circle red">
@@ -47,7 +47,7 @@
         </div>
         <div class="block accounts">
             <?php foreach($accounts as $account) :?>
-                <div id="account <?=$account['id']?>" class="account">
+                <div id="<?=$account['id']?>" class="account">
                     <?php if($account['type'] == 1) :?>
                         <div class="account-img green"><i class="fas fa-credit-card"></i></div>
                         <?php else:?>
@@ -71,71 +71,70 @@
                 <button class="operation-add blue"><div class="white"><i class="fas fa-plus"></i></div><span>Transaction</span></button>
             </div>
             <ul class="operation-list">
-                <?php foreach($operationsByDate as $date => $operations):?>
-                    <li class="operation-date">
-                        <h3><?=date('d F Y', strtotime($date))?></h3>
-                        <ul>
-                            <?php foreach ($operations as $operation) :?>
-                            <li class="operation-item">
-                                <input type="checkbox" name="choix" id="choix">
-                                <div class="operation-item_circle"><i class="fas fa-circle-question color-green"></i></div>
-                                <div class="operation-item_type">
-                                    <?php 
-                                        switch($operation['op_type']) {
-                                            case 1:
-                                                echo 'Dépense';
-                                                break;
-                                            case 2:
-                                                echo 'Revenu';
-                                                break;
-                                            case 3:
-                                                echo 'Transfert';
-                                                break;
-                                        } 
-                                    ?>
-                                </div>
-                                <span class="operation-item_categorie"><?= htmlspecialchars($operation['op_souscategorie']) ?></span>
-                                <span class="operation-item_account"><?= $operation['op_account'] ?></span>
-                                <span class="operation-item_time"><?= $operation['op_time'] ?></span>
-                                <?php if($operation['op_type'] == 1) :?>
-                                    <span class="operation-item_amount color-red">-<?=$operation['op_amount']?></span>
-                                <?php elseif($operation['op_type'] == 2) :?>
-                                    <span class="operation-item_amount color-green">+<?=$operation['op_amount']?></span>
-                                <?php else :?>
-                                    <span class="operation-item_amount"><?=$operation['op_amount']?></span>
-                                <?php endif ;?>
-                                <div class="operation-buttons">
-                                    <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                    <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
-                                </div>
-                            </li>
-                            <?php endforeach;?>
-                        </ul>
-                    </li>
-                <?php endforeach;?>
-                <!-- <li class="operation-date">
-                    <h3>25 OCTOBRE</h3>
-                    <ul>
-                    <li class="operation-item">
-                            <input type="checkbox" name="choix" id="choix">
-                            <div class="operation-item_circle"><i class="fas fa-circle-question color-green"></i></div>
-                            <div class="operation-item_type">Revenue</div>
-                            <span class="operation-item_categorie">Salaire</span>
-                            <span class="operation-item_account">Général de Dmytro</span>
-                            <span class="operation-item_time">15:00</span>
-                            <span class="operation-item_amount color-green">+1 500.00 €</span>
-                            <div class="operation-buttons">
-                                <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
-                            </div>
+                <?php if($operationsByDate) :?>
+                    <?php foreach($operationsByDate as $date => $operations):?>
+                        <li class="operation-date">
+                            <h3><?=date('d F Y', strtotime($date))?></h3>
+                            <ul>
+                                <?php foreach ($operations as $operation) :?>
+                                <li class="operation-item">
+                                    <input type="checkbox" name="choix" id="choix">
+                                    <div class="operation-item_circle"><i class="fas fa-circle-question color-green"></i></div>
+                                    <div class="operation-item_type">
+                                        <?php 
+                                            switch($operation['op_type']) {
+                                                case 1:
+                                                    echo 'Dépense';
+                                                    break;
+                                                case 2:
+                                                    echo 'Revenu';
+                                                    break;
+                                                case 3:
+                                                    echo 'Transfert';
+                                                    break;
+                                            } 
+                                        ?>
+                                    </div>
+                                    <span class="operation-item_categorie">
+                                        <?= htmlspecialchars($operation['op_souscategorie']) ?>
+                                    </span>
+                                    <span class="operation-item_account">
+                                        <?= $operation['op_account'] ?>
+                                    </span>
+                                    <span class="operation-item_time">
+                                        <?= $operation['op_time'] ?>
+                                    </span>
+                                    <?php if($operation['op_type'] == 1) :?>
+                                        <span class="operation-item_amount color-red">-<?=$operation['op_amount']?></span>
+                                    <?php elseif($operation['op_type'] == 2) :?>
+                                        <span class="operation-item_amount color-green">+<?=$operation['op_amount']?></span>
+                                    <?php else :?>
+                                        <span class="operation-item_amount"><?=$operation['op_amount']?></span>
+                                    <?php endif ;?>
+                                    <div class="operation-buttons">
+                                        <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
+                                        <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                    </div>
+                                </li>
+                                <?php endforeach;?>
+                            </ul>
                         </li>
-                    </ul>
-                </li> -->
+                    <?php endforeach;?>
+                <?php else :?>
+                    <span class="opperaton-message">Ce compte ne connaît aucune opération! Il est possible d'ajouter une transaction.</span>
+                <?php endif ;?>
             </ul>
         </div>
     </div>
 </div>
 <script>
-    account.addEventListener('click', selectAccount());
-    
+    // Select all elements with the class 'account'
+    let accounts = document.querySelectorAll('.account');
+
+    // Add event listeners to each account element
+    accounts.forEach(account => {
+        account.addEventListener('click', () => {
+            document.location.href=`index.php?page=apercu&acc_Id=${account.id}`;
+        });
+    });
 </script>

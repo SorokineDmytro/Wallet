@@ -1,7 +1,6 @@
 <?php
     session_start();
-    require_once("./src/Service/router.php");
-    spl_autoload_register("router");
+    require_once("vendor/autoload.php");
     
     // Script to use the dynamic path to different controllers
     $url="apercu";

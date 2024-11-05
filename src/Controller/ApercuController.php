@@ -22,7 +22,7 @@ use App\Service\SousCategorieService;
                     $clientId = 1; // don't forget to change it when the users could log in and have an id which can be retreated from $_SESSION
                     
                     // Retrieve operations only for the specified account
-                    $operations = $os->getOperationsByAccount(1);
+                    $operations = $os->getOperationsByAccount(isset($_GET['acc_Id']) ? $_GET['acc_Id'] : 1);
 
                     // Group operations by date
                     $operationsByDate = [];
