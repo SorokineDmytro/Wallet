@@ -59,7 +59,6 @@ h3 {
     color: #377cf6;
 }
 
-
 .wrapper {
     width: 100%;
     height: 100%;
@@ -250,6 +249,7 @@ main {
     grid-template-rows: 10vw 20vw max-content;
     grid-template-columns: 1fr;
     row-gap: 30px;
+    transition: filter 0.3s ease;
 }
 
 
@@ -373,6 +373,7 @@ main {
     display: none;
 }
 
+
 .account:hover .actions {
     display: block;
     position: absolute;
@@ -388,6 +389,7 @@ main {
     font-size: 18px;
     cursor: pointer;
 }
+
 .account:hover .account-title {
     color: #201f23;
     transition: 500ms;
@@ -415,8 +417,17 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: none;
+    background-color: #fff;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    border-radius: 20px;
+    padding: 10px;
+    transition: 500ms;
 }
-
+.add-account:hover {
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    transition: 500ms;
+}
 .add-account:hover div {
     transform: rotate(90deg);
     transition: 200ms;
@@ -448,9 +459,275 @@ main {
     margin-top: 5px;
     justify-self: end;
     transition: 200ms;
-
 }
 
+.selected {
+    border: solid 2px #d0d0d0;
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+}
+
+.selected .account-title {
+    color: #201f23;
+    transition: 500ms;
+}
+.selected .account-amount {
+    font-size: 1.35vw;
+    transition: 500ms;
+}
+
+.account-menu {
+    position: absolute;
+    right: 15%;
+    top: 0;
+    font-size: 14px;
+    padding-top: 10px;
+    visibility: hidden; /* Keeps it hidden initially */
+    opacity: 0; /* Makes it invisible */
+    transform: translateX(40px); /* Starts off-screen */
+    transition: opacity 500ms ease, transform 500ms ease; /* Animate opacity and transform */
+}
+
+/* When visible, reset the opacity and position */
+.account-menu:not(.hidden) {
+    visibility: visible; /* Makes it visible */
+    opacity: 1; /* Fully opaque */
+    transform: translateX(30px); /* Move to original position */
+}
+
+.account-menu_list {
+    display: flex;
+}
+
+.context-menu_circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #d0d0d0;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    color: #fff;
+    transition: 500ms;
+    margin-right: 10px;
+}
+
+.account-menu_list > li:first-child .context-menu_circle {
+    background-color: #ee3939;
+    opacity: 70%;
+}
+
+.account-menu_list > li:last-child .context-menu_circle {
+    background-color: #377cf6;
+    opacity: 70%;
+}
+
+.account-menu_list > li .context-menu_circle:hover {
+    opacity: 100%;
+    filter: brightness(120%);
+    cursor: pointer;
+}
+
+/*=================================================MODAL ACCOUNT======================================*/
+.overlay {
+    position: fixed;
+    top: 10%;
+    left: 15%;
+    width: 85%;
+    height: 100%;
+    backdrop-filter: blur(1px);
+}
+
+.modal-account {
+    position: fixed;
+    top: 10%;
+    left: 15%;
+    width: 85%;
+    height: 90%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-account {
+    display: grid;
+    row-gap: 50px;
+    grid-template-areas: 
+    "title"
+    "body"
+    "buttons";
+    position: relative;
+    width: 60%;
+    min-height: 350px;
+    max-height: 600px;
+    padding: 3% 5%;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+}
+
+.form-body {
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-area: body;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    min-height: 150px;
+    max-height: max-content;
+    row-gap: 20px;
+    column-gap: 50px;
+    grid-template-areas:
+    "type type"
+    "name name"
+    "amount color";
+}
+
+.required::after {
+    content: '*';
+    margin-left: 5px;
+    color: red;
+    font-weight: 700;
+    font-size: 1.25em;
+}
+
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.form-label {
+    float: left; 
+    width: 30%; 
+    font-weight: 600;
+}
+
+.form-input, .form-select {
+    width: 65%;
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+}
+
+.form-title {
+    display: block;
+    font-size: 2vw;
+    grid-area: title;
+}
+
+.acc-type {
+    grid-area: type;
+    margin-bottom: 20px;
+}
+
+.acc-name {
+    grid-area: name;
+    margin-bottom: 20px;
+}
+
+.acc-color {
+    grid-area: color;
+}
+
+.acc-color label{
+    width: 70%;
+}
+
+input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 40px;
+    padding: 0;
+    background-color: #f3f3f3;
+    border: none;
+    cursor: pointer;
+}
+input[type=color]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+}
+input[type=color]::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+}
+
+.acc-amount {
+    grid-area: amount;
+}
+
+.acc-amount label {
+    width: 50%;
+}
+
+.acc-amount input {
+    width: 50%;
+}
+
+.form-buttons {
+    grid-area: buttons;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 40px;
+}
+
+.form-btn{
+    min-width: 140px;
+    max-width: 30%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 0 10px;
+    border: none;
+    background-color: #fff;
+    color: #fff;
+    font-size: 14px;
+}
+
+.btn-annul {
+    background-color: #377cf6;
+    opacity: 80%;
+}
+.btn-annul:hover {
+    opacity: 100%;
+    transition: 500ms;
+}
+
+.btn-submit {
+    background-color: #16a18c;
+    opacity: 80%;
+}
+
+.btn-submit:hover {
+    opacity: 100%;
+    transition: 500ms;
+}
+
+.modal-close {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    color: #9d9ea2;
+}
+
+.modal-close:hover {
+    background-color: #377cf6;
+    color: #fff;
+    cursor: pointer;
+}
 /*=================================================MAIN OPERATIONS====================================*/
 .operations {
     width: 100%;
@@ -627,89 +904,3 @@ main {
     margin: 0 auto;
     text-align: center;
 }
-
-
-/*=================================================OLD STYLES FOR THE FIRST FORM====================================*/
-/* .wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px;
-    padding: 20px;
-    width: 100%;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 300px;
-    height: 500px;
-    border: 2px solid #000;
-    border-radius: 10px;
-    margin: 20px;
-    padding: 10px;
-}
-
-.container-output {
-    width: 50%;
-    height: fit-content;
-    margin: 20px auto;
-    padding: 10px;
-    display: flex;
-    align-self: center;
-    flex-direction: column;
-}
-
-.totalAmount {
-    text-align: right;
-}
-
-.date {
-    margin-left: 5px;
-}
-
-ul {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 50px;
-}
-
-li div {
-    width: 20%;
-}
-
-.action-btn {
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    border: none;
-    background-color: #1e88e5;
-    color: #fff;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.green {
-    color: #16a085;
-}
-
-.red {
-    color: #ff5858;
-} */

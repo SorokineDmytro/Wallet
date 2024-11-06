@@ -43,12 +43,16 @@ CREATE TABLE Compte (
     id SERIAL PRIMARY KEY,
     client_id INTEGER NOT NULL,
     numCompte VARCHAR(100) NOT NULL,
-    FOREIGN KEY (client_id) REFERENCES Client(id) ON DELETE CASCADE
+    typecompte_id INTEGER NOT NULL,
+    montant_initial DECIMAL (12, 2),
+    color VARCHAR(7) NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES Client(id) ON DELETE CASCADE,
+    FOREIGN KEY (typecompte_id) REFERENCES typecompte(id) ON DELETE CASCADE
 );
 -----
-INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial) VALUES (1, 'Principal de Dmytro', 1, 2550.50),
-INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial) VALUES (1, 'Secondaire de Dmytro', 1, 1750.75),
-INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial) VALUES (1, 'Épargne de Dmytro', 2, 3500.00);
+INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial, color) VALUES (1, 'Principal de Dmytro', 1, 2550.50, '#16A18C'),
+INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial, color) VALUES (1, 'Secondaire de Dmytro', 1, 1750.75, '#EE3939'),
+INSERT INTO compte (client_id, numCompte, typeCompte_id, montant_initial, color) VALUES (1, 'Épargne de Dmytro', 2, 3500.00, '#377CF6');
 
 ---Ajouter une colonne typecompte
 ALTER TABLE Compte
@@ -59,6 +63,12 @@ ADD FOREIGN KEY (typecompte_id) REFERENCES typecompte(id) ON DELETE CASCADE;
 ALTER TABLE Compte
 ADD COLUMN montant_initial DECIMAL (12, 2);
 
+---Ajouter une colonne color
+ALTER TABLE Compte
+ADD COLUMN color VARCHAR(7) NOT NULL;
+UPDATE Compte SET color = '#16A18C' WHERE ID = 1;
+UPDATE Compte SET color = '#EE3939' WHERE ID = 2;
+UPDATE Compte SET color = '#377CF6' WHERE ID = 3;
 
 
 

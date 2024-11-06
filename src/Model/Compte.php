@@ -1,13 +1,14 @@
 <?php
     namespace App\Model;
     use App\Model\EntityManager;
-    class Compte extends EntityManager {
+    class Compte {
 
         private $id;
         private $client_id;
         private $numcompte;
         private $typecompte_id;
         private $montant_initial;
+        private $color;
 
         public function __construct($data = []) { // for exemple $data = ['id' => 1, 'numProduit' => 'BB0001' ... ]
             if ($data) { // test if $data is different from empty '[]'
@@ -117,6 +118,26 @@
         public function setMontant_initial($montant_initial)
         {
                 $this->montant_initial = $montant_initial;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of color
+         */ 
+        public function getColor()
+        {
+                return $this->color;
+        }
+
+        /**
+         * Set the value of color
+         *
+         * @return  self
+         */ 
+        public function setColor($color)
+        {
+                $this->color = $color;
 
                 return $this;
         }

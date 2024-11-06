@@ -1,7 +1,7 @@
 <?php
     namespace App\Model;
     use App\Model\EntityManager;
-    class Client extends EntityManager {
+    class Client {
 
         private $id;
         private $nomclient;

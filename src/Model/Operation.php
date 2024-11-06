@@ -1,7 +1,7 @@
 <?php
     namespace App\Model;
     use App\Model\EntityManager;
-    class Operation extends EntityManager {
+    class Operation {
 
         private $id;
         private $compte_id;

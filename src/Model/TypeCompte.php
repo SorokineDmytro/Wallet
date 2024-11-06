@@ -1,7 +1,7 @@
 <?php
     namespace App\Model;
     use App\Model\EntityManager;
-    class TypeCompte extends EntityManager {
+    class TypeCompte {
 
         private $id;
         private $designation;

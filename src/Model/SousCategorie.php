@@ -1,7 +1,7 @@
 <?php
     namespace App\Model;
     use App\Model\EntityManager;
-    class SousCategorie extends EntityManager {
+    class SousCategorie {
 
         private $id;
         private $categorie_id;

@@ -1,7 +1,7 @@
 <?php
     namespace App\Model;
     use App\Model\EntityManager;
-    class Type extends EntityManager {
+    class Type {
 
         private $id;
         private $numtype;

@@ -1,7 +1,7 @@
 <?php
     namespace App\Model;
     use App\Model\EntityManager;
-    class Categorie extends EntityManager {
+    class Categorie {
 
         private $id;
         private $type_id;
