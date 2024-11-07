@@ -97,11 +97,10 @@
                 <?php if($operationsByDate) :?>
                     <?php foreach($operationsByDate as $date => $operations):?>
                         <li class="operation-date">
-                            <h3><?=date('d F Y', strtotime($date))?></h3>
+                            <h3><?=date('d/m/Y', strtotime($date))?></h3>
                             <ul>
                                 <?php foreach ($operations as $operation) :?>
                                 <li class="operation-item">
-                                    <input type="checkbox" name="choix" id="choix">
                                     <div class="operation-item_circle"><i class="fas fa-circle-question color-green"></i></div>
                                     <div class="operation-item_type">
                                         <?php 
@@ -164,6 +163,10 @@
                 </h2>
                 <button class="modal-close" onclick="hideModal(event)"><i class="fas fa-xmark"></i></button>
                     <?php if ($modalAction == 'delete'): ?>
+                        <div class="acc-id d-none">
+                                    <label for="id" class="form-label required">ID de compte:</label>
+                                    <input type="text" id="id" class="form-input" name="id" value="<?=$accountToModify['id']?>" >
+                                </div>
                         <div class="form-body" style="display:flex; font-size:22px;">
                             <p>Êtes-vous sûr de vouloir supprimer ce compte ?<br> Cette action sera irreversible et affectera la statistique !<br> Toutes les opérations sur ce compte seront également supprimées !</p>
                         </div>
@@ -194,6 +197,10 @@
                     <?php endif; ?>
                     <?php if ($modalAction == 'modify'): ?>
                         <div class="form-body">
+                                <div class="acc-id d-none">
+                                    <label for="id" class="form-label required">ID de compte:</label>
+                                    <input type="text" id="id" class="form-input" name="id" value="<?=$accountToModify['id']?>" >
+                                </div>
                                 <div class="form-container acc-type">
                                     <label for="typecompte_id" class="form-label required">Type de compte:</label>
                                     <select id="typecompte_id" class="form-select" name="typecompte_id" required >
@@ -221,8 +228,8 @@
                         <button type="submit" class="form-btn btn-submit">
                         <?php
                             if ($modalAction == 'create') echo "Créer un compte";
-                            elseif ($modalAction == 'modify') echo "Modifier le compte";
-                            elseif ($modalAction == 'delete') echo "Supprimer le compte";
+                            elseif ($modalAction == 'modify') echo "Valider";
+                            elseif ($modalAction == 'delete') echo "Supprimer";
                         ?>
                         </button>
                     </div>

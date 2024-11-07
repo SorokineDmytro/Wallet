@@ -14,20 +14,22 @@
 <body>
     <div class="wrapper">
         <aside>
-            <h1>Wallet</h1>
-            <nav>
-                <ul class="nav-list">
-                    <h3>MENU</h3>
-                    <li class="nav-list_item"><a href="index.php"><i class="fas fa-chart-bar"></i>Aperçu</a></li>
-                    <li class="nav-list_item"><a href="statistique"><i class="fas fa-chart-pie"></i>Statistique</a></li>
-                    <li class="nav-list_item"><a href="epargne"><i class="fas fa-wallet"></i>Épargne</a></li>
-                </ul>
-                <ul class="service-list">
-                    <h3>GÉNÉRAL</h3>
-                    <li class="nav-list_item"><a href="reglages"><i class="fas fa-gear"></i>Reglages</a></li>
-                    <li class="nav-list_item"><a href=""><i class="fas fa-moon"></i>Apparence</a></li>
-                </ul>
-            </nav>
+            <div class="aside-container">
+                <h1>Wallet</h1>
+                <nav>
+                    <ul class="nav-list">
+                        <h3>MENU</h3>
+                        <li class="nav-list_item"><a href="index.php"><i class="fas fa-chart-bar"></i>Aperçu</a></li>
+                        <li class="nav-list_item"><a href="statistique"><i class="fas fa-chart-pie"></i>Statistique</a></li>
+                        <li class="nav-list_item"><a href="epargne"><i class="fas fa-wallet"></i>Épargne</a></li>
+                    </ul>
+                    <ul class="service-list">
+                        <h3>GÉNÉRAL</h3>
+                        <li class="nav-list_item"><a href="reglages"><i class="fas fa-gear"></i>Reglages</a></li>
+                        <li class="nav-list_item"><a href=""><i class="fas fa-moon"></i>Apparence</a></li>
+                    </ul>
+                </nav>
+            </div>
         </aside>
         <header>
             <div class="header-left">
