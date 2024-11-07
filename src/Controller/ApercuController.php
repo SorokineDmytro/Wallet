@@ -50,7 +50,8 @@ use App\Service\SousCategorieService;
                             'id' => $account->getId(),
                             'type' => $account->getTypecompte_id(),
                             'name' => $account->getNumcompte(),
-                            'amount' => ($account->getMontant_initial() + $incomes - $expenses),
+                            'amount' => $account->getMontant_initial(),
+                            'totalAmount' => ($account->getMontant_initial() + $incomes - $expenses),
                             'color' => $account->getColor(),
                         ]; 
                     } 

@@ -616,6 +616,10 @@ main {
     box-shadow: #e2e2e2 1px 1px 20px 1px;
 }
 
+.form-select {
+    cursor: pointer;
+}
+
 .form-title {
     display: block;
     font-size: 2vw;

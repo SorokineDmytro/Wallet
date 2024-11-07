@@ -64,7 +64,7 @@
                     </div>
                     <button class="actions" onmouseenter="showAccountMenu(event)">...</button>
                     <h5 class="account-title"><?=$account['name']?></h5>
-                    <span class="account-amount"><?=number_format($account['amount'], 2, '.', ' ')?> €</span>
+                    <span class="account-amount"><?=number_format($account['totalAmount'], 2, '.', ' ')?> €</span>
                     <div class="account-menu hidden" onmouseleave="hideAccountMenu(event)">
                         <ul class="account-menu_list">
                         <li class="context-menu_list-item">
