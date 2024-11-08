@@ -5,14 +5,16 @@
     use App\Model\EntityManager;
     use App\Service\OperationService;
     use App\Service\CompteService;
-use App\Service\SousCategorieService;
+    use App\Service\SousCategorieService;
 
     class ApercuController extends Manager {
         public function __construct() {
             $cm = new EntityManager('compte', 'Compte');
+            $om = new EntityManager('operation', 'Operation');
+            $scm = new EntityManager('souscategorie', 'SousCategorie');
             $cs = new CompteService();
             $os = new OperationService();
-            $scm = new SousCategorieService;
+            $scs = new SousCategorieService;
             $page = "apercu";
             $clientId = 1; // don't forget to change it when the users could log in and have an id which can be retreated from $_SESSION
             extract($_GET);
@@ -21,23 +23,6 @@ use App\Service\SousCategorieService;
                 case "apercu" :
                     $file = "view/apercu/apercu.html.php";
                     $title = "aperçu";
-                    
-                    // OPEARTIONS 
-                    // Retrieve operations only for the specified account
-                    $selectedAccount = isset($_GET['acc_Id']) ? $_GET['acc_Id'] : 1;
-                    $operations = $os->getOperationsByAccount($selectedAccount);
-                    // Group operations by date
-                    $operationsByDate = [];
-                    foreach ($operations as $operation) {
-                        $date = date('d-m-Y', strtotime($operation->getTimestamp())); // Format date to DD-MM-YYYY
-                        $operationsByDate[$date][] = [
-                            'op_type' => $operation->getType_id(),
-                            'op_souscategorie' => $scm->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
-                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
-                            'op_amount' => $operation->getMontant(),
-                            'op_account' => $cs->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
-                        ];
-                    }
 
                     // ACCOUNTS
                     // get the basic info of each account using CompteManager to dispalay it into the view
@@ -57,12 +42,12 @@ use App\Service\SousCategorieService;
                             'color' => $account->getColor(),
                         ]; 
                     } 
-                    
+
                     // MODAL ACCOUNT
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                        $showModal = true;
-                        $accountId = $_POST['acc_Id'] ?? null; // Get the account ID if available
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acc_Id'])) {
+                        $showAcountModal = true;
                         $modalAction = $_POST['action'] ?? null; // 'create', 'modify', 'delete'
+                        $accountId = $_POST['acc_Id'] ?? null; // Get the account ID if available
                         foreach ($formattedAccounts as $account) {
                             if ($account['id'] == $accountId) {
                                 $accountToModify = $account;
@@ -73,8 +58,52 @@ use App\Service\SousCategorieService;
                             }
                         }
                     } else {
-                        $showModal = false;
+                        $showAcountModal = false;
                     }
+
+                    // OPERATIONS 
+                    // Retrieve all operations by client in array format for operation CRUD  
+                    $allOperations = $om->findAll(['client_id' => $clientId], 'array', "order by id");
+                    // Retrieve operations only for the specified account
+                    $selectedAccount = isset($_GET['acc_Id']) ? $_GET['acc_Id'] : $formattedAccounts[0]['id'];
+                    $operations = $os->getOperationsByAccount($selectedAccount);
+                    // Group operations by date
+                    $operationsByDate = [];
+                    foreach ($operations as $operation) {
+                        $date = date('d-m-Y', strtotime($operation->getTimestamp())); // Format date to DD-MM-YYYY
+                        $operationsByDate[$date][] = [
+                            'op_type' => $operation->getType_id(),
+                            'op_souscategorie' => $scs->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
+                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
+                            'op_amount' => $operation->getMontant(),
+                            'op_account' => $cs->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
+                        ];
+                    }
+
+                    // MODAL OPERATION
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['opp_Id'])) {
+                        $showOperationModal = true;
+                        $modalAction = $_POST['action'] ?? null; // 'create', 'modify', 'delete'
+                        $operationID = $_POST['opp_Id'] ?? null; // Get the account ID if available
+                        $acountToCreateOperation = $_POST['acc_For_Op'] ?? null; // Get the account to create opperation for
+                        foreach ($allOperations as $operation) {
+                            if ($operation['id'] == $operationID) {
+                                $operationToModify = $operation;
+                                break;
+                            }
+                            else {
+                                $operationToModify = null;
+                            }
+                        }
+                    } else {
+                        $showOperationModal = false;
+                    }
+
+                    // SOUS-CATEGORIES
+                    $souscategories = $scm->findAll([], 'array', "order by id");
+                    $scatRevenus = $scm->findAll(['categorie_id' => 10], 'array', "order by id");
+        // $this->printr($scatRevenu); die;
+                    
 
                     //VARIABLES
                     $variables = [
@@ -82,12 +111,20 @@ use App\Service\SousCategorieService;
                         "accounts" => $formattedAccounts,
                         "operationsByDate" => $operationsByDate,
                         "selectedAccount" => $selectedAccount,
-                        "showModal" => $showModal,                        
+                        "scatRevenus" => $scatRevenus,
+                        "showAccountModal" => $showAcountModal,                        
+                        "showOperationModal" => $showOperationModal, 
                     ];
-                    if($showModal == true){
+                    if($showAcountModal == true){
                         $variables["modalAction"] = $modalAction;
                         // $variables["accountId"] = $accountId;
                         $variables["accountToModify"] = $accountToModify;
+                    };
+                    if($showOperationModal == true){
+                        $variables["modalAction"] = $modalAction;
+                        // $variables["accountId"] = $accountId;
+                        $variables["operationToModify"] = $operationToModify;
+                        $variables["acountToCreateOperation"] = $acountToCreateOperation;
                     };
                     $this -> generatePage($file, $variables);
                     break;

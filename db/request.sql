@@ -179,6 +179,20 @@ INSERT INTO souscategorie (categorie_id, description) VALUES
 (10, 'Á vendre'),
 (10, 'Cadeaux');
 
+-- Ajout d'une colonne dans la table Souscategorie
+ALTER TABLE souscategorie
+ADD COLUMN icone VARCHAR(50),
+
+-- Ajout des valeurs de icones
+UPDATE souscategorie SET icone = 'money-check' WHERE ID = 56;
+UPDATE souscategorie SET icone = 'house-user' WHERE ID = 57;
+UPDATE souscategorie SET icone = 'hand-holding-usd' WHERE ID = 58;
+UPDATE souscategorie SET icone = 'business-time' WHERE ID = 59;
+UPDATE souscategorie SET icone = 'landmark' WHERE ID = 60;
+UPDATE souscategorie SET icone = 'donate' WHERE ID = 61;
+UPDATE souscategorie SET icone = 'dice' WHERE ID = 62;
+UPDATE souscategorie SET icone = 'comments-dollar' WHERE ID = 63;
+UPDATE souscategorie SET icone = 'gifts' WHERE ID = 64;
 
 -- Création de la table Operation
 CREATE TABLE Operation (
@@ -190,16 +204,17 @@ CREATE TABLE Operation (
     type_id INTEGER NOT NULL,
     categorie_id INTEGER,
     souscategorie_id INTEGER,
+    client_id INTEGER NOT NULL,
     FOREIGN KEY (compte_id) REFERENCES Compte(id) ON DELETE CASCADE,
     FOREIGN KEY (compte_destinataire_id) REFERENCES Compte(id),
     FOREIGN KEY (type_id) REFERENCES Type(id),
     FOREIGN KEY (categorie_id) REFERENCES Categorie(id),
-    FOREIGN KEY (souscategorie_id) REFERENCES Souscategorie(id)
+    FOREIGN KEY (souscategorie_id) REFERENCES Souscategorie(id),
+    FOREIGN KEY (client_id) REFERENCES client(id) ON DELETE CASCADE;
 );
 -----
-INSERT INTO operation (compte_id, timestamp, montant, type_id, categorie_id, souscategorie_id) VALUES 
-(1, CURRENT_TIMESTAMP, 250.00, 1, 1, 2),
-(1, CURRENT_TIMESTAMP, 1950.00, 2, 10, 56),
-(1, CURRENT_TIMESTAMP, 550.00, 1, 3, 13),
-(2, CURRENT_TIMESTAMP, 100.00, 1, 5, 24);
-
+INSERT INTO operation (compte_id, timestamp, montant, type_id, categorie_id, souscategorie_id, client_id) VALUES 
+(1, CURRENT_TIMESTAMP, 250.00, 1, 1, 2, 1),
+(1, CURRENT_TIMESTAMP, 1950.00, 2, 10, 56, 1),
+(1, CURRENT_TIMESTAMP, 550.00, 1, 3, 13, 1),
+(2, CURRENT_TIMESTAMP, 100.00, 1, 5, 24, 1);

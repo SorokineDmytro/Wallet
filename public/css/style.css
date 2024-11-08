@@ -61,12 +61,12 @@ h3 {
 
 .wrapper {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: grid;
     grid-template-areas: 
     "aside header"
     "aside main";
-    grid-template-rows: 10vh 90vh;
+    grid-template-rows: 10vh 1fr;
     grid-template-columns: 1fr 85vw;
     color: #201f23;
 }
@@ -77,28 +77,30 @@ h3 {
 }
 
 .d-none {
-    display: none;
+    display: none; 
 }
 /* ============================================================ASIDE MENU==================================================  */
 aside {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: #fff;
     border-right: 1px solid #e6e6e6;
     grid-area: aside;
 }
 
 .aside-container { 
-    width: 14%;   
-    padding: 35px 20px;
+    width: 15%;   
+    padding: 3.5vh 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     position: fixed;
-    top: 0%;
-    left: 5px;
+    top: 0;
+    left: 0;
     overflow-y: auto;
+    border: none;
+    overflow-x: hidden;
 }
 
 nav {
@@ -124,17 +126,17 @@ nav ul {
     padding-left: 25px;
 }
 
-.nav-list_item a svg {
+.nav-list_item svg {
     margin-right: 10px;
     font-size: 18px;
 }
 
-.nav-list_item a {
+.nav-list_item {
     color: #9d9ea2;
     font-size: 1.1vw;
     font-weight: 500;
 }
-.nav-list_item:hover a {
+.nav-list_item:hover {
     color: #fff;
     font-weight: 700;   
 }
@@ -238,8 +240,8 @@ main {
     grid-area: main;
     background-color: #f6f6f6;
     padding: 30px 40px;
-    height: fit-content;
-    min-height: 100%;
+
+    min-height: 1fr;
 }
 
 .block {
@@ -567,6 +569,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 2;
 }
 
 .form-account {
@@ -577,7 +580,7 @@ main {
     "body"
     "buttons";
     position: relative;
-    width: 60%;
+    width: 50%;
     min-height: 350px;
     max-height: 600px;
     padding: 3% 5%;
@@ -751,6 +754,7 @@ input[type=color]::-moz-color-swatch {
     color: #fff;
     cursor: pointer;
 }
+
 /*=================================================MAIN OPERATIONS====================================*/
 .operations {
     width: 100%;
@@ -773,7 +777,6 @@ input[type=color]::-moz-color-swatch {
 
 .operations-title h2 {
     margin-left: 2%;
-    /* font-size: 1.3vw; */
 }
 
 .operation-add {
@@ -926,4 +929,350 @@ input[type=color]::-moz-color-swatch {
     display: block;
     margin: 0 auto;
     text-align: center;
+}
+
+/*=================================================MODAL OPERATION======================================*/
+.overlay {
+    position: fixed;
+    top: 10%;
+    left: 15%;
+    width: 85%;
+    height: 100%;
+    backdrop-filter: blur(1px);
+}
+
+.modal-operation {
+    position: fixed;
+    top: 10%;
+    left: 15%;
+    width: 85%;
+    height: 90%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.form-operation {
+    display: grid;
+    row-gap: 50px;
+    grid-template-areas: 
+    "title"
+    "body"
+    "buttons";
+    position: relative;
+    width: 70%;
+    min-height: 350px;
+    max-height: 600px;
+    padding: 3% 5%;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+}
+
+.form-op-body {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    display: grid;
+    grid-area: body;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    min-height: 150px;
+    max-height: max-content;
+    row-gap: 20px;
+    column-gap: 50px;
+    grid-template-areas:
+    "type type"
+    "date amount"
+    "account account"
+    "accountTr accountTr"
+    "categorie categorie"
+    "s-categorie s-categorie";
+}
+
+.form-input, .form-select {
+    width: 65%;
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+}
+
+.form-select {
+    cursor: pointer;
+}
+
+.form-title {
+    display: block;
+    font-size: 2vw;
+    grid-area: title;
+}
+
+fieldset {
+    border: none;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.op-type {
+    grid-area: type;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+legend {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.op-type div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 15px;
+}
+
+.op-type-radio {
+    height: 55px;
+    display: flex;
+    flex-direction: column;
+}
+
+.op-type-radio label {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+.op-type-radio:nth-of-type(1) label{
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    background-color: #ee3939;
+    filter: opacity(70%);
+}
+.op-type-radio:nth-of-type(1) label:hover{
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    filter: opacity(100%);
+}
+
+.op-type-radio:nth-of-type(2) label{
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    background-color: #16a18c;
+    filter: opacity(70%);
+}
+.op-type-radio:nth-of-type(2) label:hover{
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    filter: opacity(100%);
+}
+
+.op-type-radio:nth-of-type(3) label{
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    background-color: #377cf6;
+    filter: opacity(70%);
+}
+.op-type-radio:nth-of-type(3) label:hover{
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+    filter: opacity(100%);
+}
+
+input[type=radio] {
+    visibility: hidden;
+}
+
+input[type=radio]:checked + label {
+    filter: opacity(100%);
+    box-shadow: #d0d0d0 3px 3px 15px 3px;
+}
+
+.op-amount {
+    grid-area: amount;
+}
+
+.op-amount label {
+    width: 30%;
+}
+
+.op-amount input {
+    width: 60%;
+}
+
+.op-date {
+    grid-area: date;
+}
+
+.op-date label {
+    width: 30%;
+}
+
+.op-date input {
+    width: 70%;
+}
+
+.op-acc {
+    grid-area: account;
+}
+
+.op-accTr {
+    grid-area: accountTr;
+}
+
+.op-revenu-s-cat {
+    grid-area: s-categorie;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.op-revenu-s-cat-container {
+    width: 100%;
+    /* display: flex;
+    align-items: center;
+    justify-content: space-around; */
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.op-revenu-s-cat-radio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.op-revenu-s-cat-radio label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #fff;
+    background-color: #16a18c;
+    margin-bottom: 5px;
+}
+
+.op-revenu-s-cat-radio span {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    height: max-content;
+}
+
+.op-revenu-s-cat-radio input[type=radio]:checked + label {
+    border: solid 3px #ffb325;
+}
+
+
+
+
+
+
+
+
+
+.acc-name {
+    grid-area: name;
+    margin-bottom: 20px;
+}
+
+.acc-color {
+    grid-area: color;
+}
+
+.acc-color label{
+    width: 70%;
+}
+
+input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 35px;
+    height: 40px;
+    padding: 0;
+    background-color: #f3f3f3;
+    border: none;
+    cursor: pointer;
+}
+input[type=color]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+}
+input[type=color]::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+}
+
+.form-buttons {
+    grid-area: buttons;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 40px;
+}
+
+.form-btn{
+    min-width: 140px;
+    max-width: 30%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 0 10px;
+    border: none;
+    background-color: #fff;
+    color: #fff;
+    font-size: 14px;
+}
+
+.btn-annul {
+    background-color: #377cf6;
+    opacity: 80%;
+}
+.btn-annul:hover {
+    opacity: 100%;
+    transition: 500ms;
+}
+
+.btn-submit {
+    background-color: #16a18c;
+    opacity: 80%;
+}
+
+.btn-submit:hover {
+    opacity: 100%;
+    transition: 500ms;
+}
+
+.modal-close {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    color: #9d9ea2;
+}
+
+.modal-close:hover {
+    background-color: #377cf6;
+    color: #fff;
+    cursor: pointer;
 }

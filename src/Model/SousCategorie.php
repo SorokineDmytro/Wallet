@@ -6,6 +6,7 @@
         private $id;
         private $categorie_id;
         private $description;
+        private $icone;
 
         public function __construct($data = []) { // for exemple $data = ['id' => 1, 'numProduit' => 'BB0001' ... ]
             if ($data) { // test if $data is different from empty '[]'
@@ -75,6 +76,26 @@
         public function setDescription($description)
         {
                 $this->description = $description;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of icone
+         */ 
+        public function getIcone()
+        {
+                return $this->icone;
+        }
+
+        /**
+         * Set the value of icone
+         *
+         * @return  self
+         */ 
+        public function setIcone($icone)
+        {
+                $this->icone = $icone;
 
                 return $this;
         }

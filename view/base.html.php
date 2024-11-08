@@ -19,14 +19,14 @@
                 <nav>
                     <ul class="nav-list">
                         <h3>MENU</h3>
-                        <li class="nav-list_item"><a href="index.php"><i class="fas fa-chart-bar"></i>Aperçu</a></li>
-                        <li class="nav-list_item"><a href="statistique"><i class="fas fa-chart-pie"></i>Statistique</a></li>
-                        <li class="nav-list_item"><a href="epargne"><i class="fas fa-wallet"></i>Épargne</a></li>
+                        <a href="index.php"><li class="nav-list_item"><i class="fas fa-chart-bar"></i>Aperçu</li></a>
+                        <a href="statistique"><li class="nav-list_item"><i class="fas fa-chart-pie"></i>Statistique</li></a>
+                        <a href="epargne"><li class="nav-list_item"><i class="fas fa-wallet"></i>Épargne</li></a>
                     </ul>
                     <ul class="service-list">
                         <h3>GÉNÉRAL</h3>
-                        <li class="nav-list_item"><a href="reglages"><i class="fas fa-gear"></i>Reglages</a></li>
-                        <li class="nav-list_item"><a href=""><i class="fas fa-moon"></i>Apparence</a></li>
+                        <a href="reglages"><li class="nav-list_item"><i class="fas fa-gear"></i>Reglages</li></a>
+                        <a href=""><li class="nav-list_item"><i class="fas fa-moon"></i>Apparence</li></a>
                     </ul>
                 </nav>
             </div>

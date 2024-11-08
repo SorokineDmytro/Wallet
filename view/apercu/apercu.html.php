@@ -1,3 +1,6 @@
+<?php include("accountModal.html.php")?>
+<?php include("operationModal.html.php")?>
+
 <div class="main-conatainer">
     <div class="main-widgets">
         <div class="block widget">
@@ -81,7 +84,7 @@
                     </div>
                 </div>
             <?php endforeach;?>
-            <button id="0" class="add-account" onclick="showModal('create', 0)">
+            <button id="0" class="add-account" onclick="showAccountModal('create', 0)">
                 <div class="blue"><i class="fas fa-plus"></i></div>
                 <span>Ajouter un compte</span>
             </button>
@@ -90,8 +93,9 @@
     <div class="main-operations">
         <div class="block operations">
             <div class="operations-title">
-                <h2>Liste de transactions</h2>
-                <button class="operation-add blue"><div class="white"><i class="fas fa-plus"></i></div><span>Transaction</span></button>
+                <h2>Liste de transactions <?php isset($_GET['acc_Id'])?$account=$selectedAccount:$account=$selectedAccount?></h2> 
+
+                <button class="operation-add blue" onclick="showOperationModal('create', 0, <?=$account?>)"><div class="white"><i class="fas fa-plus"></i></div><span>Transaction</span></button>
             </div>
             <ul class="operation-list">
                 <?php if($operationsByDate) :?>
@@ -149,96 +153,11 @@
         </div>
     </div>
 </div>
-
-<?php if ($showModal): ?>
-    <div class="overlay"></div>
-    <div id="modal_account" class="modal-account">
-        <form id="form_account" class="form-account" action="index.php?id=&page=<?=$modalAction?>Account" method="post">
-                <h2 class="form-title">
-                    <?php
-                        if ($modalAction == 'create') echo "Création de compte";
-                        elseif ($modalAction == 'modify') echo "Modification de compte";
-                        elseif ($modalAction == 'delete') echo "Suppression de compte";
-                    ?>
-                </h2>
-                <button class="modal-close" onclick="hideModal(event)"><i class="fas fa-xmark"></i></button>
-                    <?php if ($modalAction == 'delete'): ?>
-                        <div class="acc-id d-none">
-                                    <label for="id" class="form-label required">ID de compte:</label>
-                                    <input type="text" id="id" class="form-input" name="id" value="<?=$accountToModify['id']?>" >
-                                </div>
-                        <div class="form-body" style="display:flex; font-size:22px;">
-                            <p>Êtes-vous sûr de vouloir supprimer ce compte ?<br> Cette action sera irreversible et affectera la statistique !<br> Toutes les opérations sur ce compte seront également supprimées !</p>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($modalAction == 'create'): ?>
-                        <div class="form-body">
-                            <div class="form-container acc-type">
-                                <label for="typecompte_id" class="form-label required">Type de compte:</label>
-                                <select id="typecompte_id" class="form-select" name="typecompte_id" required >
-                                    <option value="1" selected>General</option>
-                                    <option value="2">Epargne</option>
-                                    <option value="3">Credit</option>
-                                </select>
-                            </div>
-                            <div class="form-container acc-name">
-                                <label for="numcompte" class="form-label required">Nom de compte:</label>
-                                <input type="text" id="numcompte" class="form-input" name="numcompte" value="" placeholder="Compte principal" required >
-                            </div>
-                            <div class="form-container acc-color">
-                                <label for="color" class="form-label">Couleur de compte:</label>
-                                <input type="color" id="color" class="form-input" name="color" value="#16a18c" placeholder="Selectionez un couleur" required >
-                            </div>
-                            <div class="form-container acc-amount">
-                                <label for="montant_initial" class="form-label required">Montant initial:</label>
-                                <input type="number" min="0" step="0.01" value="0.00" id="montant_initial" class="form-input" name="montant_initial" value="" required >
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($modalAction == 'modify'): ?>
-                        <div class="form-body">
-                                <div class="acc-id d-none">
-                                    <label for="id" class="form-label required">ID de compte:</label>
-                                    <input type="text" id="id" class="form-input" name="id" value="<?=$accountToModify['id']?>" >
-                                </div>
-                                <div class="form-container acc-type">
-                                    <label for="typecompte_id" class="form-label required">Type de compte:</label>
-                                    <select id="typecompte_id" class="form-select" name="typecompte_id" required >
-                                        <option value="1" <?= ($accountToModify['type'] === 1) ? 'selected' : '' ?>>General</option>
-                                        <option value="2" <?= ($accountToModify['type'] === 2) ? 'selected' : '' ?>>Epargne</option>
-                                        <option value="3" <?= ($accountToModify['type'] === 3) ? 'selected' : '' ?>>Credit</option>
-                                    </select>
-                                </div>
-                                <div class="form-container acc-name">
-                                    <label for="numcompte" class="form-label required">Nom de compte:</label>
-                                    <input type="text" id="numcompte" class="form-input" name="numcompte" value="<?=$accountToModify['name']?>" placeholder="Compte principal" required >
-                                </div>
-                                <div class="form-container acc-amount">
-                                    <label for="montant_initial" class="form-label required">Montant initial:</label>
-                                    <input type="number" min="0" step="0.01" value="<?= str_replace(' ', '', number_format($accountToModify['amount'], 2, '.', ''))?>" id="montant_initial" class="form-input" name="montant_initial" required >
-                                </div>
-                                <div class="form-container acc-color">
-                                    <label for="color" class="form-label">Couleur de compte:</label>
-                                    <input type="color" id="color" class="form-input" name="color" value="<?=$accountToModify['color']?>" placeholder="Selectionez un couleur" required >
-                                </div>
-                        </div>
-                    <?php endif; ?>
-                    <div class="form-buttons">
-                        <button  class="form-btn btn-annul" onclick="hideModal(event)">Annuler</button>
-                        <button type="submit" class="form-btn btn-submit">
-                        <?php
-                            if ($modalAction == 'create') echo "Créer un compte";
-                            elseif ($modalAction == 'modify') echo "Valider";
-                            elseif ($modalAction == 'delete') echo "Supprimer";
-                        ?>
-                        </button>
-                    </div>
-            </form>
-    </div>
-<?php endif; ?>
 <form id="hiddenModalForm" action="index.php?page=apercu" method="POST" style="display: none;">
     <input type="hidden" name="acc_Id" id="hiddenAccId">
+    <input type="hidden" name="opp_Id" id="hiddenOppId">
     <input type="hidden" name="action" id="hiddenAction">
+    <input type="hidden" name="acc_For_Op" id="hiddenAccForOp">
 </form>
 <script>
     // Select all elements with the class 'account'
@@ -273,18 +192,28 @@
     function handleContextMenuClick(event, action, accountId) {
         event.preventDefault(); // Prevent default behavior
         event.stopPropagation(); // Stop the event from bubbling up
-        showModal(action, accountId); // Call showModal with the passed action ('delete' or 'modify')
+        showAccountModal(action, accountId); // Call showAccountModal with the passed action ('delete' or 'modify')
     }
 
-    // Function to show the modal
-    function showModal(action, accountId) {
+    // Function to show the acount modal
+    function showAccountModal(action, accountId) {
     // Set values of the hidden form inputs
     document.getElementById('hiddenAccId').value = accountId;
+    document.getElementById('hiddenOppId').remove();
     document.getElementById('hiddenAction').value = action;
+    document.getElementById('hiddenModalForm').submit(); 
+    }
 
-    // Submit the form
-    document.getElementById('hiddenModalForm').submit();
-}
+    // Function to show the operation modal
+    function showOperationModal(action, operationId, account) {
+    // Set values of the hidden form inputs
+    document.getElementById('hiddenOppId').value = operationId;
+    document.getElementById('hiddenAccId').remove();
+    document.getElementById('hiddenAction').value = action;
+    document.getElementById('hiddenModalForm').submit(); 
+    document.getElementById('hiddenAccForOp').value = account; 
+    document.getElementById('hiddenModalForm').submit(); 
+    }
     
     // Function to hide the modal and re-enable scroll
     function hideModal(event) {
