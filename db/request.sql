@@ -105,6 +105,35 @@ INSERT INTO categorie (type_id, description) VALUES
 (1, 'Placement'),
 (2, 'Revenu');
 
+-- Ajout d'une colonne dans la table Souscategorie
+ALTER TABLE categorie
+ADD COLUMN color VARCHAR(7),
+ADD COLUMN icone VARCHAR(50);
+
+-- Ajout des valeurs de color
+UPDATE categorie SET color = '#ee3939' WHERE ID = 1;
+UPDATE categorie SET color = '#377cf6' WHERE ID = 2;
+UPDATE categorie SET color = '#9966cc' WHERE ID = 3;
+UPDATE categorie SET color = '#91a3b0' WHERE ID = 4;
+UPDATE categorie SET color = '#e97451' WHERE ID = 5;
+UPDATE categorie SET color = '#78c5ef' WHERE ID = 6;
+UPDATE categorie SET color = '#5b38ab' WHERE ID = 7;
+UPDATE categorie SET color = '#9c6644' WHERE ID = 8;
+UPDATE categorie SET color = '#d3cd2d' WHERE ID = 9;
+UPDATE categorie SET color = '#16a18c' WHERE ID = 10;
+
+-- Ajout des valeurs de icone
+UPDATE categorie SET icone = 'cart-shopping' WHERE ID = 1;
+UPDATE categorie SET icone = 'shirt' WHERE ID = 2;
+UPDATE categorie SET icone = 'house' WHERE ID = 3;
+UPDATE categorie SET icone = 'bus' WHERE ID = 4;
+UPDATE categorie SET icone = 'car' WHERE ID = 5;
+UPDATE categorie SET icone = 'dice' WHERE ID = 6;
+UPDATE categorie SET icone = 'tv' WHERE ID = 7;
+UPDATE categorie SET icone = 'circle-dollar-to-slot' WHERE ID = 8;
+UPDATE categorie SET icone = 'coins' WHERE ID = 9;
+UPDATE categorie SET icone = 'sack-dollar' WHERE ID = 10;
+
 -- Création de la table Souscategorie
 CREATE TABLE Souscategorie (
     id SERIAL PRIMARY KEY,
@@ -184,6 +213,61 @@ ALTER TABLE souscategorie
 ADD COLUMN icone VARCHAR(50),
 
 -- Ajout des valeurs de icones
+UPDATE souscategorie SET icone = 'cart-shopping' WHERE ID = 1;
+UPDATE souscategorie SET icone = 'utensils' WHERE ID = 2;
+UPDATE souscategorie SET icone = 'martini-glass' WHERE ID = 3;
+UPDATE souscategorie SET icone = 'shirt' WHERE ID = 4;
+UPDATE souscategorie SET icone = 'gem' WHERE ID = 5;
+UPDATE souscategorie SET icone = 'pills' WHERE ID = 6;
+UPDATE souscategorie SET icone = 'scissors' WHERE ID = 7;
+UPDATE souscategorie SET icone = 'house' WHERE ID = 8;
+UPDATE souscategorie SET icone = 'baby' WHERE ID = 9;
+UPDATE souscategorie SET icone = 'paw' WHERE ID = 10;
+UPDATE souscategorie SET icone = 'desktop' WHERE ID = 11;
+UPDATE souscategorie SET icone = 'gift' WHERE ID = 12;
+UPDATE souscategorie SET icone = 'key' WHERE ID = 13;
+UPDATE souscategorie SET icone = 'house-lock' WHERE ID = 14;
+UPDATE souscategorie SET icone = 'bolt' WHERE ID = 15;
+UPDATE souscategorie SET icone = 'paint-roller' WHERE ID = 16;
+UPDATE souscategorie SET icone = 'house-medical-circle-check' WHERE ID = 17;
+UPDATE souscategorie SET icone = 'bus' WHERE ID = 18;
+UPDATE souscategorie SET icone = 'taxi' WHERE ID = 19;
+UPDATE souscategorie SET icone = 'plane' WHERE ID = 20;
+UPDATE souscategorie SET icone = 'train' WHERE ID = 21;
+UPDATE souscategorie SET icone = 'business-time' WHERE ID = 22;
+UPDATE souscategorie SET icone = 'car' WHERE ID = 23;
+UPDATE souscategorie SET icone = 'gas-pump' WHERE ID = 24;
+UPDATE souscategorie SET icone = 'square-parking' WHERE ID = 25;
+UPDATE souscategorie SET icone = 'oil-can' WHERE ID = 26;
+UPDATE souscategorie SET icone = 'road-circle-check' WHERE ID = 27;
+UPDATE souscategorie SET icone = 'car-burst' WHERE ID = 28;
+UPDATE souscategorie SET icone = 'car-rear' WHERE ID = 29;
+UPDATE souscategorie SET icone = 'masks-theater' WHERE ID = 30;
+UPDATE souscategorie SET icone = 'dumbbell' WHERE ID = 31;
+UPDATE souscategorie SET icone = 'book' WHERE ID = 32;
+UPDATE souscategorie SET icone = 'chess-knight' WHERE ID = 33;
+UPDATE souscategorie SET icone = 'guitar' WHERE ID = 34;
+UPDATE souscategorie SET icone = 'ice-cream' WHERE ID = 35;
+UPDATE souscategorie SET icone = 'suitcase-rolling' WHERE ID = 36;
+UPDATE souscategorie SET icone = 'wifi' WHERE ID = 37;
+UPDATE souscategorie SET icone = 'mobile-screen' WHERE ID = 38;
+UPDATE souscategorie SET icone = 'tv' WHERE ID = 39;
+UPDATE souscategorie SET icone = 'gamepad' WHERE ID = 40;
+UPDATE souscategorie SET icone = 'cloud-arrow-down' WHERE ID = 41;
+UPDATE souscategorie SET icone = 'tablet-screen-button' WHERE ID = 42;
+UPDATE souscategorie SET icone = 'headphones-simple' WHERE ID = 43;
+UPDATE souscategorie SET icone = 'percent' WHERE ID = 44;
+UPDATE souscategorie SET icone = 'money-bill-trend-up' WHERE ID = 45;
+UPDATE souscategorie SET icone = 'circle-dollar-to-slot' WHERE ID = 46;
+UPDATE souscategorie SET icone = 'user-injured' WHERE ID = 47;
+UPDATE souscategorie SET icone = 'file-invoice-dollar' WHERE ID = 48;
+UPDATE souscategorie SET icone = 'gavel' WHERE ID = 49;
+UPDATE souscategorie SET icone = 'landmark-dome' WHERE ID = 50;
+UPDATE souscategorie SET icone = 'hotel' WHERE ID = 51;
+UPDATE souscategorie SET icone = 'landmark' WHERE ID = 52;
+UPDATE souscategorie SET icone = 'bitcoin-sign' WHERE ID = 53;
+UPDATE souscategorie SET icone = 'coins' WHERE ID = 54;
+UPDATE souscategorie SET icone = 'sack-dollar' WHERE ID = 55;
 UPDATE souscategorie SET icone = 'money-check' WHERE ID = 56;
 UPDATE souscategorie SET icone = 'house-user' WHERE ID = 57;
 UPDATE souscategorie SET icone = 'hand-holding-usd' WHERE ID = 58;
@@ -193,6 +277,7 @@ UPDATE souscategorie SET icone = 'donate' WHERE ID = 61;
 UPDATE souscategorie SET icone = 'dice' WHERE ID = 62;
 UPDATE souscategorie SET icone = 'comments-dollar' WHERE ID = 63;
 UPDATE souscategorie SET icone = 'gifts' WHERE ID = 64;
+
 
 -- Création de la table Operation
 CREATE TABLE Operation (

@@ -9,7 +9,7 @@
                         elseif ($modalAction == 'delete') echo "Suppression de l'opération";
                     ?>
                 </h2>
-                <button class="modal-close" onclick="hideModal(event)"><i class="fas fa-xmark"></i></button>
+                <button class="modal-close" onclick="hideModal(event)"><i class="fa-solid fa-xmark"></i></button>
                     <?php if ($modalAction == 'delete'): ?>
                         <div class="opp-id d-none">
                                     <label for="id" class="form-label required">ID d'opération:</label>
@@ -69,7 +69,7 @@
                                     <?php foreach($scatRevenus as $scatRevenu): ?>
                                         <div class="op-revenu-s-cat-radio">
                                             <input type="radio" id="s-cat<?=$scatRevenu['id']?>" name="souscategorie_id" value="<?=$scatRevenu['id']?>">
-                                            <label for="s-cat<?=$scatRevenu['id']?>"><i class="fas fa-<?=$scatRevenu['icone']?>"></i></label>
+                                            <label for="s-cat<?=$scatRevenu['id']?>"><i class="fa-solid fa-<?=$scatRevenu['icone']?>"></i></label>
                                             <span><?=$scatRevenu['description']?></span>
                                         </div>
                                     <?php endforeach;?>

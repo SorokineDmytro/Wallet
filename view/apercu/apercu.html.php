@@ -4,7 +4,7 @@
 <div class="main-conatainer">
     <div class="main-widgets">
         <div class="block widget">
-            <h4 class="widget-title"><i class="fas fa-coins"></i>Gains</h4>
+            <h4 class="widget-title"><i class="fa-solid fa-coins"></i>Gains</h4>
             <div class="widget-middle">
                 <span class="widget-main-amount">2 500.00 €</span>
                 <div class="widget-circle red">
@@ -14,7 +14,7 @@
             <span class="widget-secondary-amount"><span class="color-green">-100.00 €</span> par rapport au dernier mois</span>
         </div>
         <div class="block widget">
-            <h4 class="widget-title"><i class="fas fa-cart-shopping"></i>Dépenses</h4>
+            <h4 class="widget-title"><i class="fa-solid fa-cart-shopping"></i>Dépenses</h4>
             <div class="widget-middle">
                 <span class="widget-main-amount">2 500.00 €</span>
                 <div class="widget-circle red">
@@ -24,7 +24,7 @@
             <span class="widget-secondary-amount"><span class="color-green">-100.00 €</span> par rapport au dernier mois</span>
         </div>
         <div class="block widget">
-            <h4 class="widget-title"><i class="fas fa-piggy-bank"></i>Épargnes</h4>
+            <h4 class="widget-title"><i class="fa-solid fa-piggy-bank"></i>Épargnes</h4>
             <div class="widget-middle">
                 <span class="widget-main-amount">2 500.00 €</span>
                 <div class="widget-circle green">
@@ -34,7 +34,7 @@
             <span class="widget-secondary-amount"><span class="color-red">-100.00 €</span> par rapport au dernier mois</span>
         </div>
         <div class="block widget">
-            <h4 class="widget-title"><i class="fas fa-money-bill-trend-up"></i>Investisements</h4>
+            <h4 class="widget-title"><i class="fa-solid fa-money-bill-trend-up"></i>Investisements</h4>
             <div class="widget-middle">
                 <span class="widget-main-amount">2 500.00 €</span>
                 <div class="widget-circle green">
@@ -54,13 +54,13 @@
                         <?php 
                             switch($account['type']) {
                                 case 1 :
-                                    echo "<i class='fas fa-wallet'></i>";
+                                    echo "<i class='fa-solid fa-wallet'></i>";
                                     break;
                                 case 2 :
-                                    echo "<i class='fas fa-piggy-bank'></i>";
+                                    echo "<i class='fa-solid fa-piggy-bank'></i>";
                                     break;
                                 case 3 :
-                                    echo "<i class='fas fa-credit-card'></i>";
+                                    echo "<i class='fa-solid fa-credit-card'></i>";
                                     break;
                             }
                         ?>
@@ -72,12 +72,12 @@
                         <ul class="account-menu_list">
                         <li class="context-menu_list-item">
                                 <button class="context-menu_circle" onclick="handleContextMenuClick(event, 'delete', <?=$account['id']?>)">
-                                    <i class="fas fa-trash-can"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </li>    
                         <li class="context-menu_list-item">
                                 <button class="context-menu_circle" onclick="handleContextMenuClick(event, 'modify', <?=$account['id']?>)">
-                                    <i class="fas fa-pencil"></i>
+                                    <i class="fa-solid fa-pencil"></i>
                                 </button>
                             </li>
                         </ul>
@@ -85,7 +85,7 @@
                 </div>
             <?php endforeach;?>
             <button id="0" class="add-account" onclick="showAccountModal('create', 0)">
-                <div class="blue"><i class="fas fa-plus"></i></div>
+                <div class="blue"><i class="fa-solid fa-plus"></i></div>
                 <span>Ajouter un compte</span>
             </button>
         </div>
@@ -95,7 +95,7 @@
             <div class="operations-title">
                 <h2>Liste de transactions <?php isset($_GET['acc_Id'])?$account=$selectedAccount:$account=$selectedAccount?></h2> 
 
-                <button class="operation-add blue" onclick="showOperationModal('create', 0, <?=$account?>)"><div class="white"><i class="fas fa-plus"></i></div><span>Transaction</span></button>
+                <button class="operation-add blue" onclick="showOperationModal('create', 0, <?=$account?>)"><div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span></button>
             </div>
             <ul class="operation-list">
                 <?php if($operationsByDate) :?>
@@ -105,7 +105,7 @@
                             <ul>
                                 <?php foreach ($operations as $operation) :?>
                                 <li class="operation-item">
-                                    <div class="operation-item_circle"><i class="fas fa-circle-question color-green"></i></div>
+                                    <div class="operation-item_circle"><i class="fa-solid fa-circle-question color-green"></i></div>
                                     <div class="operation-item_type">
                                         <?php 
                                             switch($operation['op_type']) {
@@ -138,8 +138,8 @@
                                         <span class="operation-item_amount"><?= number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>
                                     <?php endif ;?>
                                     <div class="operation-buttons">
-                                        <button class="btn-action btn-modify"><i class="fas fa-pencil"></i>Modifier</button>
-                                        <button class="btn-action btn-delete"><i class="fas fa-trash"></i>Supprimer</button>
+                                        <button class="btn-action btn-modify"><i class="fa-solid fa-pencil"></i>Modifier</button>
+                                        <button class="btn-action btn-delete"><i class="fa-solid fa-trash"></i>Supprimer</button>
                                     </div>
                                 </li>
                                 <?php endforeach;?>
