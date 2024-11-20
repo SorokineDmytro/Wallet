@@ -117,9 +117,9 @@ UPDATE categorie SET color = '#9966cc' WHERE ID = 3;
 UPDATE categorie SET color = '#91a3b0' WHERE ID = 4;
 UPDATE categorie SET color = '#e97451' WHERE ID = 5;
 UPDATE categorie SET color = '#78c5ef' WHERE ID = 6;
-UPDATE categorie SET color = '#5b38ab' WHERE ID = 7;
+UPDATE categorie SET color = '#374785' WHERE ID = 7;
 UPDATE categorie SET color = '#9c6644' WHERE ID = 8;
-UPDATE categorie SET color = '#d3cd2d' WHERE ID = 9;
+UPDATE categorie SET color = '#afd275' WHERE ID = 9;
 UPDATE categorie SET color = '#16a18c' WHERE ID = 10;
 
 -- Ajout des valeurs de icone

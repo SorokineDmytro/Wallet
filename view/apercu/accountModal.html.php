@@ -1,7 +1,7 @@
 <?php if ($showAccountModal): ?>
     <div class="overlay"></div>
     <div id="modal_account" class="modal-account">
-        <form id="form_account" class="form-account" action="index.php?id=&page=<?=$modalAction?>Account" method="post">
+        <form id="form_account" class="form-account" action="account&page=<?=$modalAction?>Account" method="post">
                 <h2 class="form-title">
                     <?php
                         if ($modalAction == 'create') echo "Création de compte";
