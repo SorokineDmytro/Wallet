@@ -22,20 +22,20 @@
                     <?php if ($modalAction == 'create'): ?>
                         <div class="form-op-body">
                             <fieldset class="form-container op-type">
-                                <legend for="type_id" class="form-label op-type-legend">Type d'opération:</legend>
+                                <legend for="type_id" class="op-type-legend">Type d'opération:</legend>
                                 <div>
-                                <div class="op-type-radio">
-                                    <input type="radio" id="type1" name="type_id" value="1" checked="true">
-                                    <label for="type1">Dépense</label>
-                                </div>
-                                <div class="op-type-radio">
-                                    <input type="radio" id="type2" name="type_id" value="2">
-                                    <label for="type2">Revenu</label>
-                                </div>
-                                <div class="op-type-radio">
-                                    <input type="radio" id="type3" name="type_id" value="3">
-                                    <label for="type3">Transfért</label>
-                                </div>
+                                    <div class="op-type-radio">
+                                        <input type="radio" id="type1" name="type_id" value="1" checked="true">
+                                        <label for="type1">Dépense</label>
+                                    </div>
+                                    <div class="op-type-radio">
+                                        <input type="radio" id="type2" name="type_id" value="2">
+                                        <label for="type2">Revenu</label>
+                                    </div>
+                                    <div class="op-type-radio">
+                                        <input type="radio" id="type3" name="type_id" value="3">
+                                        <label for="type3">Transfért</label>
+                                    </div>
                                 </div>
                             </fieldset>
                             <div class="form-container op-date">
@@ -63,18 +63,25 @@
                                         <option value="" selected>En dehors de vos comptes</option>;
                                     </select>
                             </div>
-                            <fieldset class="form-container op-revenu-s-cat">
-                                <legend for="type_id" class="form-label op-revenu-s-cat-legend">Sous-categorie :</legend>
-                                <div class="op-revenu-s-cat-container">
-                                    <?php foreach($scatRevenus as $scatRevenu): ?>
-                                        <div class="op-revenu-s-cat-radio">
-                                            <input type="radio" id="s-cat<?=$scatRevenu['id']?>" name="souscategorie_id" value="<?=$scatRevenu['id']?>">
-                                            <label for="s-cat<?=$scatRevenu['id']?>"><i class="fa-solid fa-<?=$scatRevenu['icone']?>"></i></label>
-                                            <span><?=$scatRevenu['description']?></span>
+                            <fieldset class="form-container op-cat">
+                                <legend for="type_id" class="op-cat-legend">Categorie :</legend>
+                                <div class="op-cat-container">
+                                    <?php foreach($categories as $categorie): ?>
+                                        <div class="op-cat-radio">
+                                            <input type="radio" id="cat<?=$categorie['id']?>" name="categorie_id" value="<?=$categorie['id']?>" <?= ($categories[0]['id'] == $categorie['id']) ? "checked" : "" ?>>
+                                            <label for="cat<?=$categorie['id']?>" style="background-color:<?=$categorie['color']?>"><i class="fa-solid fa-<?=$categorie['icone']?>"></i></label>
+                                            <span><?=$categorie['description']?></span>
                                         </div>
                                     <?php endforeach;?>
                                 </div>
                             </fieldset>
+                            <fieldset class="form-container op-s-cat">
+                                <legend for="type_id" class="op-s-cat-legend">Sous-categorie :</legend>
+                                <div class="op-s-cat-container" id="opScatContainer">
+                                    <!-- Sous-categorie is populated here by JS using JSON -->
+                                </div>
+                            </fieldset>
+
                         </div>
                     <?php endif; ?>
                     <?php if ($modalAction == 'modify'): ?>
@@ -118,19 +125,30 @@
             </form>
     </div>
     <script>
+        // Operations type Transfert selected logic
         document.addEventListener('DOMContentLoaded', () => {
         // Select the radio inputs and op-accTr container
-        const type3Radio = document.getElementById('type3');
+        const typeTransfertRadio = document.getElementById('type3');
         const formContainerOpAccTr = document.querySelector('.op-accTr');
         const typeRadios = document.getElementsByName('type_id');
+        const categoriesContainer = document.querySelector('.op-cat');
+        const sousCategoriesContainer = document.querySelector('.op-s-cat');
         // Function to show or hide the op-accTr container
         function toggleOpAccTr() {
-            if (type3Radio.checked) {
+            if (typeTransfertRadio.checked) {
                 formContainerOpAccTr.classList.add('form-container');
                 formContainerOpAccTr.classList.remove('d-none');
+                categoriesContainer.classList.remove('form-container');
+                categoriesContainer.classList.add('d-none');
+                sousCategoriesContainer.classList.remove('form-container');
+                sousCategoriesContainer.classList.add('d-none');
             } else {
                 formContainerOpAccTr.classList.remove('form-container');
                 formContainerOpAccTr.classList.add('d-none');
+                categoriesContainer.classList.remove('d-none');
+                categoriesContainer.classList.add('form-container');
+                sousCategoriesContainer.classList.remove('d-none');
+                sousCategoriesContainer.classList.add('form-container');
             }
         }
         // Add event listeners to all radio buttons to check on change
@@ -141,6 +159,8 @@
         toggleOpAccTr();
         });
 
+
+        // Logic to prohibit the selection of the same account as the transfert target 
         document.addEventListener('DOMContentLoaded', () => {
         const compteIdSelect = document.getElementById('compte_id');
         const compteDestinataireSelect = document.getElementById('compte_destinataire_id');
@@ -160,5 +180,86 @@
         // Trigger change event on page load to set the initial state
         compteIdSelect.dispatchEvent(new Event('change'));
         });
+
+
+        // ----------------Categories and sous-categoris selection-----------------
+
+        // Add an eventListener to get a selected categorie ID for future fetch operations with it's sous-categorie
+        document.addEventListener('DOMContentLoaded', () => {
+        // Operations type Depense(1) and Revenu(2) selected logic
+        const typeDepenseRadio = document.getElementById('type1');
+        const typeRevenuRadio = document.getElementById('type2');
+
+        // Retrieve and parse the categories from categoriesJSON passed from PHP
+        const categories = JSON.parse('<?php echo $categoriesJSON; ?>');
+        // Retrieve and parse the sousCategories JSON passed from PHP
+        const sousCategories = JSON.parse('<?php echo $sousCategories; ?>');
+
+        // Select all radio inputs for categorie_id
+        const categorieRadios = document.querySelectorAll('input[name="categorie_id"]');
+
+        // Function to get the checked radio's ID and filter corresponding sousCategories
+        function getCheckedCategorieId() {
+            const checkedRadio = document.querySelector('input[name="categorie_id"]:checked');
+            if (checkedRadio) {
+                const selectedCategorieId = checkedRadio.value;
+                let selectedColor;
+                categories.forEach(category => {
+                    if (category.id == selectedCategorieId) {
+                       selectedColor = category.color;
+                    }
+                })
+                // Clear the sousCategories container before render
+                opScatContainer.innerHTML = "";
+
+                // Filter the sousCategories based on the selected category ID
+                const filteredSousCategories = sousCategories.filter(sousCategorie => sousCategorie.categorie_id == selectedCategorieId);
+
+                // Create and append elements for each filtered sousCategorie
+                filteredSousCategories.forEach(sousCategorie => {
+                    // Create a container div for the radio button and label
+                    const div = document.createElement('div');
+                    div.className = 'op-s-cat-radio';
+
+                    // Create the input (radio) element
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.id = `s-cat${sousCategorie.id}`;
+                    input.name = 'souscategorie_id';
+                    input.value = sousCategorie.id;
+
+                    // Create the label element
+                    const label = document.createElement('label');
+                    label.htmlFor = `s-cat${sousCategorie.id}`;
+                    label.style.backgroundColor = selectedColor; 
+
+                    // Create the icon (optional) within the label
+                    const icon = document.createElement('i');
+                    icon.className = `fa-solid fa-${sousCategorie.icone}`; // Assuming you have an icon class name
+                    label.appendChild(icon);
+
+                    // Create the span element for the description
+                    const span = document.createElement('span');
+                    span.textContent = sousCategorie.description;
+
+                    // Append the elements
+                    div.appendChild(input);
+                    div.appendChild(label);
+                    div.appendChild(span);
+
+                    // Append the div to the container
+                    opScatContainer.appendChild(div);
+                });
+            }
+        }
+
+        // Add change event listener to all radio buttons
+        categorieRadios.forEach(radio => {
+            radio.addEventListener('change', getCheckedCategorieId);
+        });
+
+        // Optionally trigger it on page load to capture any default checked state
+        getCheckedCategorieId();
+    });
     </script>
 <?php endif; ?>

@@ -210,7 +210,6 @@
     document.getElementById('hiddenOppId').value = operationId;
     document.getElementById('hiddenAccId').remove();
     document.getElementById('hiddenAction').value = action;
-    document.getElementById('hiddenModalForm').submit(); 
     document.getElementById('hiddenAccForOp').value = account; 
     document.getElementById('hiddenModalForm').submit(); 
     }

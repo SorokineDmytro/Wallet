@@ -77,8 +77,9 @@ h3 {
 }
 
 .d-none {
-    display: none; 
+    display: none !important; 
 }
+
 /* ============================================================ASIDE MENU==================================================  */
 aside {
     width: 100%;
@@ -942,11 +943,10 @@ input[type=color]::-moz-color-swatch {
 }
 
 .modal-operation {
-    position: fixed;
+    position: absolute;
     top: 10%;
     left: 15%;
     width: 85%;
-    height: 90%;
     background-color: transparent;
     display: flex;
     align-items: center;
@@ -956,7 +956,7 @@ input[type=color]::-moz-color-swatch {
 
 .form-operation {
     display: grid;
-    row-gap: 50px;
+    row-gap: 30px;
     grid-template-areas: 
     "title"
     "body"
@@ -964,7 +964,7 @@ input[type=color]::-moz-color-swatch {
     position: relative;
     width: 70%;
     min-height: 350px;
-    max-height: 600px;
+    max-height: fit-content;
     padding: 3% 5%;
     border-radius: 15px;
     background-color: #fff;
@@ -973,15 +973,13 @@ input[type=color]::-moz-color-swatch {
 
 .form-op-body {
     width: 100%;
-    height: fit-content;
     position: relative;
     display: grid;
     grid-area: body;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
-    min-height: 150px;
     max-height: max-content;
-    row-gap: 20px;
+    row-gap: 30px;
     column-gap: 50px;
     grid-template-areas:
     "type type"
@@ -1029,8 +1027,13 @@ fieldset {
 }
 
 legend {
+    display: block;
+    width: 100%;
+    height: max-content;
     font-size: 20px;
-    margin-bottom: 10px;
+    font-weight: 600;
+    padding-top: 30px;
+    text-align: center;
 }
 
 .op-type div{
@@ -1129,7 +1132,15 @@ input[type=radio]:checked + label {
     grid-area: accountTr;
 }
 
-.op-revenu-s-cat {
+.op-cat {
+    grid-area: categorie;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.op-s-cat {
     grid-area: s-categorie;
     display: flex;
     flex-direction: column;
@@ -1137,25 +1148,22 @@ input[type=radio]:checked + label {
     justify-content: space-between;
 }
 
-.op-revenu-s-cat-container {
+.op-cat-container, .op-s-cat-container {
     width: 100%;
-    /* display: flex;
-    align-items: center;
-    justify-content: space-around; */
     display: grid;
     align-items: center;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
 }
 
-.op-revenu-s-cat-radio {
+.op-cat-radio, .op-s-cat-radio {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.op-revenu-s-cat-radio label {
+.op-cat-radio label, .op-s-cat-radio label {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1164,18 +1172,17 @@ input[type=radio]:checked + label {
     border-radius: 50%;
     font-size: 20px;
     color: #fff;
-    background-color: #16a18c;
     margin-bottom: 5px;
 }
 
-.op-revenu-s-cat-radio span {
+.op-cat-radio span, .op-s-cat-radio span {
     font-size: 12px;
     font-weight: 500;
     text-align: center;
-    height: max-content;
+    height: 30px;
 }
 
-.op-revenu-s-cat-radio input[type=radio]:checked + label {
+.op-cat-radio input[type=radio]:checked + label, .op-s-cat-radio input[type=radio]:checked + label {
     border: solid 3px #ffb325;
 }
 

@@ -9,12 +9,13 @@
 
     class ApercuController extends Manager {
         public function __construct() {
-            $cm = new EntityManager('compte', 'Compte');
-            $om = new EntityManager('operation', 'Operation');
-            $scm = new EntityManager('souscategorie', 'SousCategorie');
-            $cs = new CompteService();
-            $os = new OperationService();
-            $scs = new SousCategorieService;
+            $compteManager = new EntityManager('compte', 'Compte');
+            $operationManager = new EntityManager('operation', 'Operation');
+            $categorieManager = new EntityManager('categorie', 'Categorie');
+            $sousCategorieManager = new EntityManager('souscategorie', 'SousCategorie');
+            $compteService = new CompteService();
+            $operationService = new OperationService();
+            $sousCategorieService = new SousCategorieService;
             $page = "apercu";
             $clientId = 1; // don't forget to change it when the users could log in and have an id which can be retreated from $_SESSION
             extract($_GET);
@@ -26,12 +27,12 @@
 
                     // ACCOUNTS
                     // get the basic info of each account using CompteManager to dispalay it into the view
-                    $accounts = $cm->findAll(['client_id' => $clientId], 'object');
+                    $accounts = $compteManager->findAll(['client_id' => $clientId], 'object');
                     $formattedAccounts = [];
                     foreach ($accounts as $account) {
                         // get the info about total debit and credit operations of each account using OperationManager
-                        $expenses = $os->getTotalExpenseByAccount($account->getId());
-                        $incomes = $os->getTotalIncomeByAccount($account->getId());
+                        $expenses = $operationService->getTotalExpenseByAccount($account->getId());
+                        $incomes = $operationService->getTotalIncomeByAccount($account->getId());
                         // account with all preformated info to send into a view in a form of a variable
                         $formattedAccounts[] = [
                             'id' => $account->getId(),
@@ -63,20 +64,20 @@
 
                     // OPERATIONS 
                     // Retrieve all operations by client in array format for operation CRUD  
-                    $allOperations = $om->findAll(['client_id' => $clientId], 'array', "order by id");
+                    $allOperations = $operationManager->findAll(['client_id' => $clientId], 'array', "order by id");
                     // Retrieve operations only for the specified account
                     $selectedAccount = isset($_GET['acc_Id']) ? $_GET['acc_Id'] : $formattedAccounts[0]['id'];
-                    $operations = $os->getOperationsByAccount($selectedAccount);
+                    $operations = $operationService->getOperationsByAccount($selectedAccount);
                     // Group operations by date
                     $operationsByDate = [];
                     foreach ($operations as $operation) {
                         $date = date('d-m-Y', strtotime($operation->getTimestamp())); // Format date to DD-MM-YYYY
                         $operationsByDate[$date][] = [
                             'op_type' => $operation->getType_id(),
-                            'op_souscategorie' => $scs->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
+                            'op_souscategorie' => $sousCategorieService->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
                             'op_time' => date('H:i', strtotime($operation->getTimestamp())),
                             'op_amount' => $operation->getMontant(),
-                            'op_account' => $cs->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
+                            'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
                         ];
                     }
 
@@ -99,10 +100,14 @@
                         $showOperationModal = false;
                     }
 
+                    // CATEGORIES
+                    $categories = $categorieManager->findAll([], "array", "order by id");
+                    $categoriesJSON = json_encode($categories);
+
                     // SOUS-CATEGORIES
-                    $souscategories = $scm->findAll([], 'array', "order by id");
-                    $scatRevenus = $scm->findAll(['categorie_id' => 10], 'array', "order by id");
-        // $this->printr($scatRevenu); die;
+                    $sousCategories = $sousCategorieManager->findAll([], "array", "order by id");
+                    $sousCategories = json_encode($sousCategories);
+
                     
 
                     //VARIABLES
@@ -111,7 +116,10 @@
                         "accounts" => $formattedAccounts,
                         "operationsByDate" => $operationsByDate,
                         "selectedAccount" => $selectedAccount,
-                        "scatRevenus" => $scatRevenus,
+                        "categories" => $categories,
+                        "categoriesJSON" => $categoriesJSON,
+                        "sousCategories" => $sousCategories,
+
                         "showAccountModal" => $showAcountModal,                        
                         "showOperationModal" => $showOperationModal, 
                     ];
@@ -146,7 +154,7 @@
                         'montant_initial' => $montant_initial,
                         'color' => $color
                     ];
-                    $cm->insert($data);
+                    $compteManager->insert($data);
                     // Redirect or return
                     header("Location: index.php?page=apercu");
                     exit;
@@ -170,13 +178,13 @@
                         'montant_initial' => $montant_initial,
                         'color' => $color
                     ];
-                    $cm->update($data);
+                    $compteManager->update($data);
                     // Redirect or return
                     header("Location: index.php?page=apercu");
                     break;
                 case "deleteAccount" :
                     $id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
-                    $cm->delete($id);
+                    $compteManager->delete($id);
                     // Redirect or return
                     header("Location: index.php?page=apercu");
                     break;
