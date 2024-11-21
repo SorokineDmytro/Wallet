@@ -1,7 +1,7 @@
 <?php if ($showOperationModal): ?>
     <div class="overlay"></div>
     <div id="modal_operation" class="modal-operation">
-        <form id="form_operation" class="form-operation" action="index.php?id=&page=<?=$modalAction?>Operation" method="post">
+        <form id="form_operation" class="form-operation" action="operation&page=<?=$modalAction?>Operation" method="post">
                 <h2 class="form-title">
                     <?php
                         if ($modalAction == 'create') echo "Creation d'une opération";

@@ -6,6 +6,8 @@
         private $id;
         private $type_id;
         private $description;
+        private $color;
+        private $icone;
 
         public function __construct($data = []) { // for exemple $data = ['id' => 1, 'numProduit' => 'BB0001' ... ]
             if ($data) { // test if $data is different from empty '[]'
@@ -74,6 +76,46 @@
         public function setDescription($description)
         {
                 $this->description = $description;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of color
+         */ 
+        public function getColor()
+        {
+                return $this->color;
+        }
+
+        /**
+         * Set the value of color
+         *
+         * @return  self
+         */ 
+        public function setColor($color)
+        {
+                $this->color = $color;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of icone
+         */ 
+        public function getIcone()
+        {
+                return $this->icone;
+        }
+
+        /**
+         * Set the value of icone
+         *
+         * @return  self
+         */ 
+        public function setIcone($icone)
+        {
+                $this->icone = $icone;
 
                 return $this;
         }

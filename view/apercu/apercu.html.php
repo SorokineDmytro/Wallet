@@ -105,7 +105,7 @@
                             <ul>
                                 <?php foreach ($operations as $operation) :?>
                                 <li class="operation-item">
-                                    <div class="operation-item_circle"><i class="fa-solid fa-circle-question color-green"></i></div>
+                                    <div class="operation-item_circle" style="background-color:<?=$operation['op_color']?>"><i class="fa-solid fa-<?=$operation['op_icon']?>"></i></div>
                                     <div class="operation-item_type">
                                         <?php 
                                             switch($operation['op_type']) {

@@ -5,6 +5,7 @@
     use App\Model\EntityManager;
     use App\Service\OperationService;
     use App\Service\CompteService;
+    use App\Service\CategorieService;
     use App\Service\SousCategorieService;
 
     class ApercuController extends Manager {
@@ -15,7 +16,8 @@
             $sousCategorieManager = new EntityManager('souscategorie', 'SousCategorie');
             $compteService = new CompteService();
             $operationService = new OperationService();
-            $sousCategorieService = new SousCategorieService;
+            $categorieService = new CategorieService();
+            $sousCategorieService = new SousCategorieService();
             $page = "apercu";
             $clientId = 1; // don't forget to change it when the users could log in and have an id which can be retreated from $_SESSION
             extract($_GET);
@@ -74,10 +76,13 @@
                         $date = date('d-m-Y', strtotime($operation->getTimestamp())); // Format date to DD-MM-YYYY
                         $operationsByDate[$date][] = [
                             'op_type' => $operation->getType_id(),
+                            'op_color' => $categorieService->getCategorieColorById(htmlspecialchars($operation->getCategorie_id())),
+                            'op_icon' => $sousCategorieService->getSousCategorieIconById(htmlspecialchars($operation->getSouscategorie_id())),
                             'op_souscategorie' => $sousCategorieService->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
                             'op_time' => date('H:i', strtotime($operation->getTimestamp())),
                             'op_amount' => $operation->getMontant(),
                             'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
+                            'op_dest_account' => $operation->getCompte_destinataire_id(), // normally = null except transferts
                         ];
                     }
 

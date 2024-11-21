@@ -1,7 +1,6 @@
 <?php
     namespace App\Service;
     use App\Model\EntityManager;
-use App\Model\SousCategorieManager;
 
     class SousCategorieService {
         private $sousCategorieManager;
@@ -14,5 +13,10 @@ use App\Model\SousCategorieManager;
         public function getSousCategorieNameById($sousCategorieId) {
             $sousCategorieName = $this->sousCategorieManager->findOne(['id' => $sousCategorieId], 'object');
             return $sousCategorieName->getDescription();
+        }
+
+        public function getSousCategorieIconById($sousCategorieId) {
+            $sousCategorieIcon = $this->sousCategorieManager->findOne(['id' => $sousCategorieId], 'object');
+            return $sousCategorieIcon->getIcone();
         }
     }
