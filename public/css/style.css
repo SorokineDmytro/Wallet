@@ -72,7 +72,6 @@ h3 {
 }
 
 .hidden {
-    /* display: none; */
     visibility: hidden;
 }
 
@@ -124,7 +123,7 @@ nav ul {
     background-color: #377cf6;
     transition: 500ms;
     cursor: pointer;
-    padding-left: 25px;
+    padding-left: 15%;
 }
 
 .nav-list_item svg {
@@ -211,7 +210,7 @@ header {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-image: url(../img/photo.jpeg);
+    background-image: url(../img/photo.webp);
     background-repeat: no-repeat;
     background-size: cover;
     margin: auto 0;
@@ -369,7 +368,6 @@ main {
     position: relative;
     width: 100%;
     height: 100%;
-    /* border: solid 2px #9d9ea2; */
     box-shadow: #e2e2e2 1px 1px 20px 1px;
     border-radius: 20px;
     padding: 10px;
@@ -389,6 +387,11 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.account-img>svg {
+    width: 60%;
+    height: 60%;
 }
 
 .actions {
@@ -424,12 +427,12 @@ main {
 .account-title {
     margin: 0.8vw 0;
     color: #9d9ea2;
-    font-weight: 1vw;
+    font-size: 0.8vw;
     transition: 300ms;
 }
 
 .account-amount {
-    font-size: 1.3vw;
+    font-size: 1.2vw;
     font-weight: 700;
     transition: 500ms;
 }
@@ -552,7 +555,7 @@ main {
 
 /*=================================================MODAL ACCOUNT======================================*/
 .overlay {
-    position: fixed;
+    position: absolute;
     top: 10%;
     left: 15%;
     width: 85%;
@@ -561,11 +564,10 @@ main {
 }
 
 .modal-account {
-    position: fixed;
-    top: 10%;
-    left: 15%;
-    width: 85%;
-    height: 90%;
+    position: absolute;
+    top: 5%;
+    /* left: 7.5%; */
+    width: 100%;
     background-color: transparent;
     display: flex;
     align-items: center;
@@ -581,7 +583,7 @@ main {
     "body"
     "buttons";
     position: relative;
-    width: 50%;
+    width: 60%;
     min-height: 350px;
     max-height: 600px;
     padding: 3% 5%;
@@ -827,6 +829,7 @@ input[type=color]::-moz-color-swatch {
 .operation-date h3 {
     padding-left: 1vw;
     margin-bottom: 10px;
+    font-size: 14px;
 }
 
 /*=================================================OPERATION EACH ITEM STYLES====================================*/
@@ -837,9 +840,9 @@ input[type=color]::-moz-color-swatch {
     display: grid;
     align-items: center;
     grid-template-areas: 
-    "image type account time amount buttons"
-    "image categorie account time amount buttons";
-    grid-template-columns: 10% 25% 20% 10% 15% 20%;
+    "image type account dest_account time amount buttons"
+    "image categorie account dest_account time amount buttons";
+    grid-template-columns: 10% 15% 15% 15% 10% 15% 20%;
     margin-bottom: 5px;
     transition: 500ms;
 }
@@ -882,6 +885,12 @@ input[type=color]::-moz-color-swatch {
 
 .operation-item_account {
     grid-area: account;
+    grid-row: span 2;
+    font-size: 16px;
+}
+
+.operation-item_dest-account {
+    grid-area: dest_account;
     grid-row: span 2;
 }
 
@@ -936,7 +945,7 @@ input[type=color]::-moz-color-swatch {
 
 /*=================================================MODAL OPERATION======================================*/
 .overlay {
-    position: fixed;
+    position: absolute;
     top: 10%;
     left: 15%;
     width: 85%;
@@ -946,9 +955,10 @@ input[type=color]::-moz-color-swatch {
 
 .modal-operation {
     position: absolute;
-    top: 10%;
-    left: 15%;
-    width: 85%;
+    top: 0%;
+    /* left: 15%; */
+    width: 100%;
+
     background-color: transparent;
     display: flex;
     align-items: center;
@@ -1190,98 +1200,36 @@ input[type=radio]:checked + label {
 
 
 
+@media screen and (max-width: 1150px) {
+    .main-conatainer {
+        display: grid;
+        grid-template-areas: 
+            "widget"
+            "statistic"
+            "operation";
+        grid-template-rows: 100px 450px max-content;
+        grid-template-columns: 1fr;
+        row-gap: 30px;
+        transition: filter 0.3s ease;
+    }
 
+    .main-statistic {
+        display: grid;
+        grid-area: statistic;
+        grid-template-columns: 1fr;
+        grid-template-rows: 4fr 2fr;
+        row-gap: 7.5%;
+        height: 450px;
+    }
 
-
-
-
-
-.acc-name {
-    grid-area: name;
-    margin-bottom: 20px;
-}
-
-.acc-color {
-    grid-area: color;
-}
-
-.acc-color label{
-    width: 70%;
-}
-
-input[type=color] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 35px;
-    height: 40px;
-    padding: 0;
-    background-color: #f3f3f3;
-    border: none;
-    cursor: pointer;
-}
-input[type=color]::-webkit-color-swatch {
-    border-radius: 50%;
-    border: none;
-}
-input[type=color]::-moz-color-swatch {
-    border-radius: 15px;
-    border: none;
-}
-
-.form-buttons {
-    grid-area: buttons;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 40px;
-}
-
-.form-btn{
-    min-width: 140px;
-    max-width: 30%;
-    height: 100%;
-    border-radius: 10px;
-    padding: 0 10px;
-    border: none;
-    background-color: #fff;
-    color: #fff;
-    font-size: 14px;
-}
-
-.btn-annul {
-    background-color: #377cf6;
-    opacity: 80%;
-}
-.btn-annul:hover {
-    opacity: 100%;
-    transition: 500ms;
-}
-
-.btn-submit {
-    background-color: #16a18c;
-    opacity: 80%;
-}
-
-.btn-submit:hover {
-    opacity: 100%;
-    transition: 500ms;
-}
-
-.modal-close {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border-radius: 10px;
-    border: none;
-    font-size: 18px;
-    color: #9d9ea2;
-}
-
-.modal-close:hover {
-    background-color: #377cf6;
-    color: #fff;
-    cursor: pointer;
+    .accounts {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+        grid-auto-rows: 95px;
+        row-gap: 20px;
+        column-gap: 20px;
+        padding: 1.8vw 1.5vw;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
 }

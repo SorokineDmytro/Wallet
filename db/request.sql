@@ -153,7 +153,7 @@ INSERT INTO souscategorie (categorie_id, description) VALUES
 (2, 'Maison & jardin'),
 (2, 'Enfants'),
 (2, 'Animaux'),
-(2, 'Électronque'),
+(2, 'Électronique'),
 (2, 'Cadeaux'),
 (3, 'Loyer'),
 (3, 'Prêt hypothécaire'),

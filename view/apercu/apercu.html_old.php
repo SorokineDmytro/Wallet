@@ -1,3 +1,6 @@
+<?php include("accountModal.html.php")?>
+<?php include("operationModal.html.php")?>
+
 <div class="main-conatainer">
     <div class="main-widgets">
         <div class="block widget">
@@ -92,7 +95,7 @@
             <div class="operations-title">
                 <h2>Liste de transactions <?php isset($_GET['acc_Id'])?$account=$selectedAccount:$account=$selectedAccount?></h2> 
 
-                <button class="operation-add blue" onclick="showOperationModal('create', 0, 1);"><div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span></button>
+                <button class="operation-add blue" onclick="showOperationModal('create', 0, <?=$account?>)"><div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span></button>
             </div>
             <ul class="operation-list">
                 <?php if($operationsByDate) :?>
@@ -138,8 +141,8 @@
                                         <span class="operation-item_amount"><?= number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>
                                     <?php endif ;?>
                                     <div class="operation-buttons">
-                                        <button class="btn-action btn-modify" onclick="showOperationModal('modify', <?= $operation['op_id']?>, <?= $operation['op_accountId']?>);"><i class="fa-solid fa-pencil"></i>Modifier</button>
-                                        <button class="btn-action btn-delete" onclick="showOperationModal('delete', <?= $operation['op_id']?>, <?= $operation['op_accountId']?>);"><i class="fa-solid fa-trash"></i>Supprimer</button>
+                                        <button class="btn-action btn-modify"><i class="fa-solid fa-pencil"></i>Modifier</button>
+                                        <button class="btn-action btn-delete"><i class="fa-solid fa-trash"></i>Supprimer</button>
                                     </div>
                                 </li>
                                 <?php endforeach;?>
@@ -153,15 +156,71 @@
         </div>
     </div>
 </div>
-<div id="overlay" class="overlay hidden"></div>
+<form id="hiddenModalForm" action="index.php?page=apercu" method="POST" style="display: none;">
+    <input type="hidden" name="acc_Id" id="hiddenAccId">
+    <input type="hidden" name="opp_Id" id="hiddenOppId">
+    <input type="hidden" name="action" id="hiddenAction">
+    <input type="hidden" name="acc_For_Op" id="hiddenAccForOp">
+</form>
 <script>
-    // Retrieve and parse the accounts JSON passed from PHP
-    const accountsJSON = JSON.parse('<?php echo $accountsJSON; ?>');
-    // Retrieve and parse the categories from categoriesJSON passed from PHP
-    const categories = JSON.parse('<?php echo $categoriesJSON; ?>');
-    // Retrieve and parse the sousCategories JSON passed from PHP
-    const sousCategories = JSON.parse('<?php echo $sousCategories; ?>');
+    // Select all elements with the class 'account'
+    let accounts = document.querySelectorAll('.account');
 
-    // Retrieve and parse the operations passed from PHP
+    // Add event listeners to each account element
+    accounts.forEach(account => {
+        account.addEventListener('click', () => {
+            document.location.href=`index.php?page=apercu&acc_Id=${account.id}`;
+        });
+    });
 
+    // Function to show the account menu (update & delete  buttons)
+    function showAccountMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const account = event.target.closest('.account');
+        const accountMenu = account.querySelector('.account-menu');
+        accountMenu.classList.remove('hidden');
+    }
+
+    // Function to hide the account menu (update & delete  buttons)
+    function hideAccountMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const account = event.target.closest('.account');
+        const accountMenu = account.querySelector('.account-menu');
+        accountMenu.classList.add('hidden');
+    }
+
+    // Function to handle click on account menu (update & delete  buttons)
+    function handleContextMenuClick(event, action, accountId) {
+        event.preventDefault(); // Prevent default behavior
+        event.stopPropagation(); // Stop the event from bubbling up
+        showAccountModal(action, accountId); // Call showAccountModal with the passed action ('delete' or 'modify')
+    }
+
+    // Function to show the acount modal
+    function showAccountModal(action, accountId) {
+    // Set values of the hidden form inputs
+    document.getElementById('hiddenAccId').value = accountId;
+    document.getElementById('hiddenOppId').remove();
+    document.getElementById('hiddenAction').value = action;
+    document.getElementById('hiddenModalForm').submit(); 
+    }
+
+    // Function to show the operation modal
+    function showOperationModal(action, operationId, account) {
+    // Set values of the hidden form inputs
+    document.getElementById('hiddenOppId').value = operationId;
+    document.getElementById('hiddenAccId').remove();
+    document.getElementById('hiddenAction').value = action;
+    document.getElementById('hiddenAccForOp').value = account; 
+    document.getElementById('hiddenModalForm').submit(); 
+    }
+    
+    // Function to hide the modal and re-enable scroll
+    function hideModal(event) {
+        event.preventDefault();
+        document.location = "index.php?page=apercu";
+    }
+ 
 </script>

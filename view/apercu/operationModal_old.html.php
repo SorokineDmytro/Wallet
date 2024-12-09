@@ -135,20 +135,16 @@
         const sousCategoriesContainer = document.querySelector('.op-s-cat');
         // Function to show or hide the op-accTr container
         function toggleOpAccTr() {
-            if (typeTransfertRadio.checked) {
-                formContainerOpAccTr.classList.add('form-container');
-                formContainerOpAccTr.classList.remove('d-none');
-                categoriesContainer.classList.remove('form-container');
-                categoriesContainer.classList.add('d-none');
-                sousCategoriesContainer.classList.remove('form-container');
-                sousCategoriesContainer.classList.add('d-none');
+                if (typeTransfertRadio.checked) {
+                    formContainerOpAccTr.classList.add('form-container');
+                    formContainerOpAccTr.classList.remove('d-none');
+                    categoriesContainer.classList.add('d-none');
+                    sousCategoriesContainer.classList.add('d-none');
             } else {
                 formContainerOpAccTr.classList.remove('form-container');
                 formContainerOpAccTr.classList.add('d-none');
                 categoriesContainer.classList.remove('d-none');
-                categoriesContainer.classList.add('form-container');
                 sousCategoriesContainer.classList.remove('d-none');
-                sousCategoriesContainer.classList.add('form-container');
             }
         }
         // Add event listeners to all radio buttons to check on change
@@ -216,7 +212,7 @@
                 const filteredSousCategories = sousCategories.filter(sousCategorie => sousCategorie.categorie_id == selectedCategorieId);
 
                 // Create and append elements for each filtered sousCategorie
-                filteredSousCategories.forEach(sousCategorie => {
+                filteredSousCategories.forEach((sousCategorie, index) => {
                     // Create a container div for the radio button and label
                     const div = document.createElement('div');
                     div.className = 'op-s-cat-radio';
@@ -227,6 +223,9 @@
                     input.id = `s-cat${sousCategorie.id}`;
                     input.name = 'souscategorie_id';
                     input.value = sousCategorie.id;
+                    if (index === 0) {
+                        input.checked = true;
+                    }
 
                     // Create the label element
                     const label = document.createElement('label');
