@@ -92,7 +92,7 @@
             <div class="operations-title">
                 <h2>Liste de transactions <?php isset($_GET['acc_Id'])?$account=$selectedAccount:$account=$selectedAccount?></h2> 
 
-                <button class="operation-add blue" onclick="showOperationModal('create', 0, 1);"><div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span></button>
+                <button class="operation-add blue" onclick="showOperationModal('create', 0, <?= $selectedAccount ?>);"><div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span></button>
             </div>
             <ul class="operation-list">
                 <?php if($operationsByDate) :?>
