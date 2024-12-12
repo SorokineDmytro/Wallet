@@ -392,64 +392,32 @@ function showOperationModal(action, operationId, accountId) {
         divContainer.append(divOpRadioContainer3);
         formContainerOpType.append(divContainer);
 
-
+///////////////////
         // Creating the fieldset OperationCategorie
         const formContainerOpCategory = document.createElement('fieldset');
         formContainerOpCategory.className = 'form-container op-cat';
-        // Creating the legend
-        const opCategoryLegend = document.createElement('legend');
-        opCategoryLegend.htmlFor = 'categorie_id';
-        opCategoryLegend.className = 'op-cat-legend';
-        opCategoryLegend.textContent = "Categorie :";
-        // Creating div to store radio buttons in
-        const divCategorieContainer = document.createElement('div');
-        divCategorieContainer.className = 'op-cat-container';
-
-        if(RadioBtnType1.checked == true) {
-            // Create and append elements for each categorie
-        const categoriesDepenses = categories.filter(
-            categorie => categorie.type_id === 1
-        );
-        categoriesDepenses.forEach((categorie, index) => {
-            // Create a container div for the radio button and label
-            const div = document.createElement('div');
-            div.className = 'op-cat-radio';
-            // Create the input (radio) element
-            const input = document.createElement('input');
-            input.type = 'radio';
-            input.id = `cat${categorie.id}`;
-            input.name = 'categorie_id';
-            input.value = categorie.id;
-            if (index === 0) {
-                input.checked = true;
-            }
-            // Create the label element
-            const label = document.createElement('label');
-            label.htmlFor = `cat${categorie.id}`;
-            label.style.backgroundColor = categorie.color; 
-            // Create the icon (optional) within the label
-            const icon = document.createElement('i');
-            icon.className = `fa-solid fa-${categorie.icone}`;
-            label.appendChild(icon);
-            // Create the span element for the description
-            const span = document.createElement('span');
-            span.textContent = categorie.description;
-            // Append the elements
-            div.appendChild(input);
-            div.appendChild(label);
-            div.appendChild(span);
-            // Append the div to the container
-            divCategorieContainer.appendChild(div);
-        });
-        } else if(RadioBtnType2.checked == true) {
-            // Create and append elements for each categorie
-            const categoriesRevenus = categories.filter(
-                categorie => categorie.type_id === 2
-            );
-            categoriesRevenus.forEach((categorie, index) => {
+        
+        function createCategorieBlock(typeOperation) {
+            // Clear the existing content of the fieldset
+            formContainerOpCategory.innerHTML = '';
+        
+            // Creating the legend
+            const opCategoryLegend = document.createElement('legend');
+            opCategoryLegend.htmlFor = 'categorie_id';
+            opCategoryLegend.className = 'op-cat-legend';
+            opCategoryLegend.textContent = "Categorie :";
+        
+            // Creating div to store radio buttons in
+            const divCategorieContainer = document.createElement('div');
+            divCategorieContainer.className = 'op-cat-container';
+        
+            // Filter and append elements for each category
+            const categoriesType = categories.filter(categorie => categorie.type_id === typeOperation);
+            categoriesType.forEach((categorie, index) => {
                 // Create a container div for the radio button and label
                 const div = document.createElement('div');
                 div.className = 'op-cat-radio';
+        
                 // Create the input (radio) element
                 const input = document.createElement('input');
                 input.type = 'radio';
@@ -459,30 +427,45 @@ function showOperationModal(action, operationId, accountId) {
                 if (index === 0) {
                     input.checked = true;
                 }
+        
                 // Create the label element
                 const label = document.createElement('label');
                 label.htmlFor = `cat${categorie.id}`;
-                label.style.backgroundColor = categorie.color; 
+                label.style.backgroundColor = categorie.color;
+        
                 // Create the icon (optional) within the label
                 const icon = document.createElement('i');
                 icon.className = `fa-solid fa-${categorie.icone}`;
                 label.appendChild(icon);
+        
                 // Create the span element for the description
                 const span = document.createElement('span');
                 span.textContent = categorie.description;
-                // Append the elements
+        
+                // Append elements to the div
                 div.appendChild(input);
                 div.appendChild(label);
                 div.appendChild(span);
+        
                 // Append the div to the container
                 divCategorieContainer.appendChild(div);
             });
+        
+            // Append the legend and container to the fieldset
+            formContainerOpCategory.append(opCategoryLegend);
+            formContainerOpCategory.append(divCategorieContainer);
+        
+            setupSousCategorySelectionLogic()
+            return formContainerOpCategory;
         }
-
-        // Appending all together to the parent container
-        formContainerOpCategory.append(opCategoryLegend);
-        formContainerOpCategory.append(divCategorieContainer);
-
+        
+        // Initial rendering for default type (e.g., type 1)
+        createCategorieBlock(1);
+        
+        // Add event listeners with callback functions
+        RadioBtnType1.addEventListener('change', () => createCategorieBlock(1));
+        RadioBtnType2.addEventListener('change', () => createCategorieBlock(2));
+////////////////
         // Creating the container OperationDate
         const formContainerOpDate = document.createElement('div');
         formContainerOpDate.className = 'form-container op-date';
