@@ -322,7 +322,7 @@ function showOperationModal(action, operationId, accountId) {
         formOpBody.append(deleteOperationText);
     } else {
     // Creating the container for each input field  
-        // Creating the fieldset OperationType
+        // ---------------------------------------------TYPE fieldset creation--------------------------------
         const formContainerOpType = document.createElement('fieldset');
         formContainerOpType.className = 'form-container op-type';
         // Creating the legend
@@ -392,80 +392,7 @@ function showOperationModal(action, operationId, accountId) {
         divContainer.append(divOpRadioContainer3);
         formContainerOpType.append(divContainer);
 
-///////////////////
-        // Creating the fieldset OperationCategorie
-        const formContainerOpCategory = document.createElement('fieldset');
-        formContainerOpCategory.className = 'form-container op-cat';
-        
-        function createCategorieBlock(typeOperation) {
-            // Clear the existing content of the fieldset
-            formContainerOpCategory.innerHTML = '';
-        
-            // Creating the legend
-            const opCategoryLegend = document.createElement('legend');
-            opCategoryLegend.htmlFor = 'categorie_id';
-            opCategoryLegend.className = 'op-cat-legend';
-            opCategoryLegend.textContent = "Categorie :";
-        
-            // Creating div to store radio buttons in
-            const divCategorieContainer = document.createElement('div');
-            divCategorieContainer.className = 'op-cat-container';
-        
-            // Filter and append elements for each category
-            const categoriesType = categories.filter(categorie => categorie.type_id === typeOperation);
-            categoriesType.forEach((categorie, index) => {
-                // Create a container div for the radio button and label
-                const div = document.createElement('div');
-                div.className = 'op-cat-radio';
-        
-                // Create the input (radio) element
-                const input = document.createElement('input');
-                input.type = 'radio';
-                input.id = `cat${categorie.id}`;
-                input.name = 'categorie_id';
-                input.value = categorie.id;
-                if (index === 0) {
-                    input.checked = true;
-                }
-        
-                // Create the label element
-                const label = document.createElement('label');
-                label.htmlFor = `cat${categorie.id}`;
-                label.style.backgroundColor = categorie.color;
-        
-                // Create the icon (optional) within the label
-                const icon = document.createElement('i');
-                icon.className = `fa-solid fa-${categorie.icone}`;
-                label.appendChild(icon);
-        
-                // Create the span element for the description
-                const span = document.createElement('span');
-                span.textContent = categorie.description;
-        
-                // Append elements to the div
-                div.appendChild(input);
-                div.appendChild(label);
-                div.appendChild(span);
-        
-                // Append the div to the container
-                divCategorieContainer.appendChild(div);
-            });
-        
-            // Append the legend and container to the fieldset
-            formContainerOpCategory.append(opCategoryLegend);
-            formContainerOpCategory.append(divCategorieContainer);
-        
-            setupSousCategorySelectionLogic()
-            return formContainerOpCategory;
-        }
-        
-        // Initial rendering for default type (e.g., type 1)
-        createCategorieBlock(1);
-        
-        // Add event listeners with callback functions
-        RadioBtnType1.addEventListener('change', () => createCategorieBlock(1));
-        RadioBtnType2.addEventListener('change', () => createCategorieBlock(2));
-////////////////
+        // ---------------------------------------------DATE input creation--------------------------------
         // Creating the container OperationDate
         const formContainerOpDate = document.createElement('div');
         formContainerOpDate.className = 'form-container op-date';
@@ -487,6 +414,7 @@ function showOperationModal(action, operationId, accountId) {
         formContainerOpDate.append(labelTimestamp);
         formContainerOpDate.append(inputTimestamp);
 
+        // ---------------------------------------------AMOUNT input creation--------------------------------
         // Creating the container OperationAmount
         const formContainerOpAmount = document.createElement('div');
         formContainerOpAmount.className = 'form-container op-amount';
@@ -509,6 +437,7 @@ function showOperationModal(action, operationId, accountId) {
         formContainerOpAmount.append(labelAmount);
         formContainerOpAmount.append(inputAmount);
 
+        // ---------------------------------------------ACCOUNT input creation--------------------------------
         // Creating the container OperationAccount
         const formContainerOpAccount = document.createElement('div');
         formContainerOpAccount.className = 'form-container op-acc';
@@ -530,6 +459,7 @@ function showOperationModal(action, operationId, accountId) {
         formContainerOpAccount.append(labelOpAccount);
         formContainerOpAccount.append(selectOpAcount);
         
+        // ---------------------------------------------TRANSFERT ACCOUNT input creation--------------------------------
         // Creating the container OperationAccountTransfert
         const formContainerOpAccountTransfert = document.createElement('div');
         formContainerOpAccountTransfert.className = 'form-container op-accTr d-none';
@@ -640,11 +570,85 @@ function showOperationModal(action, operationId, accountId) {
             setupAccountSelectionLogic();
         });
 
-        // ----------------Categories and sous-categoris selection-----------------
-
+        // ---------------------------------------------CATEGORIE fieldset creation--------------------------------
+        // Creating the fieldset OperationCategorie
+        const formContainerOpCategory = document.createElement('fieldset');
+        formContainerOpCategory.className = 'form-container op-cat';
         
+        function createCategorieBlock(typeOperation) {
+            // Clear the existing content of the fieldset
+            formContainerOpCategory.innerHTML = '';
+        
+            // Creating the legend
+            const opCategoryLegend = document.createElement('legend');
+            opCategoryLegend.htmlFor = 'categorie_id';
+            opCategoryLegend.className = 'op-cat-legend';
+            opCategoryLegend.textContent = "Categorie :";
+        
+            // Creating div to store radio buttons in
+            const divCategorieContainer = document.createElement('div');
+            divCategorieContainer.className = 'op-cat-container';
+        
+            // Filter and append elements for each category
+            const categoriesType = categories.filter(categorie => categorie.type_id === typeOperation);
+            categoriesType.forEach((categorie, index) => {
+                // Create a container div for the radio button and label
+                const div = document.createElement('div');
+                div.className = 'op-cat-radio';
+        
+                // Create the input (radio) element
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.id = `cat${categorie.id}`;
+                input.name = 'categorie_id';
+                input.value = categorie.id;
+                if (index === 0) {
+                    input.checked = true;
+                }
+        
+                // Create the label element
+                const label = document.createElement('label');
+                label.htmlFor = `cat${categorie.id}`;
+                label.style.backgroundColor = categorie.color;
+        
+                // Create the icon (optional) within the label
+                const icon = document.createElement('i');
+                icon.className = `fa-solid fa-${categorie.icone}`;
+                label.appendChild(icon);
+        
+                // Create the span element for the description
+                const span = document.createElement('span');
+                span.textContent = categorie.description;
+        
+                // Append elements to the div
+                div.appendChild(input);
+                div.appendChild(label);
+                div.appendChild(span);
+        
+                // Append the div to the container
+                divCategorieContainer.appendChild(div);
+            });
+        
+            // Append the legend and container to the fieldset
+            formContainerOpCategory.append(opCategoryLegend);
+            formContainerOpCategory.append(divCategorieContainer);
+        
+            setupSousCategorySelectionLogic()
+            return formContainerOpCategory;
+        }
+        
+        // Initial rendering for default type (e.g., type 1)
+        if(RadioBtnType1.checked = true) {
+            createCategorieBlock(1);
+        } else if (RadioBtnType2.checked = true) {
+            createCategorieBlock(2);
+        }
+        
+        // Add event listeners with callback functions
+        RadioBtnType1.addEventListener('change', () => createCategorieBlock(1));
+        RadioBtnType2.addEventListener('change', () => createCategorieBlock(2));
 
-        //-------------------------------------------------SOUS-CATEGORIE
+        // ---------------------------------------------SOUS-CATEGORIE fieldset creation--------------------------------
         // Creating the fieldset OperationCategorie
         const formContainerOpSousCategory = document.createElement('fieldset');
         formContainerOpSousCategory.className = 'form-container op-s-cat';
@@ -740,6 +744,50 @@ function showOperationModal(action, operationId, accountId) {
             setupSousCategorySelectionLogic();
         });
 
+        // ---------------------------------------------CASE MODIFY LOGIC--------------------------------
+        // Testing if operation action is modify to populate the input's values 
+        if (action === 'modify' && operationId) {
+            const operation = operationsJSON.find((op) => op.id === parseInt(operationId));
+            if (operation) {
+                // population of Type-operation input
+                setTimeout(() => { // operation.type_id
+                    const typeRadioButtons = document.getElementsByName('type_id');        
+                    for (let i = 0; i < typeRadioButtons.length; i++) {
+                        let item = typeRadioButtons[i];
+                        if (parseInt(item.value) === parseInt(operation.type_id)) {
+                            item.checked = true;
+                            createCategorieBlock(operation.type_id);
+                        }
+                    }
+                }, 1); // 1s delay to get DOM rendered
+                inputTimestamp.value = operation.timestamp;
+                inputAmount.value = parseFloat(operation.montant).toFixed(2);
+                    // operation.compte_id don't need to populate because it is already selected
+                    // operation.compte_destinataire_id
+                // population of Type-categorie input
+                setTimeout(() => { // operation.categorie_id
+                    const categoryRadioButtons = document.getElementsByName('categorie_id');
+                    for (let i = 0; i < categoryRadioButtons.length; i++) {
+                        let item = categoryRadioButtons[i];
+                        if (parseInt(item.value) === parseInt(operation.categorie_id)) {
+                            item.checked = true;
+                        }
+                    }
+                    setupSousCategorySelectionLogic();
+                }, 1); // 1s delay to get DOM rendered
+                // population of Type-sous-categorie input
+                setTimeout(() => { // operation.souscategorie_id
+                    const sousCategoryRadioButtons = document.getElementsByName('souscategorie_id');
+                    for (let i = 0; i < sousCategoryRadioButtons.length; i++) {
+                        let item = sousCategoryRadioButtons[i];
+                        if (parseInt(item.value) === parseInt(operation.souscategorie_id)) {
+                            item.checked = true;
+                        }
+                    }
+                }, 1); // 1s delay to get DOM rendered
+            }
+        }
+
         // Appending all the field-sets to the formBody
         formOpBody.append(formContainerOpType);
         formOpBody.append(formContainerOpDate);
@@ -748,7 +796,6 @@ function showOperationModal(action, operationId, accountId) {
         formOpBody.append(formContainerOpAccountTransfert);
         formOpBody.append(formContainerOpCategory);
         formOpBody.append(formContainerOpSousCategory);
-
     }
 
     // Creating the form buttons block

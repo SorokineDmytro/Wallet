@@ -155,13 +155,13 @@
 </div>
 <div id="overlay" class="overlay hidden"></div>
 <script>
-    // Retrieve and parse the accounts JSON passed from PHP
+    // Retrieve and parse the accounts in JSON format passed from PHP
     const accountsJSON = JSON.parse('<?php echo $accountsJSON; ?>');
-    // Retrieve and parse the categories from categoriesJSON passed from PHP
+    // Retrieve and parse the categories in JSON format passed from PHP
     const categories = JSON.parse('<?php echo $categoriesJSON; ?>');
-    // Retrieve and parse the sousCategories JSON passed from PHP
+    // Retrieve and parse the sousCategories in JSON format passed from PHP
     const sousCategories = JSON.parse('<?php echo $sousCategories; ?>');
-
-    // Retrieve and parse the operations passed from PHP
+    // Retrieve and parse the operations in JSON format passed from PHP
+    const operationsJSON = JSON.parse('<?php echo $operationsJSON; ?>');
 
 </script>

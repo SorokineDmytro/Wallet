@@ -49,6 +49,7 @@ class ApercuController extends Manager
                 // OPERATIONS
                 $selectedAccount = $_GET['acc_Id'] ?? $formattedAccounts[0]['id'];
                 $operations = $operationService->getOperationsByAccount($selectedAccount);
+                $operationsJSON = json_encode($operationManager->findAll([], "array", "order by id"));
                 $operationsByDate = [];
                 foreach ($operations as $operation) {
                     $date = date('d-m-Y', strtotime($operation->getTimestamp()));
@@ -76,13 +77,13 @@ class ApercuController extends Manager
                     "title" => $title,
                     "accounts" => $formattedAccounts,
                     "accountsJSON" => $accountsJSON,
-                    // "operations" => $operations,
+                    "operationsJSON" => $operationsJSON,
                     "operationsByDate" => $operationsByDate,
                     "selectedAccount" => $selectedAccount,
                     "categoriesJSON" => $categoriesJSON,
                     "sousCategories" => $sousCategoriesJSON,
                 ];
-                // $this->printr($operationsByDate);die;
+                // $this->printr($operationsJSON);die;
 
                 $this->generatePage($file, $variables);
                 break;
