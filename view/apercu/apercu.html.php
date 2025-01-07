@@ -90,8 +90,7 @@
     <div class="main-operations">
         <div class="block operations">
             <div class="operations-title">
-                <h2>Liste de transactions <?php isset($_GET['acc_Id'])?$account=$selectedAccount:$account=$selectedAccount?></h2> 
-
+                <h2>Liste de transactions sur le compte <?= $selectedAccountName ?></h2> 
                 <button class="operation-add blue" onclick="showOperationModal('create', 0, <?= $selectedAccount ?>);"><div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span></button>
             </div>
             <ul class="operation-list">
@@ -124,15 +123,15 @@
                                     <span class="operation-item_account">
                                         <?= $operation['op_account'] ?>
                                     </span>
-                                    <!-- <span class="operation-item_dest-account">
-                                        <?= $operation['op_dest_account']?$operation['op_dest_account']:'' ?>
-                                    </span> -->
+                                    <span class="operation-item_dest-account">
+                                        <?= $operation['op_destAccount'] ?>
+                                    </span>
                                     <span class="operation-item_time">
                                         <?= $operation['op_time'] ?>
                                     </span>
-                                    <?php if($operation['op_type'] == 1) :?>
+                                    <?php if($operation['op_type'] === 1 || ($operation['op_type'] === 3) && $operation['op_accountId'] == $selectedAccount) :?>
                                         <span class="operation-item_amount color-red">-<?=number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>
-                                    <?php elseif($operation['op_type'] == 2) :?>
+                                    <?php elseif($operation['op_type'] === 2 || ($operation['op_type'] === 3) && $operation['op_destAccountId'] == $selectedAccount) :?>
                                         <span class="operation-item_amount color-green">+<?=number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>
                                     <?php else :?>
                                         <span class="operation-item_amount"><?= number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>

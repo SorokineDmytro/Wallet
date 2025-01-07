@@ -65,6 +65,10 @@ function hideModal(event) {
 //==========================================ACCOUNT MODAL========================================//
 // Function to show the account modal
 function showAccountModal(action, accountId) {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // This makes the scrolling animation smooth
+    });
     // Getting overlay
     const overlay = document.getElementById('overlay'); 
     overlay.classList.remove('hidden');
@@ -270,6 +274,10 @@ function showAccountModal(action, accountId) {
 //==========================================OPERATION MODAL========================================//
 // Function to show the operation modal
 function showOperationModal(action, operationId, accountId) {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // This makes the scrolling animation smooth
+    });
     // Getting overlay
     const overlay = document.getElementById('overlay'); 
     overlay.classList.remove('hidden');
@@ -477,7 +485,7 @@ function showOperationModal(action, operationId, accountId) {
         // Populate the select with its options gathered from the ApercuController using the customn function
         makeOptionsFromAccounts(accountsJSON, selectOpAcountTransfert, accountId);
         const optionOutside = document.createElement('option');
-        optionOutside.value = '';
+        optionOutside.value = 0;
         optionOutside.textContent = 'En dehors de vos comptes';
         optionOutside.selected = true;
         selectOpAcountTransfert.append(optionOutside);
@@ -757,13 +765,20 @@ function showOperationModal(action, operationId, accountId) {
                         if (parseInt(item.value) === parseInt(operation.type_id)) {
                             item.checked = true;
                             createCategorieBlock(operation.type_id);
+                            item.click();
                         }
                     }
                 }, 1); // 1s delay to get DOM rendered
+
                 inputTimestamp.value = operation.timestamp;
                 inputAmount.value = parseFloat(operation.montant).toFixed(2);
                     // operation.compte_id don't need to populate because it is already selected
-                    // operation.compte_destinataire_id
+                // population of select - transfert target account
+                if(selectOpAcountTransfert && operation.compte_destinataire_id) {
+                    selectOpAcountTransfert.value = operation.compte_destinataire_id;
+                } else {
+                    selectOpAcountTransfert.required = false;
+                }
                 // population of Type-categorie input
                 setTimeout(() => { // operation.categorie_id
                     const categoryRadioButtons = document.getElementsByName('categorie_id');

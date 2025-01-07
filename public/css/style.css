@@ -18,15 +18,16 @@ li {
 
 h1 {
     font-weight: 500;
+    font-size: 1.5vw;
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 1.25vw;
     font-weight: 500;
 }
 
 h3 {
-    font-size: 12px;
+    font-size: 0.8vw;
     letter-spacing: 2px;
     font-weight: 700;
 }
@@ -90,7 +91,7 @@ aside {
 
 .aside-container { 
     width: 15%;   
-    padding: 3.5vh 20px;
+    padding: 3.5vh 1.5vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,8 +116,9 @@ nav ul {
 
 .nav-list_item {
     margin: 5px 0;
-    padding: 20px 15px;
-    border-radius: 7px;
+    padding: 1.25vw 1vw;
+    /* border-radius: 7px; */
+    border-radius: 0.5vw;
     transition: 500ms;
 }
 .nav-list_item:hover {
@@ -127,8 +129,8 @@ nav ul {
 }
 
 .nav-list_item svg {
-    margin-right: 10px;
-    font-size: 18px;
+    font-size: 1.1vw;
+    margin-right: 7.5%;
 }
 
 .nav-list_item {
@@ -165,8 +167,10 @@ header {
 }
 
 .menu-btn {
-    height: 40px;
-    width: 40px;
+    height: 2vw;
+    min-height: 40px;
+    width: 2vw;
+    min-width: 40px;
     background-color: #fafafa;
     border-radius: 10px;
     display: flex;
@@ -185,7 +189,6 @@ header {
 
 .menu-btn svg {
     color: #9d9ea2;
-    font-size: 18px;
 }
 
 .separator {
@@ -196,7 +199,7 @@ header {
 
 .person {
     display: grid;
-    height:75%;
+    height: 75%;
     grid-template-areas: 
     "image name"
     "image mail";
@@ -207,8 +210,10 @@ header {
 
 .photo {
     grid-area: image;
-    width: 50px;
-    height: 50px;
+    width: 2.5vw;
+    min-width: 50px;
+    height: 2.5vw;
+    min-height: 50px;
     border-radius: 50%;
     background-image: url(../img/photo.webp);
     background-repeat: no-repeat;
@@ -768,7 +773,7 @@ input[type=color]::-moz-color-swatch {
         "operations";
     grid-template-columns: 1fr;
     grid-template-rows: 30px 1fr;
-    row-gap: 20px;
+    row-gap: 2.5vw;
 }
 
 .operations-title {
@@ -780,6 +785,7 @@ input[type=color]::-moz-color-swatch {
 
 .operations-title h2 {
     margin-left: 2%;
+    font-weight: 700;
 }
 
 .operation-add {
@@ -829,7 +835,6 @@ input[type=color]::-moz-color-swatch {
 .operation-date h3 {
     padding-left: 1vw;
     margin-bottom: 10px;
-    font-size: 14px;
 }
 
 /*=================================================OPERATION EACH ITEM STYLES====================================*/
@@ -849,12 +854,6 @@ input[type=color]::-moz-color-swatch {
 .operation-item:hover {
     box-shadow: #d0d0d0 3px 3px 15px 3px;
     transition: 500ms;
-}
-
-.operation-item input {
-    grid-area: checkbox;
-    grid-row: span 2;
-    cursor: pointer;
 }
 
 .operation-item_circle {
@@ -1199,9 +1198,145 @@ input[type=radio]:checked + label {
 }
 
 
+@media screen and (max-width: 3840px) {
+    .menu-btn svg {
+        font-size: 1vw;
+    }
+
+    .name {
+        font-size: 0.7vw;
+        padding-top: 0.5vw;
+    }
+    
+    .mail {
+        font-size: 0.65vw;
+        padding-bottom: 0.5vw;
+    }
+
+    .context-menu_circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.75vw;
+        height: 1.75vw;
+        border: 1px solid #d0d0d0;
+        border-radius: 50%;
+        margin-bottom: 5px;
+        color: #fff;
+        transition: 500ms;
+        margin-right: 10px;
+    }
+
+    .context-menu_circle svg{
+        font-size: 0.75vw;
+    }
+
+    .operation-date h3 {
+        font-size: 0.75vw;
+    }
+
+    .operation-add {
+        width: 8vw;
+        font-size: 0.8vw;
+        padding: 0.5vw;
+    }
+    
+    .operation-add div {
+        width: 1.25vw;
+        height: 1.25vw;
+    }
+
+    .operation-item_type {
+        font-size: 0.7vw;
+    }
+
+    .operation-item_categorie {
+        font-size: 0.8vw;
+    }
+    
+    .operation-item_account {
+        font-size: 0.8vw;
+    }
+    
+    .operation-item_dest-account {
+        font-size: 0.8vw;
+    }
+    
+    .operation-item_time {
+        font-size: 0.8vw;
+    }
+    
+    .operation-item_amount {
+        font-size: 0.8vw;
+    }
+    
+    .btn-action {
+        font-size: 0.8vw;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .menu-btn svg {
+        font-size: 1.2vw;
+    }
+
+    .name {
+        font-size: 1vw;
+        padding-top: 0.2vw;
+    }
+    
+    .mail {
+        font-size: 0.8vw;
+        padding-bottom: 0.2vw;
+    }
+
+    .operation-date h3 {
+        font-size: 14px;
+    }
+
+    .operation-add {
+        width: 10vw;
+        font-size: 1vw;
+        padding: 0.75vw;
+    }
+    
+    .operation-add div {
+        width: 1.4vw;
+        height: 1.4vw;
+    }
+
+    .operation-item_type {
+        font-size: 0.85vw;
+    }
+
+    .operation-item_categorie {
+        font-size: 1vw;
+    }
+    
+    .operation-item_account {
+        font-size: 1vw;
+    }
+    
+    .operation-item_dest-account {
+        font-size: 1vw;
+    }
+    
+    .operation-item_time {
+        font-size: 1vw;
+    }
+    
+    .operation-item_amount {
+        font-size: 1vw;
+    }
+    
+    .btn-action {
+        font-size: 1vw;
+    }
+}
+
 
 @media screen and (max-width: 1150px) {
-    .main-conatainer {
+   .main-conatainer {
         display: grid;
         grid-template-areas: 
             "widget"
@@ -1231,5 +1366,44 @@ input[type=radio]:checked + label {
         padding: 1.8vw 1.5vw;
         overflow-y: scroll;
         scrollbar-width: none;
+    }
+
+    .operation-add {
+        width: 15vw;
+        font-size: 1.5vw;
+        padding: 0.9vw;
+    }
+    
+    .operation-add div {
+        width: 1.7vw;
+        height: 1.7vw;
+    }
+
+    .operation-item_type {
+        font-size: 1.25vw;
+    }
+
+    .operation-item_categorie {
+        font-size: 1.5vw;
+    }
+    
+    .operation-item_account {
+        font-size: 1.5vw;
+    }
+    
+    .operation-item_dest-account {
+        font-size: 1.5vw;
+    }
+    
+    .operation-item_time {
+        font-size: 1.5vw;
+    }
+    
+    .operation-item_amount {
+        font-size: 1.5vw;
+    }
+    
+    .btn-action {
+        font-size: 1.5vw;
     }
 }

@@ -14,4 +14,10 @@
             $accountName = $this->compteManager->findOne(['id' => $accountId], 'object');
             return $accountName->getNumcompte();
         }
+
+        // function to retrive an account name by it's ID
+        public function getDestAccountNameByAccountId($accountId) {
+            $destAccountName = $this->compteManager->findOne(['id' => $accountId], 'object');
+            return $destAccountName->getNumcompte();
+        }
     }

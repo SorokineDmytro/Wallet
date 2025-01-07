@@ -29,9 +29,36 @@
             return $totalExpense;
         }
 
+        // function to retrieve the total amount of transferts sent by each account 
+        public function getTotalTransfertOutByAccount($accountId) {
+            $totalTransfertOut = 0;
+            $transfertsOut = $this->operationManager->findAll(['compte_id' => $accountId, 'type_id' => 3], 'object');
+            foreach ($transfertsOut as $transfert) {
+                $totalTransfertOut += $transfert->getMontant();
+            }
+            return $totalTransfertOut;
+        }
+
+        // function to retrieve the total amount of transferts received by each account 
+        public function getTotalTransfertInByAccount($accountId) {
+            $totalTransfertIn = 0;
+            $transfertsIn = $this->operationManager->findAll(['compte_destinataire_id' => $accountId, 'type_id' => 3], 'object');
+            foreach ($transfertsIn as $transfert) {
+                $totalTransfertIn += $transfert->getMontant();
+            }
+            return $totalTransfertIn;
+        }
+
         // function to retrieve the operations by account
         public function getOperationsByAccount($accountId) {
-            $operations = $this->operationManager->findAll(['compte_id' => $accountId], 'object', 'order by timestamp desc');
+            $operations1 = $this->operationManager->findAll(['compte_id' => $accountId], 'object', 'order by timestamp desc');
+            $operations2 = $this->operationManager->findAll(['compte_destinataire_id' => $accountId], 'object', 'order by timestamp desc');
+            // Merge and sort operations by timestamp
+            $operations = array_merge($operations1, $operations2);
+            usort($operations, function ($a, $b) {
+                return $b->getTimestamp() <=> $a->getTimestamp();
+            });
             return $operations;
         }
+        
     }

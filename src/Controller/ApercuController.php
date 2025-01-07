@@ -34,13 +34,15 @@ class ApercuController extends Manager
                 foreach ($accounts as $account) {
                     $expenses = $operationService->getTotalExpenseByAccount($account->getId());
                     $incomes = $operationService->getTotalIncomeByAccount($account->getId());
+                    $transfertsOut = $operationService->getTotalTransfertOutByAccount($account->getId());
+                    $transfertsIn = $operationService->getTotalTransfertInByAccount($account->getId());
 
                     $formattedAccounts[] = [
                         'id' => $account->getId(),
                         'type' => $account->getTypecompte_id(),
                         'name' => $account->getNumcompte(),
                         'amount' => $account->getMontant_initial(),
-                        'totalAmount' => ($account->getMontant_initial() + $incomes - $expenses),
+                        'totalAmount' => ($account->getMontant_initial() + $incomes - $expenses - $transfertsOut + $transfertsIn),
                         'color' => $account->getColor(),
                     ];
                 }
@@ -48,22 +50,55 @@ class ApercuController extends Manager
 
                 // OPERATIONS
                 $selectedAccount = $_GET['acc_Id'] ?? $formattedAccounts[0]['id'];
+                $selectedAccountName = $compteService->getAccountNameByAccountId($selectedAccount);
                 $operations = $operationService->getOperationsByAccount($selectedAccount);
                 $operationsJSON = json_encode($operationManager->findAll([], "array", "order by id"));
                 $operationsByDate = [];
                 foreach ($operations as $operation) {
                     $date = date('d-m-Y', strtotime($operation->getTimestamp()));
-                    $operationsByDate[$date][] = [
-                        'op_id' => $operation->getId(),
-                        'op_type' => $operation->getType_id(),
-                        'op_color' => $categorieService->getCategorieColorById(htmlspecialchars($operation->getCategorie_id())),
-                        'op_icon' => $sousCategorieService->getSousCategorieIconById(htmlspecialchars($operation->getSouscategorie_id())),
-                        'op_souscategorie' => $sousCategorieService->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
-                        'op_time' => date('H:i', strtotime($operation->getTimestamp())),
-                        'op_amount' => $operation->getMontant(),
-                        'op_accountId' => $operation->getCompte_id(),
-                        'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
-                    ];
+                    if ($operation->getCompte_destinataire_id() !== null && $operation->getType_id() === 3) {
+                        $operationsByDate[$date][] = [
+                            'op_id' => $operation->getId(),
+                            'op_type' => $operation->getType_id(),
+                            'op_color' => '#6082B6',
+                            'op_icon' => 'arrow-right-arrow-left',
+                            'op_souscategorie' => 'Transfert',
+                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
+                            'op_amount' => $operation->getMontant(),
+                            'op_accountId' => $operation->getCompte_id(),
+                            'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
+                            'op_destAccountId' => $operation->getCompte_destinataire_id(),
+                            'op_destAccount' => $compteService->getDestAccountNameByAccountId(htmlspecialchars($operation->getCompte_destinataire_id())),
+                        ];
+                    } elseif ($operation->getCompte_destinataire_id() === null && $operation->getType_id() === 3) {
+                        $operationsByDate[$date][] = [
+                            'op_id' => $operation->getId(),
+                            'op_type' => $operation->getType_id(),
+                            'op_color' => '#6082B6',
+                            'op_icon' => 'arrow-right-arrow-left',
+                            'op_souscategorie' => 'Transfert',
+                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
+                            'op_amount' => $operation->getMontant(),
+                            'op_accountId' => $operation->getCompte_id(),
+                            'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
+                            'op_destAccountId' => $operation->getCompte_destinataire_id(),
+                            'op_destAccount' => 'En dehors de vos comptes',
+                        ];
+                    } else {
+                        $operationsByDate[$date][] = [
+                            'op_id' => $operation->getId(),
+                            'op_type' => $operation->getType_id(),
+                            'op_color' => $categorieService->getCategorieColorById(htmlspecialchars($operation->getCategorie_id())),
+                            'op_icon' => $sousCategorieService->getSousCategorieIconById(htmlspecialchars($operation->getSouscategorie_id())),
+                            'op_souscategorie' => $sousCategorieService->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
+                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
+                            'op_amount' => $operation->getMontant(),
+                            'op_accountId' => $operation->getCompte_id(),
+                            'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
+                            'op_destAccountId' => $operation->getCompte_destinataire_id(),
+                            'op_destAccount' => '',
+                        ];
+                    }
                 }
 
                 // CATEGORIES
@@ -80,6 +115,7 @@ class ApercuController extends Manager
                     "operationsJSON" => $operationsJSON,
                     "operationsByDate" => $operationsByDate,
                     "selectedAccount" => $selectedAccount,
+                    "selectedAccountName" => $selectedAccountName,
                     "categoriesJSON" => $categoriesJSON,
                     "sousCategories" => $sousCategoriesJSON,
                 ];

@@ -34,7 +34,8 @@
                         ];
                         $compteManager->insert($data);
                         // Redirect or return
-                        header("Location: index.php?page=apercu");
+                        $compteCreated = $compteManager->findOne(['numcompte' => $numcompte])->getId();
+                        header("Location: index.php?page=apercu&acc_Id=$compteCreated");
                         exit;
                     case "modifyAccount" :
                         // Filtering and sanitizing input values came from $_POST
@@ -58,7 +59,7 @@
                         ];
                         $compteManager->update($data);
                         // Redirect or return
-                        header("Location: index.php?page=apercu");
+                        header("Location: index.php?page=apercu&acc_Id=$id");
                         break;
                     case "deleteAccount" :
                         $id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
