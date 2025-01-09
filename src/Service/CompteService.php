@@ -20,4 +20,11 @@
             $destAccountName = $this->compteManager->findOne(['id' => $accountId], 'object');
             return $destAccountName->getNumcompte();
         }
+
+        // function to retrieve the saving accounts by user
+        public function getSavingsAccountsByUser($userId) {
+            $savingAccounts = $this->compteManager->findAll(['client_id' => $userId, 'typecompte_id' => 2], 'object');
+            return $savingAccounts;
+        }
+
     }

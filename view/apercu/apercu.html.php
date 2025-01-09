@@ -1,45 +1,9 @@
 <div class="main-conatainer">
     <div class="main-widgets">
-        <div class="block widget">
-            <h4 class="widget-title"><i class="fa-solid fa-coins"></i>Gains</h4>
-            <div class="widget-middle">
-                <span class="widget-main-amount">2 500.00 €</span>
-                <div class="widget-circle red">
-                    <span>-5.1%</span>
-                </div>
-            </div>
-            <span class="widget-secondary-amount"><span class="color-green">-100.00 €</span> par rapport au dernier mois</span>
-        </div>
-        <div class="block widget">
-            <h4 class="widget-title"><i class="fa-solid fa-cart-shopping"></i>Dépenses</h4>
-            <div class="widget-middle">
-                <span class="widget-main-amount">2 500.00 €</span>
-                <div class="widget-circle red">
-                    <span>-5.1%</span>
-                </div>
-            </div>
-            <span class="widget-secondary-amount"><span class="color-green">-100.00 €</span> par rapport au dernier mois</span>
-        </div>
-        <div class="block widget">
-            <h4 class="widget-title"><i class="fa-solid fa-piggy-bank"></i>Épargnes</h4>
-            <div class="widget-middle">
-                <span class="widget-main-amount">2 500.00 €</span>
-                <div class="widget-circle green">
-                    <span>+5.1%</span>
-                </div>
-            </div>
-            <span class="widget-secondary-amount"><span class="color-red">-100.00 €</span> par rapport au dernier mois</span>
-        </div>
-        <div class="block widget">
-            <h4 class="widget-title"><i class="fa-solid fa-money-bill-trend-up"></i>Investisements</h4>
-            <div class="widget-middle">
-                <span class="widget-main-amount">2 500.00 €</span>
-                <div class="widget-circle green">
-                    <span>+5.1%</span>
-                </div>
-            </div>
-            <span class="widget-secondary-amount"><span class="color-red">-100.00 €</span> par rapport au dernier mois</span>
-        </div>
+        <div class="block widget"></div>
+        <div class="block widget"></div>
+        <div class="block widget"></div>
+        <div class="block widget"></div>
     </div>
     <div class="main-statistic">
         <div class="block statistics">
@@ -94,60 +58,7 @@
                 <button class="operation-add blue" onclick="showOperationModal('create', 0, <?= $selectedAccount ?>);"><div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span></button>
             </div>
             <ul class="operation-list">
-                <?php if($operationsByDate) :?>
-                    <?php foreach($operationsByDate as $date => $operations):?>
-                        <li class="operation-date">
-                            <h3><?=date('d/m/Y', strtotime($date))?></h3>
-                            <ul>
-                                <?php foreach ($operations as $operation) :?>
-                                <li class="operation-item">
-                                    <div class="operation-item_circle" style="background-color:<?=$operation['op_color']?>"><i class="fa-solid fa-<?=$operation['op_icon']?>"></i></div>
-                                    <div class="operation-item_type">
-                                        <?php 
-                                            switch($operation['op_type']) {
-                                                case 1:
-                                                    echo 'Dépense';
-                                                    break;
-                                                case 2:
-                                                    echo 'Revenu';
-                                                    break;
-                                                case 3:
-                                                    echo 'Transfert';
-                                                    break;
-                                            } 
-                                        ?>
-                                    </div>
-                                    <span class="operation-item_categorie">
-                                        <?= htmlspecialchars($operation['op_souscategorie']) ?>
-                                    </span>
-                                    <span class="operation-item_account">
-                                        <?= $operation['op_account'] ?>
-                                    </span>
-                                    <span class="operation-item_dest-account">
-                                        <?= $operation['op_destAccount'] ?>
-                                    </span>
-                                    <span class="operation-item_time">
-                                        <?= $operation['op_time'] ?>
-                                    </span>
-                                    <?php if($operation['op_type'] === 1 || ($operation['op_type'] === 3) && $operation['op_accountId'] == $selectedAccount) :?>
-                                        <span class="operation-item_amount color-red">-<?=number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>
-                                    <?php elseif($operation['op_type'] === 2 || ($operation['op_type'] === 3) && $operation['op_destAccountId'] == $selectedAccount) :?>
-                                        <span class="operation-item_amount color-green">+<?=number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>
-                                    <?php else :?>
-                                        <span class="operation-item_amount"><?= number_format((float)$operation['op_amount'], 2, '.', ' ') ?> €</span>
-                                    <?php endif ;?>
-                                    <div class="operation-buttons">
-                                        <button class="btn-action btn-modify" onclick="showOperationModal('modify', <?= $operation['op_id']?>, <?= $operation['op_accountId']?>);"><i class="fa-solid fa-pencil"></i>Modifier</button>
-                                        <button class="btn-action btn-delete" onclick="showOperationModal('delete', <?= $operation['op_id']?>, <?= $operation['op_accountId']?>);"><i class="fa-solid fa-trash"></i>Supprimer</button>
-                                    </div>
-                                </li>
-                                <?php endforeach;?>
-                            </ul>
-                        </li>
-                    <?php endforeach;?>
-                <?php else :?>
-                    <span class="opperaton-message">Ce compte ne connaît aucune opération! Il est possible d'ajouter une transaction.</span>
-                <?php endif ;?>
+                
             </ul>
         </div>
     </div>
@@ -162,5 +73,18 @@
     const sousCategories = JSON.parse('<?php echo $sousCategories; ?>');
     // Retrieve and parse the operations in JSON format passed from PHP
     const operationsJSON = JSON.parse('<?php echo $operationsJSON; ?>');
-
+    // Retrieve the selected account ID passed from PHP
+    const selectedAccount = +JSON.parse('<?php echo $selectedAccountJSON; ?>');
+    // Retrieve the mothly gains passed from PHP
+    const totalActualMonthGains = JSON.parse('<?php echo $totalActualMonthGainsJSON; ?>');
+    const totalLastMonthGains = JSON.parse('<?php echo $totalLastMonthGainsJSON; ?>');
+    // Retrieve the mothly expenses passed from PHP
+    const totalActualMonthDepenses = JSON.parse('<?php echo $totalActualMonthDepensesJSON; ?>');
+    const totalLastMonthDepenses = JSON.parse('<?php echo $totalLastMonthDepensesJSON; ?>');
+    // Retrieve the mothly saivings passed from PHP
+    const totalActualMonthSavings = JSON.parse('<?php echo $totalActualMonthSavingsJSON; ?>');
+    const totalLastMonthSavings = JSON.parse('<?php echo $totalLastMonthSavingsJSON; ?>');
+    // Retrieve the mothly investments passed from PHP
+    const totalActualMonthInvestments = JSON.parse('<?php echo $totalActualMonthInvestmentsJSON; ?>');
+    const totalLastMonthInvestments = JSON.parse('<?php echo $totalLastMonthInvestmentsJSON; ?>');
 </script>

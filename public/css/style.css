@@ -48,6 +48,10 @@ h3 {
     background-color: #fff;
 }
 
+.gray {
+    background-color: #91a3b0;
+}
+
 .color-green {
     color: #16a18c;
 }
@@ -58,6 +62,10 @@ h3 {
 
 .color-blue {
     color: #377cf6;
+}
+
+.color-gray {
+    color: #91a3b0;
 }
 
 .wrapper {
@@ -329,7 +337,7 @@ main {
 
 .widget-circle {
     grid-area: middle;
-    width: 2.8vw;
+    width: fit-content;
     height: 1.4vw;
     border-radius: 20px;
     color: #fff;
@@ -377,6 +385,7 @@ main {
     border-radius: 20px;
     padding: 10px;
     transition: 500ms;
+    cursor: pointer;
 }
 
 .account:hover {
@@ -402,7 +411,6 @@ main {
 .actions {
     display: none;
 }
-
 
 .account:hover .actions {
     display: block;
@@ -440,6 +448,7 @@ main {
     font-size: 1.2vw;
     font-weight: 700;
     transition: 500ms;
+    letter-spacing: 1px;
 }
 
 .add-account {
@@ -453,6 +462,7 @@ main {
     border-radius: 20px;
     padding: 10px;
     transition: 500ms;
+    cursor: pointer;
 }
 .add-account:hover {
     box-shadow: #d0d0d0 3px 3px 15px 3px;
@@ -513,7 +523,7 @@ main {
     padding-top: 10px;
     visibility: hidden; /* Keeps it hidden initially */
     opacity: 0; /* Makes it invisible */
-    transform: translateX(50px); /* Starts off-screen */
+    transform: translateX(1.5vw); /* Starts off-screen */
     transition: opacity 300ms ease, transform 300ms ease; /* Animate opacity and transform */
 }
 
@@ -521,7 +531,7 @@ main {
 .account-menu:not(.hidden) {
     visibility: visible; /* Makes it visible */
     opacity: 1; /* Fully opaque */
-    transform: translateX(30px); /* Move to original position */
+    transform: translateX(2vw); /* Move to original position */
 }
 
 .account-menu_list {
@@ -539,7 +549,7 @@ main {
     margin-bottom: 5px;
     color: #fff;
     transition: 500ms;
-    margin-right: 10px;
+    margin-right: 0.5vw;
 }
 
 .account-menu_list > li:first-child .context-menu_circle {
@@ -799,6 +809,7 @@ input[type=color]::-moz-color-swatch {
     border: none;
     border-radius: 20px;
     padding: 10px;
+    cursor: pointer;
 }
 
 .operation-add:hover div {
@@ -936,10 +947,11 @@ input[type=color]::-moz-color-swatch {
     color: #ee3939;
 }
 
-.opperaton-message {
+.operation-message {
     display: block;
     margin: 0 auto;
     text-align: center;
+    font-size: 1vw;
 }
 
 /*=================================================MODAL OPERATION======================================*/

@@ -7,6 +7,7 @@ use App\Service\OperationService;
 use App\Service\CompteService;
 use App\Service\CategorieService;
 use App\Service\SousCategorieService;
+use DateTime;
 
 class ApercuController extends Manager
 {
@@ -50,56 +51,12 @@ class ApercuController extends Manager
 
                 // OPERATIONS
                 $selectedAccount = $_GET['acc_Id'] ?? $formattedAccounts[0]['id'];
+                $selectedAccountJSON = json_encode($selectedAccount);
                 $selectedAccountName = $compteService->getAccountNameByAccountId($selectedAccount);
-                $operations = $operationService->getOperationsByAccount($selectedAccount);
-                $operationsJSON = json_encode($operationManager->findAll([], "array", "order by id"));
-                $operationsByDate = [];
-                foreach ($operations as $operation) {
-                    $date = date('d-m-Y', strtotime($operation->getTimestamp()));
-                    if ($operation->getCompte_destinataire_id() !== null && $operation->getType_id() === 3) {
-                        $operationsByDate[$date][] = [
-                            'op_id' => $operation->getId(),
-                            'op_type' => $operation->getType_id(),
-                            'op_color' => '#6082B6',
-                            'op_icon' => 'arrow-right-arrow-left',
-                            'op_souscategorie' => 'Transfert',
-                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
-                            'op_amount' => $operation->getMontant(),
-                            'op_accountId' => $operation->getCompte_id(),
-                            'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
-                            'op_destAccountId' => $operation->getCompte_destinataire_id(),
-                            'op_destAccount' => $compteService->getDestAccountNameByAccountId(htmlspecialchars($operation->getCompte_destinataire_id())),
-                        ];
-                    } elseif ($operation->getCompte_destinataire_id() === null && $operation->getType_id() === 3) {
-                        $operationsByDate[$date][] = [
-                            'op_id' => $operation->getId(),
-                            'op_type' => $operation->getType_id(),
-                            'op_color' => '#6082B6',
-                            'op_icon' => 'arrow-right-arrow-left',
-                            'op_souscategorie' => 'Transfert',
-                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
-                            'op_amount' => $operation->getMontant(),
-                            'op_accountId' => $operation->getCompte_id(),
-                            'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
-                            'op_destAccountId' => $operation->getCompte_destinataire_id(),
-                            'op_destAccount' => 'En dehors de vos comptes',
-                        ];
-                    } else {
-                        $operationsByDate[$date][] = [
-                            'op_id' => $operation->getId(),
-                            'op_type' => $operation->getType_id(),
-                            'op_color' => $categorieService->getCategorieColorById(htmlspecialchars($operation->getCategorie_id())),
-                            'op_icon' => $sousCategorieService->getSousCategorieIconById(htmlspecialchars($operation->getSouscategorie_id())),
-                            'op_souscategorie' => $sousCategorieService->getSousCategorieNameById(htmlspecialchars($operation->getSouscategorie_id())),
-                            'op_time' => date('H:i', strtotime($operation->getTimestamp())),
-                            'op_amount' => $operation->getMontant(),
-                            'op_accountId' => $operation->getCompte_id(),
-                            'op_account' => $compteService->getAccountNameByAccountId(htmlspecialchars($operation->getCompte_id())),
-                            'op_destAccountId' => $operation->getCompte_destinataire_id(),
-                            'op_destAccount' => '',
-                        ];
-                    }
-                }
+                $operationsIn = $operationManager->findAll(['compte_id'=>$selectedAccount], "array", "order by id");
+                $operationsOut = $operationManager->findAll(['compte_destinataire_id'=>$selectedAccount], "array", "order by id");
+                $operationsTotal = array_merge($operationsIn, $operationsOut);
+                $operationsJSON = json_encode($operationsTotal);
 
                 // CATEGORIES
                 $categoriesJSON = json_encode($categorieManager->findAll([], "array", "order by id"));
@@ -107,17 +64,48 @@ class ApercuController extends Manager
                 // SOUS-CATEGORIES
                 $sousCategoriesJSON = json_encode($sousCategorieManager->findAll([], "array", "order by id"));
 
+                // WIDGETS TOTALS (to be implemented into statistics)
+                // $totalGains = $operationService->getTotalOperationsByUser($clientId, 2);
+                // $totalDepenses = $operationService->getTotalOperationsByUser($clientId, 1);
+                // $totalSavings = $operationService->getTotalSavingsByUser($clientId);
+                // $totalInvestments = $operationService->getTotalInvestmentsByUser($clientId);
+
+                // WIDGETS
+                $currentDate = new DateTime(); // Get current date
+                $actualMonth = date('m');
+                $lastMonth = $currentDate->modify('-1 month')->format('m');
+
+                $totalActualMonthGainsJSON = json_encode($operationService->getTotalMonthlyOperationsByUser($clientId, 2, $actualMonth));
+                $totalLastMonthGainsJSON = json_encode($operationService->getTotalMonthlyOperationsByUser($clientId, 2, $lastMonth));
+
+                $totalActualMonthDepensesJSON = json_encode($operationService->getTotalMonthlyOperationsByUser($clientId, 1, $actualMonth));
+                $totalLastMonthDepensesJSON = json_encode($operationService->getTotalMonthlyOperationsByUser($clientId, 1, $lastMonth));
+
+                $totalActualMonthSavingsJSON = json_encode($operationService->getTotalMonthlySavingsByUser($clientId, $actualMonth));
+                $totalLastMonthSavingsJSON = json_encode($operationService->getTotalMonthlySavingsByUser($clientId, $lastMonth));
+
+                $totalActualMonthInvestmentsJSON = json_encode($operationService->getTotalMonthlyInvestmentsByUser($clientId, $actualMonth));
+                $totalLastMonthInvestmentsJSON = json_encode($operationService->getTotalMonthlyInvestmentsByUser($clientId, $lastMonth));
+
                 // VARIABLES
                 $variables = [
                     "title" => $title,
                     "accounts" => $formattedAccounts,
                     "accountsJSON" => $accountsJSON,
                     "operationsJSON" => $operationsJSON,
-                    "operationsByDate" => $operationsByDate,
                     "selectedAccount" => $selectedAccount,
+                    "selectedAccountJSON" => $selectedAccountJSON,
                     "selectedAccountName" => $selectedAccountName,
                     "categoriesJSON" => $categoriesJSON,
                     "sousCategories" => $sousCategoriesJSON,
+                    "totalActualMonthGainsJSON" => $totalActualMonthGainsJSON,
+                    "totalLastMonthGainsJSON" => $totalLastMonthGainsJSON,
+                    "totalActualMonthDepensesJSON" => $totalActualMonthDepensesJSON,
+                    "totalLastMonthDepensesJSON" => $totalLastMonthDepensesJSON,
+                    "totalActualMonthSavingsJSON" => $totalActualMonthSavingsJSON,
+                    "totalLastMonthSavingsJSON" => $totalLastMonthSavingsJSON,
+                    "totalActualMonthInvestmentsJSON" => $totalActualMonthInvestmentsJSON,
+                    "totalLastMonthInvestmentsJSON" => $totalLastMonthInvestmentsJSON,
                 ];
                 // $this->printr($operationsJSON);die;
 
