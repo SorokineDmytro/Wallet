@@ -1,3 +1,103 @@
+//==========================================ACCOUNT'S RENDERRING========================================//
+function renderAccounts(accounts, selectedAccountId) {
+    const accountsContainer = document.querySelector('.block.accounts');
+    accountsContainer.innerHTML = ''; // Clear any existing content
+    // Iterate over accounts to create their HTML
+    accounts.forEach(account => {
+        const accountDiv = document.createElement('div');
+        accountDiv.id = account.id;
+        accountDiv.className = `account ${selectedAccountId === account.id ? 'selected' : ''}`;
+        // Account image block
+        const accountImg = document.createElement('div');
+        accountImg.className = 'account-img';
+        accountImg.style.backgroundColor = account.color;
+        // Add icon based on type
+        switch (account.type) {
+            case 1:
+                accountImg.innerHTML = "<i class='fa-solid fa-wallet'></i>";
+                break;
+            case 2:
+                accountImg.innerHTML = "<i class='fa-solid fa-piggy-bank'></i>";
+                break;
+            case 3:
+                accountImg.innerHTML = "<i class='fa-solid fa-credit-card'></i>";
+                break;
+        }
+        // Append account image to account div
+        accountDiv.appendChild(accountImg);
+        // Actions button
+        const actionsButton = document.createElement('button');
+        actionsButton.className = 'actions';
+        actionsButton.textContent = '...';
+        actionsButton.onmouseenter = showAccountMenu;
+        // Append actions button to account div
+        accountDiv.appendChild(actionsButton);
+        // Account title
+        const accountTitle = document.createElement('h5');
+        accountTitle.className = 'account-title';
+        accountTitle.textContent = account.name;
+        // Append account title to account div
+        accountDiv.appendChild(accountTitle);
+        // Account amount
+        const accountAmount = document.createElement('span');
+        accountAmount.className = 'account-amount';
+        accountAmount.textContent = `${parseFloat(account.totalAmount).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €`;
+        // Append account amount to account div
+        accountDiv.appendChild(accountAmount);
+        // Account menu
+        const accountMenu = document.createElement('div');
+        accountMenu.className = 'account-menu hidden';
+        accountMenu.onmouseleave = hideAccountMenu;
+        // Account menu list
+        const accountMenuList = document.createElement('ul');
+        accountMenuList.className = 'account-menu_list';
+        // Delete button
+        const deleteItem = document.createElement('li');
+        deleteItem.className = 'context-menu_list-item';
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'context-menu_circle';
+        deleteButton.onclick = event => handleContextMenuClick(event, 'delete', account.id);
+        deleteButton.innerHTML = "<i class='fa-solid fa-trash-can'></i>";
+        // Append delete button to delete item
+        deleteItem.appendChild(deleteButton);
+        accountMenuList.appendChild(deleteItem);
+        // Modify button
+        const modifyItem = document.createElement('li');
+        modifyItem.className = 'context-menu_list-item';
+        const modifyButton = document.createElement('button');
+        modifyButton.className = 'context-menu_circle';
+        modifyButton.onclick = event => handleContextMenuClick(event, 'modify', account.id);
+        modifyButton.innerHTML = "<i class='fa-solid fa-pencil'></i>";
+        // Append modify button to modify item
+        modifyItem.appendChild(modifyButton);
+        accountMenuList.appendChild(modifyItem);
+        // Append account menu list to account menu
+        accountMenu.appendChild(accountMenuList);
+        accountDiv.appendChild(accountMenu);
+        // Append account div to container
+        accountsContainer.appendChild(accountDiv);
+    });
+    // Add "Add Account" button
+    const addAccountButton = document.createElement('button');
+    addAccountButton.id = '0';
+    addAccountButton.className = 'add-account';
+    addAccountButton.onclick = () => showAccountModal('create', 0);
+    // Add icon to the button
+    const addIconDiv = document.createElement('div');
+    addIconDiv.className = 'blue';
+    addIconDiv.innerHTML = "<i class='fa-solid fa-plus'></i>";
+    // Add text to the button
+    const addText = document.createElement('span');
+    addText.textContent = 'Ajouter un compte';
+    // Append icon and text to the button
+    addAccountButton.appendChild(addIconDiv);
+    addAccountButton.appendChild(addText);
+    // Append the button to the container
+    accountsContainer.appendChild(addAccountButton);
+}
+// Call the render function with the data
+renderAccounts(accountsJSON, selectedAccount);
+
 // Select all elements with the class 'account'
 let accounts = document.querySelectorAll('.account');
 
@@ -324,6 +424,16 @@ function showOperationModal(action, operationId, accountId) {
     const formOpBody = document.createElement('div');
     formOpBody.className = 'form-op-body';
     if(action == 'delete') {
+        // Adding a hidden input field to store an account id to be redirrercted to when the operation is deleted
+        const inputAccountHiddenId = document.createElement('input');
+        inputAccountHiddenId.type = 'number';
+        inputAccountHiddenId.id = 'accHiddenId';
+        inputAccountHiddenId.name = 'accHiddenId';
+        inputAccountHiddenId.className = 'form-input d-none';
+        inputAccountHiddenId.value = accountId;
+        // Appending the hidden input to the form
+        formOperation.append(inputAccountHiddenId);
+        // Adding a style to the form body
         formOpBody.style.cssText = "display:flex; font-size:22px;";
         const deleteOperationText = document.createElement('p');
         deleteOperationText.innerHTML = `Êtes-vous sûr de vouloir supprimer cette opération ?<br> Cette action sera irreversible et affectera la statistique !`;
@@ -866,6 +976,22 @@ function makeOptionsFromAccounts(accountsJSON, selectName, accountId) {
 
 
 //==========================================OPERATION'S LIST RENDERRING========================================//
+// Creating the dynamic title of the operations list
+const operationsTitle = document.querySelector('.operations-title');
+const opTitle = document.createElement('h2');
+let selectedAccountName = '';
+selectedAccountName = accountsJSON.find(account => account.id === selectedAccount).name;
+opTitle.innerHTML = `Liste de transactions sur le compte ${selectedAccountName}`;
+// Creating the button-add of the operations list
+const opButton = document.createElement('button');
+opButton.classList.add('operation-add', 'blue');
+opButton.innerHTML = `<div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span>`;
+opButton.addEventListener('click', () => showOperationModal('create', 0, selectedAccount));
+// Appending all together
+operationsTitle.appendChild(opTitle);
+operationsTitle.appendChild(opButton);
+
+// Function to render the operations list
 function renderOperations(operations) {    
     const operationList = document.querySelector('.operation-list');
     operationList.innerHTML = ''; // Clear existing content
@@ -997,7 +1123,7 @@ try {
 }
 
 //==========================================WIDGET'S RENDERRING========================================//
-function renderWidgets(blockIndex, actualMonthNumber, lastMonthNubmer) {
+function renderWidgets(blockIndex, actualMonthNumber, lastMonthNumber) {
     const widgetBlock = document.querySelectorAll('.widget');
     switch (blockIndex) {
         case 0:
@@ -1019,7 +1145,7 @@ function renderWidgets(blockIndex, actualMonthNumber, lastMonthNubmer) {
     }
     let numberSign = '+';
     let numberColor = 'green';
-    let numberDifference = parseFloat(actualMonthNumber-lastMonthNubmer);
+    let numberDifference = parseFloat(actualMonthNumber-lastMonthNumber);
     
     if(numberDifference < 0 && title !== 'Dépenses') {
         numberSign = '';
@@ -1031,14 +1157,13 @@ function renderWidgets(blockIndex, actualMonthNumber, lastMonthNubmer) {
         numberSign = '';
     }
     numberDifference = parseFloat(numberDifference).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    console.log(numberDifference);
 
     let percentageSign = '+';
     let percentageColor = 'green';
-    let percentageDifference = parseFloat((actualMonthNumber/lastMonthNubmer)*100);
-    if (lastMonthNubmer === 0) {
+    let percentageDifference = parseFloat((actualMonthNumber/lastMonthNumber)*100);
+    if (lastMonthNumber == 0) {
         percentageDifference = '100';
-    } else if(actualMonthNumber === 0) {
+    } else if(actualMonthNumber == 0) {
         percentageDifference = '100';
         percentageSign = '-';
         percentageColor = 'red';
@@ -1063,7 +1188,6 @@ function renderWidgets(blockIndex, actualMonthNumber, lastMonthNubmer) {
         }
     }
     percentageDifference = parseFloat(percentageDifference).toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-    console.log(percentageDifference + ' %');
     
     // console.log(widgetBlock);
     widgetBlock[blockIndex].innerHTML = `
@@ -1086,3 +1210,59 @@ try {
 } catch (error) {
     console.error('Error rendering widgets:', error);
 }
+
+//==========================================STATISTIC'S RENDERRING========================================//
+// Select the canvas element
+// Select the canvas element
+const canvas = document.getElementById('curveTotalByMonth').getContext('2d');
+// Generate data
+const dates = [];
+for (let i = 1; i <= 31; i++) {
+    dates.push(i);
+}
+const data = [12, 19, 3, 5, 2, 3, 8, 9, 10, 15, 18, 13, 17, 15, 13, 14, 18, 17, 20, 26, 12, 19, 3, 5, 2, 3, 8, 9, 10, 11, 18];
+
+// Create a chart
+const myChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+        labels: [...dates], // Labels for the x-axis
+        datasets: [{
+            data: [...data], // Data for the chart
+            backgroundColor: '#16a18c',
+            borderColor: '#16a18c',
+            borderWidth: 4,
+            tension: 0.5,
+            pointRadius: 1,
+            // Omit the label to avoid showing it
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false, // Disable legend display
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    callback: function(value, index, ticks) {
+                        return index % 3 === 0 ? this.getLabelForValue(value) : ''; // Show label every 5th index
+                    }
+                }
+            },
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Populate the total amount of all accounts
+const totalAmount = document.querySelector('.total-amount');
+totalSum = 0;
+accountsJSON.forEach(account => {
+    totalSum += account.totalAmount;
+    return totalSum;
+});
+totalAmount.innerHTML = `${parseFloat(totalSum).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;

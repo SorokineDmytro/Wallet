@@ -52,6 +52,7 @@
         </div>
             
         <script src="./public/fontawesome-free-6.5.0-web/js/all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="./public/js/apercu.js"></script>
     </body>
     </html>

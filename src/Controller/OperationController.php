@@ -104,6 +104,7 @@
                         header("Location: index.php?page=apercu&acc_Id=$compte_id");
                         break;
                     case "deleteOperation" :
+                        $compte_id = filter_var($_POST['accHiddenId'], FILTER_VALIDATE_INT); // Validate as int
                         $id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
                         $operationManager->delete($id);
                         // Redirect or return

@@ -49,7 +49,7 @@ h3 {
 }
 
 .gray {
-    background-color: #91a3b0;
+    background-color: #9d9ea2;
 }
 
 .color-green {
@@ -65,7 +65,7 @@ h3 {
 }
 
 .color-gray {
-    color: #91a3b0;
+    color: #9d9ea2;
 }
 
 .wrapper {
@@ -362,8 +362,52 @@ main {
 
 .statistics {
     padding: 1.8vw 1.5vw;
+    display: grid;
+    grid-template-areas: 
+        "canvas total"; 
+    grid-template-columns: 2fr 1.5fr;
+    grid-template-rows: 1fr;
 }
 
+#curveTotalByMonth {
+    grid-area: canvas;
+}
+
+.total {
+    grid-area: total;
+    display: grid;
+    grid-template-areas: 
+        "title"
+        "subtitle"
+        "amount";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 2fr;
+}
+.total-title {
+    display: block;
+    grid-area: title;
+    justify-self: center;
+    align-self: center;
+}
+
+.total-subtitle {
+    display: block;
+    grid-area: subtitle;
+    justify-self: center;
+    align-self: end;
+    font-size: 1.1vw;
+    font-weight: 500;
+    transition: 500ms;
+}
+
+.total-amount {
+    display: block;
+    grid-area: amount;
+    justify-self: center;
+    align-self: start;
+    font-size: 1.4vw;
+    font-weight: 600;
+}
 /*=================================================MAIN ACCOUNTS MIDDLE====================================*/
 .accounts {
     display: grid;
