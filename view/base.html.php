@@ -5,10 +5,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Wallet</title>
         <link rel="stylesheet" href="./public/css/style.css">
+        
         <link rel="stylesheet" href="./public/fontawesome-free-6.5.0-web/css/min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+        <!-- Dynamically loaded CSS -->
+        <?php
+            // Define CSS files based on the current page content
+            $pageStyles = [
+                'aperçu' => './public/css/apercu.css',
+                'statistique' => './public/css/statistique.css',
+                'épargne' => './public/css/epargne.css',
+                'reglages' => './public/css/reglages.css',
+            ];
+            // Get the current page title or content type
+            $currentStyle = $pageStyles[$title] ?? null;
+            // Load the specific stylesheet if defined
+            if ($currentStyle) {
+                echo "<link rel='stylesheet' href='{$currentStyle}'>";
+            }
+        ?>
     </head>
     <body>
         <div class="wrapper">
@@ -53,6 +70,21 @@
             
         <script src="./public/fontawesome-free-6.5.0-web/js/all.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="./public/js/apercu.js"></script>
+        <!-- Dynamically loaded JS -->
+        <?php
+            // Define CSS files based on the current page content
+            $pageScripts = [
+                'aperçu' => './public/js/apercu.js',
+                'statistique' => './public/js/statistique.js',
+                'épargne' => './public/js/epargne.js',
+                'reglages' => './public/js/reglages.js',
+            ];
+            // Get the current page title or content type
+            $currentScript = $pageScripts[$title] ?? null;
+            // Load the specific stylesheet if defined
+            if ($currentScript) {
+                echo "<script src='{$currentScript}'></script>";
+            }
+        ?>
     </body>
     </html>

@@ -1,4 +1,49 @@
+// Function to retrieve the formatted timestamp (the end of the day) for a given date
+function getFormattedTimestamp(date) {
+    // Get the current date
+    const currentDate = new Date();
+    currentDate.setHours(23, 59, 59, 999);
+    // Subtract 1 day
+    currentDate.setDate(currentDate.getDate() - date);
+    // Format the new date as a timestamp
+    const formattedTimestamp = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}`;
+    return formattedTimestamp;
+};
+
 //==========================================ACCOUNT'S RENDERRING========================================//
+// Retrieve the information and caculate the account's balance by account number
+function calculateAccountBalanceByAccountByDate(accountNumber, timestamp) {
+    // Get the initial amount of the account
+    let initialAmount = accountsJSON.find(account => account.id === accountNumber).amount;
+    // Get the total revenues by account
+    let revenus = 0;
+    const totalRevenuesByAccount = operationsTotalByClient.filter(operation => operation.compte_id === accountNumber && operation.type_id === 2 && operation.timestamp <= timestamp);
+    totalRevenuesByAccount.forEach(operation => {
+        revenus += parseFloat(operation.montant);
+    });
+    // Get the total expenses by account
+    let expenses = 0;
+    const totalExpensesByAccount = operationsTotalByClient.filter(operation => operation.compte_id === accountNumber && operation.type_id === 1 && operation.timestamp <= timestamp);
+    totalExpensesByAccount.forEach(operation => {
+        expenses += parseFloat(operation.montant);
+    }); 
+    // Get the total transfers in by account
+    let transfertsIn = 0;
+    const totalTransfertsInByAccount = operationsTotalByClient.filter(operation => operation.compte_destinataire_id === accountNumber && operation.type_id === 3 && operation.timestamp <= timestamp);
+    totalTransfertsInByAccount.forEach(operation => {
+        transfertsIn += parseFloat(operation.montant);
+    });
+    // Get the total transfers out by account
+    let transfertsOut = 0;
+    const totalTransfertsOutByAccount = operationsTotalByClient.filter(operation => operation.compte_id === accountNumber && operation.type_id === 3 && operation.timestamp <= timestamp);
+    totalTransfertsOutByAccount.forEach(operation => {
+        transfertsOut += parseFloat(operation.montant);
+    });
+    // Calculate the account's balance
+    return parseFloat(initialAmount) + revenus - expenses + transfertsIn - transfertsOut;
+};
+
+// Function to render the accounts
 function renderAccounts(accounts, selectedAccountId) {
     const accountsContainer = document.querySelector('.block.accounts');
     accountsContainer.innerHTML = ''; // Clear any existing content
@@ -41,7 +86,7 @@ function renderAccounts(accounts, selectedAccountId) {
         // Account amount
         const accountAmount = document.createElement('span');
         accountAmount.className = 'account-amount';
-        accountAmount.textContent = `${parseFloat(account.totalAmount).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €`;
+        accountAmount.textContent = `${calculateAccountBalanceByAccountByDate(account.id, getFormattedTimestamp(0)).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €`;
         // Append account amount to account div
         accountDiv.appendChild(accountAmount);
         // Account menu
@@ -1161,7 +1206,10 @@ function renderWidgets(blockIndex, actualMonthNumber, lastMonthNumber) {
     let percentageSign = '+';
     let percentageColor = 'green';
     let percentageDifference = parseFloat((actualMonthNumber/lastMonthNumber)*100);
-    if (lastMonthNumber == 0) {
+    if(actualMonthNumber <= 0 && lastMonthNumber == 0) {
+        percentageDifference = '0';
+        percentageColor = 'red';
+    } else if (lastMonthNumber == 0) {
         percentageDifference = '100';
     } else if(actualMonthNumber == 0) {
         percentageDifference = '100';
@@ -1212,32 +1260,50 @@ try {
 }
 
 //==========================================STATISTIC'S RENDERRING========================================//
+// Retrieve the information and caculate the total balance by date
+function calculateTotalBalance(date) {
+    let totalBalance = 0;
+    accountsJSON.forEach(account => {
+        totalBalance += calculateAccountBalanceByAccountByDate(account.id, date);
+    });
+    return totalBalance;
+};
+
 // Select the canvas element
-// Select the canvas element
-const canvas = document.getElementById('curveTotalByMonth').getContext('2d');
+const canvas = document.getElementById('curveTotalByMonth')
+const ctx = canvas.getContext('2d');
 // Generate data
 const dates = [];
-for (let i = 1; i <= 31; i++) {
-    dates.push(i);
+for (let i = 0; i < 31; i++) {
+    let dateFr = getFormattedTimestamp(i).slice(5, 10).split('-').reverse().join('/');
+    dates.push(dateFr);
 }
-const data = [12, 19, 3, 5, 2, 3, 8, 9, 10, 15, 18, 13, 17, 15, 13, 14, 18, 17, 20, 26, 12, 19, 3, 5, 2, 3, 8, 9, 10, 11, 18];
+const data = [];
+for (let i = 0; i < 31; i++) {
+    data.push(calculateTotalBalance(getFormattedTimestamp(i)));
+}
+
+// Ensure the parent container sets the dimensions
+const parentWidth = canvas.parentElement.offsetWidth;
+const parentHeight = canvas.parentElement.offsetHeight;
 
 // Create a chart
-const myChart = new Chart(canvas, {
+const myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: [...dates], // Labels for the x-axis
+        labels: [...dates.reverse()], // Labels for the x-axis
         datasets: [{
-            data: [...data], // Data for the chart
+            data: [...data.reverse()], // Data for the chart
             backgroundColor: '#16a18c',
             borderColor: '#16a18c',
-            borderWidth: 4,
+            borderWidth: 6,
             tension: 0.5,
-            pointRadius: 1,
-            // Omit the label to avoid showing it
+            pointRadius: 0,
         }]
     },
     options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false, // Disable legend display
@@ -1248,15 +1314,31 @@ const myChart = new Chart(canvas, {
                 ticks: {
                     callback: function(value, index, ticks) {
                         return index % 3 === 0 ? this.getLabelForValue(value) : ''; // Show label every 5th index
-                    }
-                }
+                    },
+                    font: {
+                        size: 16, // Font size for x-axis labels
+                        weight: 'bold', // Font weight for x-axis labels
+                    },
+                },
             },
             y: {
-                beginAtZero: true
+                ticks: {
+                    font: {
+                        size: 16, // Font size for x-axis labels
+                        weight: 'bold', // Font weight for x-axis labels
+                    },
+                },
             }
         }
     }
 });
+
+// A ResizeObserver ensures the chart updates whenever its container resizes.
+const resizeObserver = new ResizeObserver(() => {
+    myChart.resize();
+});
+
+resizeObserver.observe(canvas.parentElement);
 
 // Populate the total amount of all accounts
 const totalAmount = document.querySelector('.total-amount');
@@ -1265,4 +1347,4 @@ accountsJSON.forEach(account => {
     totalSum += account.totalAmount;
     return totalSum;
 });
-totalAmount.innerHTML = `${parseFloat(totalSum).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+totalAmount.innerHTML = `${calculateTotalBalance(getFormattedTimestamp(0)).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;

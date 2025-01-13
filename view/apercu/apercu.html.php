@@ -11,8 +11,10 @@
             <canvas id="curveTotalByMonth"></canvas>
             <div class="total">
                 <h2 class="total-title">Tendance du solde:</h2>
-                <span class="total-subtitle">Total aujourd'hui:</span>
-                <span class="total-amount"></span>
+                <a href="statistique" class="total-subcontainer">
+                    <span class="total-subtitle">Total aujourd'hui:</span>
+                    <span class="total-amount"></span>
+                </a>
             </div>
         </div>
         <div class="block accounts">
@@ -31,16 +33,18 @@
 </div>
 <div id="overlay" class="overlay hidden"></div>
 <script>
+    // Retrieve the selected account ID passed from PHP and parse it to an integer
+    const selectedAccount = +JSON.parse('<?php echo $selectedAccountJSON; ?>');
     // Retrieve and parse the accounts in JSON format passed from PHP
     const accountsJSON = JSON.parse('<?php echo $accountsJSON; ?>');
     // Retrieve and parse the categories in JSON format passed from PHP
     const categories = JSON.parse('<?php echo $categoriesJSON; ?>');
     // Retrieve and parse the sousCategories in JSON format passed from PHP
     const sousCategories = JSON.parse('<?php echo $sousCategories; ?>');
+    // Retrieve the operations total by client passed from PHP
+    const operationsTotalByClient = JSON.parse('<?php echo $operationsTotalByClientJSON; ?>');
     // Retrieve and parse the operations in JSON format passed from PHP
-    const operationsJSON = JSON.parse('<?php echo $operationsJSON; ?>');
-    // Retrieve the selected account ID passed from PHP and parse it to an integer
-    const selectedAccount = +JSON.parse('<?php echo $selectedAccountJSON; ?>');
+    const operationsJSON = operationsTotalByClient.filter(operation => operation.compte_id === selectedAccount || operation.compte_destinataire_id === selectedAccount);
     // Retrieve the mothly gains passed from PHP
     const totalActualMonthGains = '<?php echo $totalActualMonthGains; ?>';
     const totalLastMonthGains = '<?php echo $totalLastMonthGains; ?>';

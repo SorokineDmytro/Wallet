@@ -23,41 +23,29 @@ public function __construct()
         $accounts = $compteManager->findAll(['client_id' => $clientId], 'object', 'order by id asc');
         $formattedAccounts = [];
         foreach ($accounts as $account) {
-            $expenses = $operationService->getTotalExpenseByAccount($account->getId());
-            $incomes = $operationService->getTotalIncomeByAccount($account->getId());
-            $transfertsOut = $operationService->getTotalTransfertOutByAccount($account->getId());
-            $transfertsIn = $operationService->getTotalTransfertInByAccount($account->getId());
             $formattedAccounts[] = [
                 'id' => $account->getId(),
                 'type' => $account->getTypecompte_id(),
                 'name' => $account->getNumcompte(),
                 'amount' => $account->getMontant_initial(),
-                'totalAmount' => ($account->getMontant_initial() + $incomes - $expenses - $transfertsOut + $transfertsIn),
                 'color' => $account->getColor(),
             ];
         }
         $accountsJSON = json_encode($formattedAccounts);
         
         // OPERATIONS
+        // Get the selected account ID passed from the URL
         $selectedAccount = $_GET['acc_Id'] ?? $formattedAccounts[0]['id'];
         $selectedAccountJSON = json_encode($selectedAccount);
-
-        $operationsIn = $operationManager->findAll(['compte_id'=>$selectedAccount], "array", "order by id");
-        $operationsOut = $operationManager->findAll(['compte_destinataire_id'=>$selectedAccount], "array", "order by id");
-        $operationsTotal = array_merge($operationsIn, $operationsOut);
-        $operationsJSON = json_encode($operationsTotal);
+        // Get all operations by client
+        $operationsTotalByClient = $operationManager->findAll(['client_id'=>$clientId], "array", "order by id");
+        $operationsTotalByClientJSON = json_encode($operationsTotalByClient);
         
         // CATEGORIES
         $categoriesJSON = json_encode($categorieManager->findAll([], "array", "order by id"));
         
         // SOUS-CATEGORIES
         $sousCategoriesJSON = json_encode($sousCategorieManager->findAll([], "array", "order by id"));
-        
-        // WIDGETS TOTALS (to be implemented into statistics)
-        // $totalGains = $operationService->getTotalOperationsByUser($clientId, 2);
-        // $totalDepenses = $operationService->getTotalOperationsByUser($clientId, 1);
-        // $totalSavings = $operationService->getTotalSavingsByUser($clientId);
-        // $totalInvestments = $operationService->getTotalInvestmentsByUser($clientId);
         
         // WIDGETS
         $currentDate = new DateTime(); // Get current date
@@ -76,7 +64,6 @@ public function __construct()
         $variables = [
             "title" => $title,
             "accountsJSON" => $accountsJSON,
-            "operationsJSON" => $operationsJSON,
             "selectedAccountJSON" => $selectedAccountJSON,
             "categoriesJSON" => $categoriesJSON,
             "sousCategories" => $sousCategoriesJSON,
@@ -88,6 +75,7 @@ public function __construct()
             "totalLastMonthSavings" => $totalLastMonthSavings,
             "totalActualMonthInvestments" => $totalActualMonthInvestments,
             "totalLastMonthInvestments" => $totalLastMonthInvestments,
+            "operationsTotalByClientJSON" => $operationsTotalByClientJSON,
         ];
         $this->generatePage($file, $variables);
     }
