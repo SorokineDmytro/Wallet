@@ -1,4 +1,4 @@
-// Function to retrieve the formatted timestamp (the end of the day) for a given date
+// Function to retrieve the formatted timestamp (the end of the day) for a given date (today is 0, yestuday is -1, etc.)
 function getFormattedTimestamp(date) {
     // Get the current date
     const currentDate = new Date();
