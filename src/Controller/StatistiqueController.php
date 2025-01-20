@@ -14,6 +14,21 @@
             $file = "view/statistique/statistique.html.php";
             $title = "statistique";
 
+            // ACCOUNTS
+            $accounts = $compteManager->findAll(['client_id' => $clientId], 'object', 'order by id asc');
+            $formattedAccounts = [];
+            foreach ($accounts as $account) {
+                $formattedAccounts[] = [
+                    'id' => $account->getId(),
+                    'type' => $account->getTypecompte_id(),
+                    'name' => $account->getNumcompte(),
+                    'amount' => $account->getMontant_initial(),
+                    'color' => $account->getColor(),
+                    'creationTimestamp' => $account->getDate_creation(),
+                ];
+            }
+            $accountsJSON = json_encode($formattedAccounts);
+
             // OPERATIONS
             // Get all operations by client
             $operationsTotalByClient = $operationManager->findAll(['client_id'=>$clientId], "array", "order by id");
@@ -24,6 +39,7 @@
 
             $variables = [
                 "title" => $title,
+                "accountsJSON" => $accountsJSON,
                 "categoriesJSON" => $categoriesJSON,
                 "operationsTotalByClientJSON" => $operationsTotalByClientJSON,
             ];

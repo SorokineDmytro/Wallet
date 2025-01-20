@@ -213,3 +213,39 @@
     font-size: 0.8vw;
     font-weight: 700;
 }
+
+/* ------------------------------------------ Curve chart styles ------------------------------------------ */
+.line-chart {
+    grid-area: line-chart;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: 
+    "chart-title" 
+    "chart-body"
+    "switchers"
+    "chart-btn";
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.5fr 9fr 1fr 1fr;
+    position: relative;
+}
+
+#curveLineTendance {
+    grid-area: chart-body;
+    display: block;
+    margin: auto;
+    max-width: 100%; /* Important to be adaptive don't change */
+    max-height: 12vw; /* Important to be adaptive don't change */
+}
+
+.line-error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 45%;
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    font-size: 0.8vw;
+}

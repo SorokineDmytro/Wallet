@@ -272,3 +272,34 @@ main {
     transition: 500ms;
 }
 
+@media screen and (max-width: 3840px) {
+    .menu-btn svg {
+        font-size: 1vw;
+    }
+
+    .name {
+        font-size: 0.7vw;
+        padding-top: 0.5vw;
+    }
+    
+    .mail {
+        font-size: 0.65vw;
+        padding-bottom: 0.5vw;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .menu-btn svg {
+        font-size: 1.2vw;
+    }
+
+    .name {
+        font-size: 1vw;
+        padding-top: 0.2vw;
+    }
+    
+    .mail {
+        font-size: 0.8vw;
+        padding-bottom: 0.2vw;
+    }
+}

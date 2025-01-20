@@ -1,8 +1,11 @@
 <?php
+
+
     namespace App\Controller;
 
     use App\Model\Manager;
     use App\Model\EntityManager;
+    use DateTime;
 
     class AccountController extends Manager {
         public function __construct() {
@@ -11,7 +14,9 @@
             $url = isset($_GET['url']) ? $_GET['url'] : '';
             extract($_GET);
             $page = isset($_GET['page']) ? $_GET['page'] : '';
-            
+            $date = new DateTime();
+            $timestamp = $date->format('Y-m-d H:i:s');
+
             if ($url === 'account') {
                 switch ($page) {
                     case "createAccount" :
@@ -25,12 +30,14 @@
                         $numcompte = htmlspecialchars($numcompte, ENT_QUOTES, 'UTF-8');
                         $color = htmlspecialchars(trim($_POST['color']), ENT_QUOTES, 'UTF-8');
                         $montant_initial = filter_var($_POST['montant_initial'], FILTER_VALIDATE_FLOAT);
+                        $$timestamp = $timestamp;
                         $data = [
                             'client_id' => $clientId,
                             'numcompte' => $numcompte,
                             'typecompte_id' => $typecompte_id,
                             'montant_initial' => $montant_initial,
-                            'color' => $color
+                            'color' => $color,
+                            'date_creation' => $timestamp,
                         ];
                         $compteManager->insert($data);
                         // Redirect or return

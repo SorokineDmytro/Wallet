@@ -70,7 +70,14 @@ UPDATE Compte SET color = '#16A18C' WHERE ID = 1;
 UPDATE Compte SET color = '#EE3939' WHERE ID = 2;
 UPDATE Compte SET color = '#377CF6' WHERE ID = 3;
 
-
+---Ajouter une colonne date_creation
+ALTER TABLE Compte
+ADD COLUMN date_creation TIMESTAMP NOT NULL;
+UPDATE Compte SET date_creation = ' 2024-10-24 15:31:00' where id = 1;
+UPDATE Compte SET date_creation = ' 2024-10-24 15:31:00' where id = 2;
+UPDATE Compte SET date_creation = ' 2024-10-24 15:31:00' where id = 3;
+UPDATE Compte SET date_creation = ' 2025-01-08 15:31:00' where id = 34;
+UPDATE Compte SET date_creation = ' 2025-01-08 15:31:00' where id = 36;
 
 -- Création de la table Type
 CREATE TABLE Type (

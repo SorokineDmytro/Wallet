@@ -1297,7 +1297,7 @@ const myChart = new Chart(ctx, {
             backgroundColor: '#16a18c',
             borderColor: '#16a18c',
             borderWidth: 6,
-            tension: 0.5,
+            tension: 0,
             pointRadius: 0,
         }]
     },

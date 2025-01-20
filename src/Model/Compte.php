@@ -9,6 +9,7 @@
         private $typecompte_id;
         private $montant_initial;
         private $color;
+        private $date_creation;
 
         public function __construct($data = []) { // for exemple $data = ['id' => 1, 'numProduit' => 'BB0001' ... ]
             if ($data) { // test if $data is different from empty '[]'
@@ -138,6 +139,26 @@
         public function setColor($color)
         {
                 $this->color = $color;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of date_creation
+         */ 
+        public function getDate_creation()
+        {
+                return $this->date_creation;
+        }
+
+        /**
+         * Set the value of date_creation
+         *
+         * @return  self
+         */ 
+        public function setDate_creation($date_creation)
+        {
+                $this->date_creation = $date_creation;
 
                 return $this;
         }

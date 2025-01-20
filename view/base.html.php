@@ -1,8 +1,10 @@
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Wallet est une application de gestion financière qui vous aide à catégoriser les opérations, à suivre les soldes de chaque compte et à générer des statistiques détaillées pour un budget plus intelligent.">
+
         <title>Wallet</title>
         <link rel="stylesheet" href="./public/css/style.css">
         
