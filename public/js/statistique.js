@@ -788,9 +788,11 @@ function drawTendanceCanvas(offsetStart, offsetEnd) {
                 data: [...formattedData.reverse()], // Data for the chart
                 backgroundColor: '#16a18c',
                 borderColor: '#16a18c',
-                borderWidth: 6,
-                tension: 0.1,
+                borderWidth: 3,
+                tension: 0,
                 pointRadius: 1,
+                backgroundColor: '#66cba187',
+                fill: true,
             }]
         },
         options: {
@@ -812,9 +814,6 @@ function drawTendanceCanvas(offsetStart, offsetEnd) {
             scales: {
                 x: {
                     ticks: {
-                        callback: function(value, index, ticks) {
-                            return index % 2 === 0 ? this.getLabelForValue(value) : ''; // Show label every 5th index
-                        },
                         font: {
                             size: 16, // Font size for x-axis labels
                             weight: 'bold', // Font weight for x-axis labels
@@ -823,6 +822,9 @@ function drawTendanceCanvas(offsetStart, offsetEnd) {
                 },
                 y: {
                     ticks: {
+                        callback: function(value) {
+                            return value ? `${ value / 1000 }K` : ''; // Show label / 1000 + K
+                        },
                         font: {
                             size: 16, // Font size for x-axis labels
                             weight: 'bold', // Font weight for x-axis labels

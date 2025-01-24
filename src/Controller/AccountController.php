@@ -10,7 +10,7 @@
     class AccountController extends Manager {
         public function __construct() {
             $compteManager = new EntityManager('compte', 'Compte');
-            $clientId = 1; // don't forget to change it when the users could log in and have an id which can be retreated from $_SESSION
+            $clientId = $_SESSION['client_id'];
             $url = isset($_GET['url']) ? $_GET['url'] : '';
             extract($_GET);
             $page = isset($_GET['page']) ? $_GET['page'] : '';

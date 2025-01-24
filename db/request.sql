@@ -22,9 +22,15 @@ CREATE TABLE Client (
     prenomClient VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     mot_de_passe VARCHAR(255) NOT NULL,
-    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    password_reset_token VARCHAR(255),
+    token_expiration TIMESTAMP
 );
 -- pour inserer le client utilise la fonction insertClient dans process.php qui va hasher le MDP avec BCRYPT
+
+-- indexing the email column to speed up the search
+ALTER TABLE client ADD CONSTRAINT unique_email UNIQUE (email);
+CREATE INDEX idx_email ON client(email);
 
 -- Création de la table TypeCompte
 CREATE TABLE typecompte (

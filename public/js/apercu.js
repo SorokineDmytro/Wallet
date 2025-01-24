@@ -1296,9 +1296,11 @@ const myChart = new Chart(ctx, {
             data: [...data.reverse()], // Data for the chart
             backgroundColor: '#16a18c',
             borderColor: '#16a18c',
-            borderWidth: 6,
+            borderWidth: 3,
             tension: 0,
             pointRadius: 0,
+            backgroundColor: '#66cba187',
+            fill: true,
         }]
     },
     options: {
@@ -1312,7 +1314,7 @@ const myChart = new Chart(ctx, {
         scales: {
             x: {
                 ticks: {
-                    callback: function(value, index, ticks) {
+                    callback: function(value, index) {
                         return index % 3 === 0 ? this.getLabelForValue(value) : ''; // Show label every 5th index
                     },
                     font: {
@@ -1323,6 +1325,9 @@ const myChart = new Chart(ctx, {
             },
             y: {
                 ticks: {
+                    callback: function(value) {
+                        return value ? `${ value / 1000 }K` : ''; // Show label / 1000 + K
+                    },
                     font: {
                         size: 16, // Font size for x-axis labels
                         weight: 'bold', // Font weight for x-axis labels

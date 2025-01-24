@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Wallet est une application de gestion financière qui vous aide à catégoriser les opérations, à suivre les soldes de chaque compte et à générer des statistiques détaillées pour un budget plus intelligent.">
 
-        <title>Wallet</title>
+        <title>Wallet <?= isset($title) ? "- ".ucfirst($title) : "" ?></title>
+        <link rel="icon" href="./public/img/wallet.png" type="image/png">
+
         <link rel="stylesheet" href="./public/css/style.css">
         
         <link rel="stylesheet" href="./public/fontawesome-free-6.5.0-web/css/min.css">
@@ -54,14 +56,14 @@
                     <h2><?=ucfirst($title)?></h2>
                 </div>
                 <div class="header-right">
-                    <a class="menu-btn"><i class="fas fa-bell"></i></a>
+                    <a class="menu-btn news"><i class="fas fa-bell"></i></a>
                     <div class="separator"></div>
-                    <a class="menu-btn"><i class="fas fa-door-open"></i></a>
+                    <a class="menu-btn logout"><i class="fas fa-door-open"></i></a>
                     <div class="separator"></div>
                     <div class="person">
                         <div class="photo"></div>
-                        <span class="name">Dmytro Sorokine</span>
-                        <span class="mail">sorokine.dimitri@gmail.com</span>
+                        <span class="name"><?= $clientInfo['firstName'].' '.$clientInfo['lastName'] ?></span>
+                        <span class="mail"><?= $clientInfo['email'] ?></span>
                     </div>
                 </div>
             </header>
@@ -73,6 +75,7 @@
         <script src="./public/fontawesome-free-6.5.0-web/js/all.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+        <script src="./public/js/base.js"></script>
         <!-- Dynamically loaded JS -->
         <?php
             // Define CSS files based on the current page content
