@@ -30,6 +30,7 @@
                     'lastName' => $client->getNomclient(),
                     'firstName' => $client->getPrenomclient(),
                     'email' => $client->getEmail(),
+                    'photo' => $client->getPhoto(),
                 ];
 
                 // ACCOUNTS

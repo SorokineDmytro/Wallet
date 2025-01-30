@@ -1025,146 +1025,154 @@ function makeOptionsFromAccounts(accountsJSON, selectName, accountId) {
 const operationsTitle = document.querySelector('.operations-title');
 const opTitle = document.createElement('h2');
 let selectedAccountName = '';
-selectedAccountName = accountsJSON.find(account => account.id === selectedAccount).name;
-opTitle.innerHTML = `Liste de transactions sur le compte ${selectedAccountName}`;
-// Creating the button-add of the operations list
-const opButton = document.createElement('button');
-opButton.classList.add('operation-add', 'blue');
-opButton.innerHTML = `<div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span>`;
-opButton.addEventListener('click', () => showOperationModal('create', 0, selectedAccount));
-// Appending all together
-operationsTitle.appendChild(opTitle);
-operationsTitle.appendChild(opButton);
+if (accountsJSON.length > 0) {
+    selectedAccountName = accountsJSON.find(account => account.id === selectedAccount).name;
+    opTitle.innerHTML = `Liste de transactions sur le compte ${selectedAccountName}`;
+    // Creating the button-add of the operations list
+    const opButton = document.createElement('button');
+    opButton.classList.add('operation-add', 'blue');
+    opButton.innerHTML = `<div class="white"><i class="fa-solid fa-plus"></i></div><span>Transaction</span>`;
+    opButton.addEventListener('click', () => showOperationModal('create', 0, selectedAccount));
+    // Appending all together
+    operationsTitle.appendChild(opTitle);
+    operationsTitle.appendChild(opButton);
 
-// Function to render the operations list
-function renderOperations(operations) {    
+    // Function to render the operations list
+    function renderOperations(operations) {    
+        const operationList = document.querySelector('.operation-list');
+        operationList.innerHTML = ''; // Clear existing content
+
+        if (!operations || operations.length === 0) {
+            operationList.innerHTML = '<span class="operation-message">Ce compte ne connaît aucune opération! Il est possible d\'ajouter une transaction.</span>';
+            return;
+        }
+
+        // Group operations by date
+        const operationsByDate = operations.reduce((acc, operation) => {
+            const date = new Date(operation.timestamp).toLocaleDateString('fr-FR'); // Format date
+            if (!acc[date]) {
+                acc[date] = [];
+            }
+            acc[date].push(operation);
+            return acc;
+        }, {});
+
+        // Reverse the order of days from recent to oldest
+        Object.entries(operationsByDate)
+        .sort(([dateA], [dateB]) => {
+            // Parse the date strings back into Date objects for accurate sorting
+            const parsedDateA = dateA.split('/').reverse().join('-'); // Convert "DD/MM/YYYY" to "YYYY-MM-DD"
+            const parsedDateB = dateB.split('/').reverse().join('-');
+            return new Date(parsedDateB) - new Date(parsedDateA); // Sort in descending order
+        })
+        .forEach(([date, operations]) => {
+            // Sort operations by time within the day
+            operations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort the operations by date from newest to oldest
+        
+            // Create date block
+            const dateBlock = document.createElement('li');
+            dateBlock.className = 'operation-date';
+        
+            const dateHeader = document.createElement('h3');
+            dateHeader.textContent = date;
+            dateBlock.appendChild(dateHeader);
+        
+            // Create operations list for this date
+            const operationSubList = document.createElement('ul');
+        
+            operations.forEach(operation => {
+                const operationItem = document.createElement('li');
+                operationItem.className = 'operation-item';
+            
+                // Logic to determine the amount color and math sign based on the operation type
+                let amountClass = 'color-green'; // Default to green
+                let amountSign = '+';
+                if (operation.type_id === 1 || (operation.type_id === 3 && operation.compte_id === selectedAccount)) {
+                    // Expense
+                    amountClass = 'color-red';
+                    amountSign = '-';
+                } 
+            
+                //Logic to determine the categorie color based on categorie_id
+                let categorieColor = '#6082B6'; // Default for transferts
+                if (operation.categorie_id) {
+                    categorieColor = categories.find(categorie => categorie.id === operation.categorie_id).color;
+                }
+            
+                //Logic to determine the sousCategorie icon and descriptio based on souscategorie_id
+                let sousCategorieIcon = 'arrow-right-arrow-left'; // Default for transferts
+                let sousCategorieName = 'Transfert'; // Default for transferts
+                if (operation.souscategorie_id) {
+                    sousCategorieIcon = sousCategories.find(sousCategorie => sousCategorie.id === operation.souscategorie_id).icone;
+                    sousCategorieName = sousCategories.find(sousCategorie => sousCategorie.id === operation.souscategorie_id).description;
+                }
+            
+                //Logic to determine the compte name based on compte_id
+                let compteName = 'Inconnu'; // Default for unknown
+                compteName = accountsJSON.find(account => account.id === operation.compte_id).name;
+            
+                //Logic to determine the compte name based on compte_destinataire_id
+                let compteDestinataireName = ''; // Default for unknown
+                if (operation.compte_destinataire_id) {
+                    compteDestinataireName = accountsJSON.find(account => account.id === operation.compte_destinataire_id).name;
+                } else if (operation.type_id === 3) {
+                    compteDestinataireName = 'En dehors de vos comptes';
+                } 
+            
+                // Add operation details
+                operationItem.innerHTML = `
+                    <div class="operation-item_circle" style="background-color:${categorieColor};">
+                        <i class="fa-solid fa-${sousCategorieIcon}"></i>
+                    </div>
+                    <div class="operation-item_type">${getOperationType(operation.type_id)}</div>
+                    <span class="operation-item_categorie">${sousCategorieName}</span>
+                    <span class="operation-item_account">${compteName}</span>
+                    <span class="operation-item_dest-account">${compteDestinataireName}</span>
+                    <span class="operation-item_time">${new Date(operation.timestamp).toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'})}</span>
+                    <span class="operation-item_amount ${amountClass}">${amountSign}${parseFloat(operation.montant).toFixed(2)} €</span>
+                    <div class="operation-buttons">
+                        <button class="btn-action btn-modify" onclick="showOperationModal('modify', ${operation.id}, ${operation.compte_id});">
+                            <i class="fa-solid fa-pencil"></i>Modifier
+                        </button>
+                        <button class="btn-action btn-delete" onclick="showOperationModal('delete', ${operation.id}, ${operation.compte_id});">
+                            <i class="fa-solid fa-trash"></i>Supprimer
+                        </button>
+                    </div>
+                `;
+            
+                operationSubList.appendChild(operationItem);
+            });
+        
+            dateBlock.appendChild(operationSubList);
+            operationList.appendChild(dateBlock);
+        });
+    }
+
+    function getOperationType(typeId) {
+        switch (typeId) {
+            case 1:
+                return 'Dépense';
+            case 2:
+                return 'Revenu';
+            case 3:
+                return 'Transfert';
+            default:
+                return 'Inconnu';
+        }
+    }
+
+    // Call the function
+    try {
+        renderOperations(operationsJSON);
+    } catch (error) {
+        console.error('Error rendering operations:', error);
+    }
+} else {
+    opTitle.innerHTML = `Liste de transactions`;
+    operationsTitle.appendChild(opTitle);
     const operationList = document.querySelector('.operation-list');
     operationList.innerHTML = ''; // Clear existing content
-
-    if (!operations || operations.length === 0) {
-        operationList.innerHTML = '<span class="operation-message">Ce compte ne connaît aucune opération! Il est possible d\'ajouter une transaction.</span>';
-        return;
-    }
-
-    // Group operations by date
-    const operationsByDate = operations.reduce((acc, operation) => {
-        const date = new Date(operation.timestamp).toLocaleDateString('fr-FR'); // Format date
-        if (!acc[date]) {
-            acc[date] = [];
-        }
-        acc[date].push(operation);
-        return acc;
-    }, {});
-
-    // Reverse the order of days from recent to oldest
-    Object.entries(operationsByDate)
-    .sort(([dateA], [dateB]) => {
-        // Parse the date strings back into Date objects for accurate sorting
-        const parsedDateA = dateA.split('/').reverse().join('-'); // Convert "DD/MM/YYYY" to "YYYY-MM-DD"
-        const parsedDateB = dateB.split('/').reverse().join('-');
-        return new Date(parsedDateB) - new Date(parsedDateA); // Sort in descending order
-    })
-    .forEach(([date, operations]) => {
-        // Sort operations by time within the day
-        operations.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort the operations by date from newest to oldest
-    
-        // Create date block
-        const dateBlock = document.createElement('li');
-        dateBlock.className = 'operation-date';
-    
-        const dateHeader = document.createElement('h3');
-        dateHeader.textContent = date;
-        dateBlock.appendChild(dateHeader);
-    
-        // Create operations list for this date
-        const operationSubList = document.createElement('ul');
-    
-        operations.forEach(operation => {
-            const operationItem = document.createElement('li');
-            operationItem.className = 'operation-item';
-        
-            // Logic to determine the amount color and math sign based on the operation type
-            let amountClass = 'color-green'; // Default to green
-            let amountSign = '+';
-            if (operation.type_id === 1 || (operation.type_id === 3 && operation.compte_id === selectedAccount)) {
-                // Expense
-                amountClass = 'color-red';
-                amountSign = '-';
-            } 
-        
-            //Logic to determine the categorie color based on categorie_id
-            let categorieColor = '#6082B6'; // Default for transferts
-            if (operation.categorie_id) {
-                categorieColor = categories.find(categorie => categorie.id === operation.categorie_id).color;
-            }
-        
-            //Logic to determine the sousCategorie icon and descriptio based on souscategorie_id
-            let sousCategorieIcon = 'arrow-right-arrow-left'; // Default for transferts
-            let sousCategorieName = 'Transfert'; // Default for transferts
-            if (operation.souscategorie_id) {
-                sousCategorieIcon = sousCategories.find(sousCategorie => sousCategorie.id === operation.souscategorie_id).icone;
-                sousCategorieName = sousCategories.find(sousCategorie => sousCategorie.id === operation.souscategorie_id).description;
-            }
-        
-            //Logic to determine the compte name based on compte_id
-            let compteName = 'Inconnu'; // Default for unknown
-            compteName = accountsJSON.find(account => account.id === operation.compte_id).name;
-        
-            //Logic to determine the compte name based on compte_destinataire_id
-            let compteDestinataireName = ''; // Default for unknown
-            if (operation.compte_destinataire_id) {
-                compteDestinataireName = accountsJSON.find(account => account.id === operation.compte_destinataire_id).name;
-            } else if (operation.type_id === 3) {
-                compteDestinataireName = 'En dehors de vos comptes';
-            } 
-        
-            // Add operation details
-            operationItem.innerHTML = `
-                <div class="operation-item_circle" style="background-color:${categorieColor};">
-                    <i class="fa-solid fa-${sousCategorieIcon}"></i>
-                </div>
-                <div class="operation-item_type">${getOperationType(operation.type_id)}</div>
-                <span class="operation-item_categorie">${sousCategorieName}</span>
-                <span class="operation-item_account">${compteName}</span>
-                <span class="operation-item_dest-account">${compteDestinataireName}</span>
-                <span class="operation-item_time">${new Date(operation.timestamp).toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'})}</span>
-                <span class="operation-item_amount ${amountClass}">${amountSign}${parseFloat(operation.montant).toFixed(2)} €</span>
-                <div class="operation-buttons">
-                    <button class="btn-action btn-modify" onclick="showOperationModal('modify', ${operation.id}, ${operation.compte_id});">
-                        <i class="fa-solid fa-pencil"></i>Modifier
-                    </button>
-                    <button class="btn-action btn-delete" onclick="showOperationModal('delete', ${operation.id}, ${operation.compte_id});">
-                        <i class="fa-solid fa-trash"></i>Supprimer
-                    </button>
-                </div>
-            `;
-        
-            operationSubList.appendChild(operationItem);
-        });
-    
-        dateBlock.appendChild(operationSubList);
-        operationList.appendChild(dateBlock);
-    });
-}
-
-function getOperationType(typeId) {
-    switch (typeId) {
-        case 1:
-            return 'Dépense';
-        case 2:
-            return 'Revenu';
-        case 3:
-            return 'Transfert';
-        default:
-            return 'Inconnu';
-    }
-}
-
-// Call the function
-try {
-    renderOperations(operationsJSON);
-} catch (error) {
-    console.error('Error rendering operations:', error);
+    operationList.innerHTML = '<span class="operation-message">Il n\'y a auccun compte pour le moment. Veuillez créer un compte pour y ajouter une transaction.</span>';
 }
 
 //==========================================WIDGET'S RENDERRING========================================//

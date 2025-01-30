@@ -9,6 +9,9 @@
         private $email;
         private $mot_de_passe;
         private $date_creation;
+        private $password_reset_token;
+        private $token_expiration;
+        private $photo;
 
 
         public function __construct($data = []) { // for exemple $data = ['id' => 1, 'numProduit' => 'BB0001' ... ]
@@ -138,6 +141,66 @@
         public function setDate_creation($date_creation)
         {
                 $this->date_creation = $date_creation;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of password_reset_token
+         */ 
+        public function getPassword_reset_token()
+        {
+                return $this->password_reset_token;
+        }
+
+        /**
+         * Set the value of password_reset_token
+         *
+         * @return  self
+         */ 
+        public function setPassword_reset_token($password_reset_token)
+        {
+                $this->password_reset_token = $password_reset_token;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of token_expiration
+         */ 
+        public function getToken_expiration()
+        {
+                return $this->token_expiration;
+        }
+
+        /**
+         * Set the value of token_expiration
+         *
+         * @return  self
+         */ 
+        public function setToken_expiration($token_expiration)
+        {
+                $this->token_expiration = $token_expiration;
+
+                return $this;
+        }
+
+        /**
+         * Get the value of photo
+         */ 
+        public function getPhoto()
+        {
+                return $this->photo;
+        }
+
+        /**
+         * Set the value of photo
+         *
+         * @return  self
+         */ 
+        public function setPhoto($photo)
+        {
+                $this->photo = $photo;
 
                 return $this;
         }

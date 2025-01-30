@@ -57,6 +57,7 @@
             $table=$this->table;
             $this->insertTable($table,$data);
         }
+        
         public function update($data){
             $table=$this->table;
             $this->updateTable($table,$data);

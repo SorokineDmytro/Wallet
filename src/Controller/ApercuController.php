@@ -40,6 +40,7 @@
                     'lastName' => $client->getNomclient(),
                     'firstName' => $client->getPrenomclient(),
                     'email' => $client->getEmail(),
+                    'photo' => $client->getPhoto(),
                 ];
 
                 // ACCOUNTS
@@ -58,7 +59,7 @@
 
                 // OPERATIONS
                 // Get the selected account ID passed from the URL
-                $selectedAccount = $_GET['acc_Id'] ?? $formattedAccounts[0]['id'];
+                $selectedAccount = $_GET['acc_Id'] ?? $formattedAccounts[0]['id'] ?? null;
                 $selectedAccountJSON = json_encode($selectedAccount);
                 // Get all operations by client
                 $operationsTotalByClient = $operationManager->findAll(['client_id'=>$clientId], "array", "order by id");
