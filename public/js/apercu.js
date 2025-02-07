@@ -299,7 +299,7 @@ function showAccountModal(action, accountId) {
         formContainerAccType.append(accTypeLabel);
         formContainerAccType.append(accTypeSelect);
 
-            // Creating the container AccName
+        // Creating the container AccName
         const formContainerAccName = document.createElement('div');
         formContainerAccName.className = 'form-container acc-name';
         // Creating the label

@@ -60,6 +60,7 @@ h2 {
     grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
     color: #201f23;
+    background-color: #F9F9FD;
 }
 
 aside {
@@ -69,8 +70,10 @@ aside {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(120deg, #1dbed7 0%, #1D8FE1 50%, #625EB1 100%);
-    background-blend-mode: screen;
+    background-image: url(../img/login.webp);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 main {
@@ -80,7 +83,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f5f5f5;
+    background-color: #F9F9FD;
     padding: 20px;
 }
 

@@ -570,7 +570,6 @@ function validateLastName() {
 
     enableSubmitButton();
 }
-    // document.querySelector('#lastName').addEventListener('keyup', validateLastName);
 
 // Verify that the first name is at least 2 characters long (trim spaces) and contains at least 2 letters
 function validateFirstName() {
@@ -607,7 +606,6 @@ function validateFirstName() {
 
     enableSubmitButton();
 }
-// document.querySelector('#firstName').addEventListener('keyup', validateFirstName);
 
 // Validate email format and uniqueness
 function validateEmail() {
@@ -670,7 +668,6 @@ function updateIconAndStyles(input, icon, iconClass, color, tooltip) {
         iconContainer.title = tooltip;
     }
 }
-// document.querySelector('#email').addEventListener('input', validateEmail);
 
 // Validate password with specific rules
 function validatePassword() {
@@ -682,7 +679,7 @@ function validatePassword() {
     const hasUppercase = /[A-Z]/.test(password); // at least one uppercase letter
     const hasDigit = /\d/.test(password); // at least one digit
     const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password); // at least one special character
-    const isLongEnough = password.length >= 8; // at least 6 characters
+    const isLongEnough = password.length >= 8; // at least 8 characters
 
     // Combine all rules
     const isValid = hasLowercase && hasUppercase && hasDigit && hasSpecialChar && isLongEnough;
@@ -698,7 +695,6 @@ function validatePassword() {
 
     enableSubmitButton();
 }
-// document.querySelector('#password').addEventListener('input', validatePassword);
 
 // Validate password confirmation
 function validatePasswordConfirmation() {
@@ -717,7 +713,6 @@ function validatePasswordConfirmation() {
 
     enableSubmitButton();
 }
-// document.querySelector('#passwordConfirmation').addEventListener('input', validatePasswordConfirmation);
 
 // Function that enables the submit button only if all the inputs are filled in and the passwords match
 function enableSubmitButton() {

@@ -18,7 +18,7 @@
     <body>
         <div class="wrapper">
             <aside>
-                <img src="./public/img/wellcome.jpeg" alt="wellcome image of wallet" class="wellcome-image">
+                
             </aside>
             <main>
                 <?=$content?>

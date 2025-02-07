@@ -26,7 +26,6 @@ CREATE TABLE Client (
     password_reset_token VARCHAR(255),
     token_expiration TIMESTAMP
 );
--- pour inserer le client utilise la fonction insertClient dans process.php qui va hasher le MDP avec BCRYPT
 
 -- indexing the email column to speed up the search
 ALTER TABLE client ADD CONSTRAINT unique_email UNIQUE (email);

@@ -60,11 +60,11 @@
                     <div class="separator"></div>
                     <a class="menu-btn logout"><i class="fas fa-door-open"></i></a>
                     <div class="separator"></div>
-                    <div class="person">
+                    <a href="reglages" class="person">
                         <div class="photo" style="background-image:url('<?= $clientInfo['photo']?>');"></div>
                         <span class="name"><?= $clientInfo['firstName'].' '.$clientInfo['lastName'] ?></span>
                         <span class="mail"><?= $clientInfo['email'] ?></span>
-                    </div>
+                    </a>
                 </div>
             </header>
             <main>

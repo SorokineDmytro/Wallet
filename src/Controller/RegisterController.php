@@ -43,7 +43,7 @@ class RegisterController extends Manager {
             'prenomclient' => $input['firstName'],
             'email' => $input['email'],
             'mot_de_passe' => $hashedPassword,
-            'photo' => './public/img/user.png',
+            'photo' => './public/img/avatars/unknown_user.png',
         ]);
 
         echo json_encode(['success' => true, 'message' => 'Inscription réussie ! Vous serez redirigé.']);

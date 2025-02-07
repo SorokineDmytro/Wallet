@@ -31,11 +31,18 @@
                     'firstName' => $client->getPrenomclient(),
                     'email' => $client->getEmail(),
                     'photo' => $client->getPhoto(),
+                    'register_date' => date("d-m-Y", strtotime($client->getDate_creation())),
                 ];
+
+                // CLIENTS
+                $clientsListJSON = $clientManager->findAll([], 'array');
+                $clientsEmailListJSON = json_encode(array_column($clientsListJSON, 'email'));
 
                 $variables = [
                     "title" => $title,
                     "clientInfo" => $clientInfo,
+                    "clientInfoJSON" => json_encode($clientInfo),
+                    "clientsEmailListJSON" => $clientsEmailListJSON,
                 ];
                 $this -> generatePage($file, $variables);
             } else {

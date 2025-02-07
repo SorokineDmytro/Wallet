@@ -71,7 +71,7 @@ h3 {
 
 .wrapper {
     width: 100%;
-    height: 110vh;
+    height: 100vh;
     display: grid;
     grid-template-areas: 
     "aside header"
@@ -251,7 +251,7 @@ header {
 
 main {
     grid-area: main;
-    background-color: #f6f6f6;
+    background-color: #F9F9FD;
     padding: 30px 40px;
 
     min-height: 1fr;
