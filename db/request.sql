@@ -315,3 +315,16 @@ INSERT INTO operation (compte_id, timestamp, montant, type_id, categorie_id, sou
 (1, CURRENT_TIMESTAMP, 1950.00, 2, 10, 56, 1),
 (1, CURRENT_TIMESTAMP, 550.00, 1, 3, 13, 1),
 (2, CURRENT_TIMESTAMP, 100.00, 1, 5, 24, 1);
+
+-- Création de la table Epargne
+CREATE TABLE Epargne (
+    id SERIAL PRIMARY KEY,
+    client_id INTEGER NOT NULL,
+    montant_initial DECIMAL (12, 2),
+    contributions DECIMAL (12, 2),
+    periode_contributions VARCHAR(10) NOT NULL,
+    taux_interet DECIMAL (12, 2),
+    periode_interet VARCHAR(10) NOT NULL,
+    nombre_annees INTEGER NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES Client(id) ON DELETE CASCADE
+);

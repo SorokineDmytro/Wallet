@@ -6,18 +6,17 @@
         "operation";
     grid-template-rows: 10vw 20vw max-content;
     grid-template-columns: 1fr;
-    row-gap: 30px;
+    row-gap: 1vw;
     transition: filter 0.3s ease;
 }
-
 
 /*=================================================MAIN WIDGETS TOP====================================*/
 .main-widgets {
     display: grid;
     grid-area: widget;
     grid-template-columns: repeat(4, 1fr);
-    column-gap: 2%;
-
+    column-gap: 1vw;
+    height: 100%;
 }
 
 .widget {
@@ -28,8 +27,9 @@
         "bottom";
     grid-template-columns: 1fr;
     grid-template-rows: 3fr repeat(2, 2fr);
-    row-gap: 10px;
-    padding: 20px;
+    row-gap: 0.5vw;
+    padding: 1vw;
+    height: 100%;
 }
 
 .widget:hover .widget-title {
@@ -41,7 +41,6 @@
 .widget-title {
     grid-area: top;
     color: #9d9ea2;
-    /* font-size: 16px; */
     font-size: 1.1vw;
     font-weight: 500;
     transition: 500ms;
@@ -83,7 +82,7 @@
     grid-area: statistic;
     grid-template-columns: 5fr 3fr;
     grid-template-rows: 1fr;
-    column-gap: 2%;
+    column-gap: 1vw;
 }
 
 .statistics {
@@ -137,14 +136,10 @@
 }
 
 .total-subcontainer:hover {
-    background-color: #16a18c;
-    border-radius: 0.5vw;
+    box-shadow: #e2e2e2 1px 1px 20px 1px;
+    border-radius: 20px;
     cursor: pointer;
     
-}
-
-.total-subcontainer:hover span {
-    color: #fafafa;
 }
 
 .total-subtitle {
@@ -168,10 +163,8 @@
 .accounts {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* grid-template-rows: 3fr repeat(2, 2fr); */
     grid-auto-rows: 7.5vw;
-    row-gap: 20px;
-    column-gap: 20px;
+    gap: 1vw;
     padding: 1.8vw 1.5vw;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -183,9 +176,10 @@
     height: 100%;
     box-shadow: #e2e2e2 1px 1px 20px 1px;
     border-radius: 20px;
-    padding: 10px;
+    padding: 0.75vw;
     transition: 500ms;
     cursor: pointer;
+    /* overflow: hidden; */
 }
 
 .account:hover {
@@ -381,7 +375,6 @@
 .modal-account {
     position: absolute;
     top: 5%;
-    /* left: 7.5%; */
     width: 100%;
     background-color: transparent;
     display: flex;
@@ -427,7 +420,7 @@
 .required::after {
     content: '*';
     margin-left: 5px;
-    color: red;
+    color: #ee3939;
     font-weight: 700;
     font-size: 1.25em;
 }
@@ -458,6 +451,15 @@
 
 .form-select {
     cursor: pointer;
+}
+
+select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("../img/caret-down-light.svg");
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 1%) center;
 }
 
 .form-title {
@@ -500,7 +502,7 @@ input[type=color]::-webkit-color-swatch {
     border: none;
 }
 input[type=color]::-moz-color-swatch {
-    border-radius: 15px;
+    border-radius: 50%;
     border: none;
 }
 
@@ -553,6 +555,11 @@ input[type=color]::-moz-color-swatch {
 .btn-submit:hover {
     opacity: 100%;
     transition: 500ms;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .modal-close {
@@ -691,6 +698,7 @@ input[type=color]::-moz-color-swatch {
 .operation-item_categorie {
     grid-area: categorie;
     color: #201f23;
+    padding-right: 5%;
 }
 
 .operation-item_account {
@@ -767,9 +775,7 @@ input[type=color]::-moz-color-swatch {
 .modal-operation {
     position: absolute;
     top: 0%;
-    /* left: 15%; */
     width: 100%;
-
     background-color: transparent;
     display: flex;
     align-items: center;
@@ -853,7 +859,7 @@ legend {
     display: block;
     width: 100%;
     height: max-content;
-    font-size: 20px;
+    font-size: 1vw;
     font-weight: 600;
     padding-top: 30px;
     text-align: center;
@@ -932,7 +938,7 @@ input[type=radio]:checked + label {
 }
 
 .op-amount input {
-    width: 60%;
+    width: 65%;
 }
 
 .op-date {
@@ -944,7 +950,7 @@ input[type=radio]:checked + label {
 }
 
 .op-date input {
-    width: 70%;
+    width: 65%;
 }
 
 .op-acc {
@@ -976,7 +982,7 @@ input[type=radio]:checked + label {
     display: grid;
     align-items: center;
     grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
+    gap: 1vw;
 }
 
 .op-cat-radio, .op-s-cat-radio {
@@ -990,23 +996,15 @@ input[type=radio]:checked + label {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
-    font-size: 20px;
     color: #fff;
-    margin-bottom: 5px;
+    margin-bottom: 0.5vw;
 }
 
 .op-cat-radio span, .op-s-cat-radio span {
-    font-size: 12px;
     font-weight: 500;
     text-align: center;
     height: 30px;
-}
-
-.op-cat-radio input[type=radio]:checked + label, .op-s-cat-radio input[type=radio]:checked + label {
-    border: solid 3px #ffb325;
 }
 
 
@@ -1022,7 +1020,7 @@ input[type=radio]:checked + label {
         margin-bottom: 5px;
         color: #fff;
         transition: 500ms;
-        margin-right: 10px;
+        margin-right: 0.5vw;
     }
 
     .context-menu_circle svg{
@@ -1071,9 +1069,31 @@ input[type=radio]:checked + label {
     .btn-action {
         font-size: 0.8vw;
     }
+
+    .op-cat-radio label, .op-s-cat-radio label {
+        width: 2.75vw;
+        height: 2.75vw;
+        font-size: 1.25vw;
+    }
+
+    .op-cat-radio input[type=radio]:checked + label, .op-s-cat-radio input[type=radio]:checked + label {
+        border: solid 0.15vw #ffb325;
+    }
+
+    .op-cat-radio span, .op-s-cat-radio span {
+        font-size: 0.6vw;
+    }
 }
 
 @media screen and (max-width: 1600px) {
+    .operations {
+        row-gap: 2vw;
+    }
+
+    .operations-title h2 {
+        font-size: 2vw;
+    }
+
     .operation-date h3 {
         font-size: 14px;
     }
@@ -1116,6 +1136,25 @@ input[type=radio]:checked + label {
     .btn-action {
         font-size: 1vw;
     }
+
+    .op-cat-radio label, .op-s-cat-radio label {
+        width: 3.5vw;
+        height: 3.5vw;
+        font-size: 1.3vw;
+    }
+
+    .op-cat-radio input[type=radio]:checked + label, .op-s-cat-radio input[type=radio]:checked + label {
+        border: solid 0.3vw #ffb325;
+    }
+
+    .op-cat-radio span, .op-s-cat-radio span {
+        font-size: 0.85vw;
+    }
+
+    .context-menu_circle {
+        width: 2vw;
+        height: 2vw;
+    }
 }
 
 
@@ -1126,9 +1165,9 @@ input[type=radio]:checked + label {
             "widget"
             "statistic"
             "operation";
-        grid-template-rows: 100px 450px max-content;
+        grid-template-rows: 120px 450px max-content;
         grid-template-columns: 1fr;
-        row-gap: 30px;
+        row-gap: 1.5vw;
         transition: filter 0.3s ease;
     }
 
@@ -1137,19 +1176,71 @@ input[type=radio]:checked + label {
         grid-area: statistic;
         grid-template-columns: 1fr;
         grid-template-rows: 4fr 2fr;
-        row-gap: 7.5%;
-        height: 450px;
+        row-gap: 1.5vw;
+        height: 100%
     }
 
     .accounts {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
         grid-auto-rows: 95px;
-        row-gap: 20px;
-        column-gap: 20px;
+        gap: 1vw;
         padding: 1.8vw 1.5vw;
         overflow-y: scroll;
         scrollbar-width: none;
+    }
+
+    .account-img {
+        width: 2.5vw;
+        height: 2.5vw;
+        border-radius: 10px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .account-img>svg {
+        width: 60%;
+        height: 60%;
+    }
+    
+    .account:hover .account-amount {
+        font-size: 1.65vw;
+    }
+    
+    .account-title {
+        font-size: 1vw;
+        margin: 0.4vw 0;
+    }
+    
+    .account-amount {
+        font-size: 1.5vw;
+    }
+
+    .selected .account-amount {
+        font-size: 1.65vw;
+    }
+
+    .context-menu_circle {
+        width: 2.5vw;
+        height: 2.5vw;
+    }
+
+    .context-menu_circle svg{
+        font-size: 1vw;
+    }
+
+    .total-title {
+        font-size: 1.5vw;
+    }
+
+    .total-subtitle {
+        font-size: 1.5vw;
+    }
+    
+    .total-amount {
+        font-size: 1.75vw;
     }
 
     .operation-add {
@@ -1163,6 +1254,18 @@ input[type=radio]:checked + label {
         height: 1.7vw;
     }
 
+    .operation-item_circle {
+        grid-area: image;
+        width: 3vw;
+        height: 3vw;
+        border-radius: 50%;
+        margin: 0 auto;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
     .operation-item_type {
         font-size: 1.25vw;
     }
@@ -1190,4 +1293,677 @@ input[type=radio]:checked + label {
     .btn-action {
         font-size: 1.5vw;
     }
+
+    /* MODAL */
+    .form-operation {
+        width: 80%;
+    }
+
+    legend {
+        font-size: 1.5vw;
+    }
+
+    .op-cat-radio label, .op-s-cat-radio label {
+        width: 5vw;
+        height: 5vw;
+        font-size: 1.75vw;
+    }
+
+    .op-cat-radio span, .op-s-cat-radio span {
+        font-size: 1.25vw;
+    }
+}
+
+@media screen and (max-width: 950px) {
+
+    .main-conatainer {
+        grid-template-rows: 100px 400px max-content;
+    }
+
+    .main-statistic {
+        display: grid;
+        grid-area: statistic;
+        grid-template-columns: 1fr;
+        grid-template-rows: 2fr 1.25fr;
+        row-gap: 1.5vw;
+        height: 100%;
+    }
+
+    .widget-title {
+        font-size: 1.5vw;
+    }
+    
+    .widget-middle {
+        font-size: 1.8vw;
+    }
+    
+    .widget-circle {
+        height: 1.8vw;
+        font-size: 1vw;
+    }
+    
+    .widget-secondary-amount {
+        font-size: 1vw;
+    }
+
+    .btn-action span {
+        display: none;
+    }
+
+    .btn-action {
+        font-size: 1.75vw;
+    }
+
+    .actions {
+        display: block;
+        position: absolute;
+        top: -5%;
+        right: -3%;
+        text-align: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border: 1px solid #9d9ea2;
+        background-color: transparent;
+        color: #000;
+        font-size: 10px;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    .account:hover .actions {
+        display: block;
+        position: absolute;
+        top: -5%;
+        right: -3%;
+        text-align: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background-color: #377cf6;
+        color: #fff;
+        font-size: 10px;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    .context-menu_circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 6vw;
+        height: 6vw;
+        border: 1px solid #d0d0d0;
+        border-radius: 50%;
+        margin-bottom: 5px;
+        color: #fff;
+        transition: 500ms;
+        margin-right: 1.5vw;
+    }
+
+    .context-menu_circle svg{
+        font-size: 2.5vw;
+    }
+
+    .account-img {
+        width: 3vw;
+        height: 3vw;
+        border-radius: 10px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .account-title {
+        margin: 0.8vw 0;
+        color: #9d9ea2;
+        font-size: 1.3vw;
+        transition: 300ms;
+    }
+    
+    .account-amount {
+        font-size: 1.8vw;
+    }
+
+    .selected .account-amount {
+        font-size: 2vw;
+        transition: 500ms;
+    }
+
+    .account:hover .account-amount {
+        font-size: 2vw;
+    }
+
+    /* MODALS  */
+    .overlay {
+        left: 10%;
+        width: 90%;
+    }
+
+    .form-account {
+        width: 80%;
+    }
+
+    .form-title {
+        display: block;
+        font-size: 3vw;
+        grid-area: title;
+    }
+
+    .form-body {
+        grid-template-areas:
+        "type type"
+        "name name"
+        "amount amount"
+        "color color";
+    }
+
+    .acc-amount label {
+        width: 30%;
+    }
+    
+    .acc-amount input {
+        width: 65%;
+    }
+
+    .form-operation {
+        width: 90%;
+    }
+
+    legend {
+        font-size: 2vw;
+    }
+
+    .op-cat-radio label, .op-s-cat-radio label {
+        width: 7vw;
+        height: 7vw;
+        font-size: 2.5vw;
+    }
+
+    .op-cat-radio span, .op-s-cat-radio span {
+        font-size: 1.5vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-conatainer {
+        display: grid;
+        grid-template-areas: 
+            "widget"
+            "statistic"
+            "operation";
+        grid-template-rows: 80px 350px max-content;
+        grid-template-columns: 1fr;
+        row-gap: 1.5vw;
+        transition: filter 0.3s ease;
+    }
+
+    .accounts {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1.3fr));
+        grid-auto-rows: 85px;
+        gap: 1vw;
+        padding: 1.8vw 1.5vw;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    .account-img {
+        width: 3.5vw;
+        height: 3.5vw;
+        border-radius: 10px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .account-title {
+        margin: 0.8vw 0;
+        color: #9d9ea2;
+        font-size: 1.5vw;
+        transition: 300ms;
+    }
+    
+    .account-amount {
+        font-size: 2vw;
+    }
+
+    .selected .account-amount {
+        font-size: 2.2vw;
+        transition: 500ms;
+    }
+
+    .account:hover .account-amount {
+        font-size: 2.2vw;
+    }
+
+    .add-account div {
+        width: 3.5vw;
+        height: 3.5vw;
+        font-size: 1.75vw;
+    }
+    
+    .add-account span {
+        font-size: 1.5vw;
+    }
+
+    .total-subcontainer:hover {
+        border-radius: 15px;
+    }
+
+    .total-title {
+        font-size: 2vw;
+    }
+
+    .total-subtitle {
+        font-size: 2vw;
+    }
+    
+    .total-amount {
+        font-size: 2.25vw;
+    }
+
+    .operation-date h3 {
+        font-size: 1.2vw;
+    }
+
+    /* MODALS  */
+    .form-operation {
+        row-gap: 3vw;
+        width: 90%;
+    }
+
+    .form-op-body {
+        row-gap: 3vw;
+        grid-template-areas:
+        "type type"
+        "date date"
+        "amount amount"
+        "account account"
+        "accountTr accountTr"
+        "categorie categorie"
+        "s-categorie s-categorie";
+    }
+
+    legend {
+        font-size: 2.5vw;
+    }
+
+    .op-cat-radio span, .op-s-cat-radio span {
+        font-size: 1.7vw;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .main-conatainer {
+        display: grid;
+        grid-template-areas: 
+            "widget"
+            "statistic"
+            "operation"
+            "empty";
+        grid-template-rows: 180px 250px 1fr 15vw;
+        grid-template-columns: 1fr;
+        row-gap: 3vw;
+        transition: filter 0.3s ease;
+    }
+
+    .empty {
+        grid-area: empty;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .main-widgets {
+        display: grid;
+        grid-area: widget;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 1.5vw;
+        height: 100%;
+    }
+
+    .widget {
+        border-radius: 10px;
+        display: grid;
+        height: 3fr;
+        grid-template-areas: 
+            "top" 
+            "middle"
+            "bottom";
+        grid-template-columns: 1fr;
+        grid-template-rows: 3fr, repeat(2, 2fr);
+        row-gap: 1vw;
+        padding: 2vw;
+        min-height: 100%;
+    }
+
+    .widget-title {
+        font-size: 3.5vw;
+    }
+    
+    .widget-middle {
+        font-size: 3.5vw;
+    }
+    
+    .widget-circle {
+        height: 3.5vw;
+        font-size: 1.75vw;
+        padding: 0.6vw;
+    }
+    
+    .widget-secondary-amount {
+        font-size: 2.25vw;
+    }
+
+    .main-statistic {
+        display: grid;
+        grid-area: statistic;
+        grid-template-columns: 1fr;
+        grid-template-rows: 2fr 2fr;
+        row-gap: 1.5vw;
+        height: 100%;
+    }
+
+    .accounts {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        grid-auto-rows: 100px;
+        gap: 1vw;
+        padding: 1.8vw 1.5vw;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    .account {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        box-shadow: #e2e2e2 1px 1px 20px 1px;
+        border-radius: 15px;
+        padding: 1.75vw;
+        transition: 500ms;
+        cursor: pointer;
+    }
+
+    .account-img {
+        width: 7vw;
+        height: 7vw;
+        border-radius: 5px;
+    }
+
+    .account-title {
+        font-size: 3.75vw;
+    }
+    
+    .account-amount {
+        font-size: 3.75vw;
+    }
+
+    .selected .account-amount {
+        font-size: 4vw;
+        transition: 500ms;
+    }
+
+    .account:hover .account-amount {
+        font-size: 4vw;
+    }
+
+    .add-account {
+        height: 100%;
+        border-radius: 15px;
+        padding: 1.75vw;
+    }
+
+    .add-account div {
+        width: 6vw;
+        height: 6vw;
+        font-size: 3.5vw;
+    }
+    
+    .add-account span {
+        font-size: 4vw;
+    }
+
+    .context-menu_circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 12.5vw;
+        height: 12.5vw;
+        border: 1px solid #d0d0d0;
+        border-radius: 50%;
+        margin-bottom: 5px;
+        color: #fff;
+        transition: 500ms;
+        margin-right: 1.5vw;
+    }
+
+    .context-menu_circle svg{
+        font-size: 4vw;
+    }
+
+    .total-subcontainer:hover {
+        border-radius: 10px;
+    }
+
+    .total-title {
+        font-size: 2.5vw;
+    }
+
+    .total-subtitle {
+        font-size: 2.5vw;
+    }
+    
+    .total-amount {
+        font-size: 2.75vw;
+    }
+    
+    .operations-title h2 {
+        font-size: 3.5vw;
+    }
+
+    .operation-add {
+        width: 170px;
+        margin-right: 2%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 3.5vw;
+        padding: 5px;
+    }
+    
+    .operation-add div {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        color: #377cf6;
+        transition: 300ms;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .operation-date h3 {
+        font-size: 3vw;
+    }
+
+    .operation-item {   
+        padding: 1vw;
+        box-shadow: #e2e2e2 1px 1px 20px 1px;
+        border-radius: 10px;
+        display: grid;
+        align-items: center;
+        grid-template-areas: 
+        "image categorie categorie amount buttons"
+        "image account dest_account time buttons";
+        grid-template-columns: 15% 25% 20% 25% 15%;
+        grid-template-rows: repeat(2, 1fr);
+        margin-bottom: 5px;
+        transition: 500ms;
+    }
+
+    .operation-item_circle {
+        grid-area: image;
+        width: 9vw;
+        height: 9vw;
+    }
+    
+    .operation-item_type {
+        display: none;
+        font-size: 3vw;
+    }
+
+    .operation-item_categorie {
+        grid-area: categorie;
+        font-size: 3.5vw;
+    }
+    
+    .operation-item_account {
+        grid-area: account;
+        font-size: 3vw;
+    }
+    
+    .operation-item_dest-account {
+        grid-area: dest_account;
+        font-size: 3vw;
+    }
+    
+    .operation-item_time {
+        grid-area: time;
+        font-size: 3vw;
+    }
+    
+    .operation-item_amount {
+        grid-area: amount;
+        font-size: 3.5vw;
+    }
+    
+    .btn-action {
+        grid-area: buttons;
+        font-size: 3.5vw;
+    }
+
+    /* MODALS  */
+    .overlay {
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .form-account {
+        display: grid;
+        row-gap: 30px;
+        grid-template-areas: 
+        "title"
+        "body"
+        "buttons";
+        position: relative;
+        width: 90%;
+    }
+
+    .form-title {
+        display: block;
+        font-size: 5vw;
+        grid-area: title;
+    }
+
+    .form-body {
+        grid-template-areas:
+        "type type"
+        "name name"
+        "amount amount"
+        "color color";
+        gap: 0;
+        grid-template-rows: repeat(4, 1fr);
+    }
+
+    .form-container {
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        float: left; 
+        width: 100%; 
+        font-weight: 600;
+        margin-bottom: 5%;
+    }
+    
+    .form-input, .form-select {
+        width: 100%;
+        height: 40px;
+    }
+
+    .acc-amount label {
+        width: 100%;
+    }
+    
+    .acc-amount input {
+        width: 100%;
+    }
+
+    .acc-color label {
+        width: 100%;
+    }
+    
+    .acc-color input {
+        width: 100%;
+    }
+
+    input[type=color]::-webkit-color-swatch {
+        border-radius: 10px;
+        border: none;
+    }
+    input[type=color]::-moz-color-swatch {
+        border-radius: 10px;
+        border: none;
+    }
+
+    .form-op-body {
+        row-gap: 0;;
+    }
+
+    legend {
+        font-size: 4vw;
+    }
+
+    .op-amount label {
+        width: 100%;
+    }
+    
+    .op-amount input {
+        width: 100%;
+    }
+    
+    .op-date label {
+        width: 100%;
+    }
+
+    .op-date input {
+        width: 100%;
+        -webkit-appearance: none; /* Remove default styling in Safari */
+        appearance: none;
+    }
+
+    .op-cat-radio label, .op-s-cat-radio label {
+        width: 10vw;
+        height: 10vw;
+        font-size: 3.5vw;
+    }
+
+    .op-cat-radio span, .op-s-cat-radio span {
+        font-size: 2.5vw;
+    }
+
 }

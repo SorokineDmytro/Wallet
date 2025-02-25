@@ -251,7 +251,7 @@ function drawExpensesCanvas(offsetStart, offsetEnd) {
                 data: [...totalByCategory],
                 backgroundColor: [...expenseCategoriesColors],
                 hoverOffset: 10,
-                borderRadius: 7.5,
+                borderRadius: 5,
                 spacing: 1,
             }],
         },

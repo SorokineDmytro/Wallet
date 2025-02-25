@@ -39,25 +39,24 @@
                     <nav>
                         <ul class="nav-list">
                             <h3>MENU</h3>
-                            <a href="index.php"><li class="nav-list_item"><i class="fa-solid fa-chart-bar"></i>Aperçu</li></a>
-                            <a href="statistique"><li class="nav-list_item"><i class="fa-solid fa-chart-pie"></i>Statistique</li></a>
-                            <a href="epargne"><li class="nav-list_item"><i class="fa-solid fa-wallet"></i>Épargne</li></a>
+                            <a href="index.php"><li class="nav-list_item"><i class="fa-solid fa-chart-bar"></i><span>Aperçu</span></li></a>
+                            <a href="statistique"><li class="nav-list_item"><i class="fa-solid fa-chart-pie"></i><span>Statistique</span></li></a>
+                            <a href="epargne"><li class="nav-list_item"><i class="fa-solid fa-wallet"></i><span>Épargne</span></li></a>
                         </ul>
                         <ul class="service-list">
                             <h3>GÉNÉRAL</h3>
-                            <a href="reglages"><li class="nav-list_item"><i class="fa-solid fa-gear"></i>Reglages</li></a>
-                            <a href=""><li class="nav-list_item"><i class="fa-solid fa-moon"></i>Apparence</li></a>
+                            <a href="reglages"><li class="nav-list_item"><i class="fa-solid fa-gear"></i><span>Reglages</span></li></a>
                         </ul>
                     </nav>
                 </div>
             </aside>
             <header>
                 <div class="header-left">
-                    <h2><?=ucfirst($title)?></h2>
+                    <h2>
+                        <?= $title === 'épargne' ? "Épargne" : ucfirst($title) ?>
+                    </h2>                  
                 </div>
                 <div class="header-right">
-                    <a class="menu-btn news"><i class="fas fa-bell"></i></a>
-                    <div class="separator"></div>
                     <a class="menu-btn logout"><i class="fas fa-door-open"></i></a>
                     <div class="separator"></div>
                     <a href="reglages" class="person">
@@ -69,6 +68,13 @@
             </header>
             <main>
                 <?=$content?>
+                <div class="nav-list-mobile">
+                    <a href="index.php"><i class="fa-solid fa-chart-bar"></i></a>
+                    <a href="statistique"><i class="fa-solid fa-chart-pie"></i></a>
+                    <a href="epargne"><i class="fa-solid fa-wallet"></i></a>
+                    <a href="reglages"><i class="fa-solid fa-gear"></i></a>
+                    <a class="logoutMobile"><i class="fas fa-door-open"></i></a>
+                </div>
             </main>
         </div>
             

@@ -57,6 +57,7 @@
                 <button class="statistic-btn line-btn" id="line-all">Tout</button>
             </div>
     </div>
+    <div class="empty"></div>
 </div>
 <script>
     // Retrieve and parse the accounts in JSON format passed from PHP

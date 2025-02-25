@@ -119,9 +119,7 @@
                         session_destroy();
 
                         // Delete client from database
-                        $clientManager->delete([
-                            'id' => $clientId,
-                        ]);
+                        $clientManager->delete($clientId);
                         // Reddirection to the wellcome page
                         header('Location: index.php?url=wellcome');
                         break;

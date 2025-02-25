@@ -17,6 +17,7 @@ section {
 }
 
 .settings-image {
+    grid-area: image;
     height: 43vw;
     width: 100%;
     background-image: url(../img/settings.webp);
@@ -26,6 +27,7 @@ section {
 }
 
 .settings-container {
+    grid-area: content;
     height: 43vw;
     width: 100%;
     display: grid;
@@ -37,10 +39,11 @@ section {
     overflow: hidden;
 }
 
-h3 {
+.settings-container h3 {
     font-weight: 700;
     font-size: 1vw;
     color: #201f23;
+    letter-spacing: normal;
 }
 
 .settings-container-logo {
@@ -233,7 +236,7 @@ h3 {
     "buttons";
     position: relative;
     width: 60%;
-    min-height: 350px;
+    min-height: 330px;
     max-height: max-content;
     padding: 3% 5%; 
     border-radius: 15px;
@@ -248,7 +251,7 @@ h3 {
     grid-area: body;
     grid-template-rows: auto;
     grid-template-columns: 1fr;
-    min-height: 150px;
+    min-height: 100px;
     max-height: max-content;
     row-gap: 20px;
 }
@@ -261,12 +264,16 @@ h3 {
     font-size: 1.25em;
 }
 
+.form-photo {
+    max-width: 100%;
+}
+
 .photo-main-container {
     display: grid;
     grid-template-areas: 
     ". photo input"
     ". photo button";
-    grid-template-columns: 0.5fr 10vw 3fr;
+    grid-template-columns: 10% 10vw 1fr;
     grid-template-rows: 3vw 7vw;
 }
 
@@ -285,8 +292,8 @@ h3 {
 
 .btn-choice-photo {
     grid-area: button;
-    width: 10vw;
-    height: 3vw;
+    width: 50%;
+    height: 50%;
     justify-self: center;
     border-radius: 10px;
     padding: 0 10px;
@@ -311,6 +318,16 @@ h3 {
     ". error-message";
     grid-template-columns: 3fr 7fr;
     position: relative;
+}
+
+.password {
+    display: grid;
+    grid-template-areas: 
+    "label"
+    "input";
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 1vw;
 }
 
 .form-label {
@@ -450,4 +467,286 @@ h3 {
     background-color: #377cf6;
     color: #fff;
     cursor: pointer;
+}
+
+@media screen and (max-width: 3840px) {
+
+}
+
+@media screen and (max-width: 1600px) {
+
+}
+
+@media screen and (max-width: 1150px) {
+    section {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+        "content";
+        gap: 1vw;
+        margin: 0 auto;
+    }
+
+    .settings-image {
+        display: none;
+    }
+
+    .settings-container {
+        grid-area: content;
+        height: 80vw;
+        width: 100%;
+        display: grid;
+        grid-template-areas: 
+        "logo"
+        "content";
+        grid-template-rows: 1fr 5fr;
+        gap: 1vw;
+        overflow: hidden;
+    }
+
+    .circle-photo {
+        width: 20vw;
+        height: 20vw;
+    }
+    
+    .action-btn {
+        width: 4.75vw;
+        height: 4.75vw;
+        font-size: 1.8vw;
+    }
+    .action-btn:hover {
+        width: 5.5vw;
+        height: 5.5vw;
+        font-size: 2vw;
+    }
+    
+    .settings-register-date {
+        font-size: 2vw;
+    }
+    .settings-register-date button {
+        top: -2.25vw;
+        right: 1vw;
+    }
+    .settings-register-date button:hover {
+        top: -2.5vw;
+        right: 0.75vw;
+    }
+    
+    .settings-container-content {
+        display: grid;
+        grid-template-areas: 
+        "header"
+        "main"
+        "password";
+        grid-template-rows: 1fr 2fr 1fr;
+    }
+
+    .settings-container h3 {
+        font-size: 2vw;
+    }
+
+    .settings-name {
+        font-size: 3vw;
+    }
+    
+    .settings-email {
+        font-size: 2vw;
+    }
+    
+    .settings-password {
+        height: 100%;
+        width: 90%;
+        margin: 0 auto;
+        padding: 2vw 1vw;
+        display: grid;
+        grid-template-rows: 0.5fr 1fr;
+    }
+
+    .info-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
+        padding: 0 2vw;
+    }
+    
+    .info-list_item-label {
+        font-size: 2vw;
+    }
+    
+    .info-list_item-text {
+        font-size: 2vw;
+    }
+
+    /* MODAL */
+    .modal {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        width: 90%;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+    }
+
+    .form-title {
+        font-size: 2.5vw;
+    }
+    
+}
+
+@media screen and (max-width: 950px) {
+    /* MODAL */
+    .overlay {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: 90%;
+        height: 80%;
+        backdrop-filter: blur(1px);
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    /* MODAL */
+    .overlay {
+        top: 10%;
+        left: 10%;
+        width: 90%;
+    }
+
+    .modal {
+        top: 10%;
+        left: 0;
+        width: 100%;
+    }
+
+    .form {
+        width: 90%;
+    }
+
+    .form-title {
+        font-size: 3.5vw;
+    }
+
+    .photo-main-container {
+        display: grid;
+        grid-template-areas: 
+        ". photo input"
+        ". photo button";
+        grid-template-columns: 10% 20vw 1fr;
+        grid-template-rows: 7vw 13vw;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .settings-container {
+        grid-area: content;
+        height: 100vw;
+    }
+    /* MODAL */
+    .overlay {
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .modal {
+        top: 10%;
+        left: 0;
+        width: 100%;
+    }
+
+    .form {
+        width: 90%;
+        grid-template-areas: 
+        "title"
+        "body"
+        "buttons";
+    }
+     
+    .form-title {
+        font-size: 4.5vw;
+        padding-top: 3vw;
+    }
+
+    .photo-main-container {
+        width: 100%;
+        display: grid;
+        grid-template-areas: 
+        "photo input"
+        "photo button";
+        grid-template-columns: 30vw 50vw;
+        grid-template-rows: 13vw 17vw;
+    }
+
+    .btn-choice-photo {
+        grid-area: button;
+        width: 70%;
+        height: 70%;
+    }
+
+    .form-btn{
+        min-width: 120px;
+    }
+
+    .action-btn {
+        width: 10vw;
+        height: 10vw;
+        font-size: 4vw;
+        bottom: -2vw;
+        right: -2vw;
+    }
+    .action-btn:hover {
+        width: 11vw;
+        height: 11vw;
+        font-size: 4.25vw;
+        bottom: -2.5vw;
+        right: -2.5vw;
+    }
+    
+    .settings-register-date {
+        font-size: 3vw;
+    }
+
+    .settings-container h3 {
+        font-size: 3vw;
+    }
+
+    .settings-name {
+        font-size: 4vw;
+    }
+    
+    .settings-email {
+        font-size: 3vw;
+    }
+    
+    .info-list_item-label {
+        font-size: 3vw;
+    }
+    
+    .info-list_item-text {
+        font-size: 3vw;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .form {
+        width: 90%;
+        grid-template-areas: 
+        "title"
+        "body"
+        "buttons"
+        "empty";
+    }
+
+    .empty {
+        grid-area: empty;
+        display: block;
+        width: 100%;
+        height: 15px;
+    }
 }

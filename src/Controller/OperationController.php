@@ -20,7 +20,7 @@
                             $compte_id = filter_var($_POST['compte_id'], FILTER_VALIDATE_INT); // Validate as int
                             $compte_destinataire_id = null;
                             $timestamp = htmlspecialchars(trim($_POST['timestamp']), ENT_QUOTES, 'UTF-8'); // Sanitize string input
-                            $montant = filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT); // Validate as float
+                            $montant = abs(filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT)); // Validate as positive float
                             $type_id = filter_var($_POST['type_id'], FILTER_VALIDATE_INT);
                             $categorie_id = filter_var($_POST['categorie_id'], FILTER_VALIDATE_INT);
                             $souscategorie_id = filter_var($_POST['souscategorie_id'], FILTER_VALIDATE_INT);
@@ -28,7 +28,7 @@
                             $compte_id = filter_var($_POST['compte_id'], FILTER_VALIDATE_INT); // Validate as int
                             $compte_destinataire_id = isset($_POST['compte_destinataire_id']) && $_POST['compte_destinataire_id'] !== '0' && $_POST['compte_destinataire_id'] !== '' ? filter_var($_POST['compte_destinataire_id'], FILTER_VALIDATE_INT) : null;                            
                             $timestamp = htmlspecialchars(trim($_POST['timestamp']), ENT_QUOTES, 'UTF-8'); // Sanitize string input
-                            $montant = filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT); // Validate as float
+                            $montant = abs(filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT)); // Validate as positive float
                             $type_id = filter_var($_POST['type_id'], FILTER_VALIDATE_INT);
                             $categorie_id = null;
                             $souscategorie_id = null;
@@ -64,7 +64,7 @@
                             $compte_id = filter_var($_POST['compte_id'], FILTER_VALIDATE_INT); // Validate as int
                             $compte_destinataire_id = null;
                             $timestamp = htmlspecialchars(trim($_POST['timestamp']), ENT_QUOTES, 'UTF-8'); // Sanitize string input
-                            $montant = filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT); // Validate as float
+                            $montant = abs(filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT)); // Validate as positive float
                             $type_id = filter_var($_POST['type_id'], FILTER_VALIDATE_INT);
                             $categorie_id = filter_var($_POST['categorie_id'], FILTER_VALIDATE_INT);
                             $souscategorie_id = filter_var($_POST['souscategorie_id'], FILTER_VALIDATE_INT);
@@ -73,7 +73,7 @@
                             $compte_id = filter_var($_POST['compte_id'], FILTER_VALIDATE_INT); // Validate as int
                             $compte_destinataire_id = isset($_POST['compte_destinataire_id']) && $_POST['compte_destinataire_id'] !== '0' && $_POST['compte_destinataire_id'] !== '' ? filter_var($_POST['compte_destinataire_id'], FILTER_VALIDATE_INT) : null;                            
                             $timestamp = htmlspecialchars(trim($_POST['timestamp']), ENT_QUOTES, 'UTF-8'); // Sanitize string input
-                            $montant = filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT); // Validate as float
+                            $montant = abs(filter_var($_POST['montant'], FILTER_VALIDATE_FLOAT)); // Validate as positive float
                             $type_id = filter_var($_POST['type_id'], FILTER_VALIDATE_INT);
                             $categorie_id = null;
                             $souscategorie_id = null;

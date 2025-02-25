@@ -30,6 +30,7 @@
             </ul>
         </div>
     </div>
+    <div class="empty"></div> <!-- to make place for mobile menu fixed to the bottom -->
 </div>
 <div id="overlay" class="overlay hidden"></div>
 <script>

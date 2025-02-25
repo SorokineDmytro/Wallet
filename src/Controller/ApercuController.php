@@ -5,7 +5,6 @@
     use App\Model\EntityManager;
     use App\Service\OperationService;
     use DateTime;
-    use phpDocumentor\Reflection\Location;
 
     class ApercuController extends Manager
     {

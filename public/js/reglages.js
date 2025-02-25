@@ -50,6 +50,7 @@ function showModal(action) {
             // Creating the hidden container Username for autocomplete
             const hiddenUsername = document.createElement('div');
             hiddenUsername.className = 'form-container hidden';
+            hiddenUsername.style.height = '0';
             // Creating the input
             const hiddenUsernameInput = document.createElement('input');
             hiddenUsernameInput.id = 'hiddenUssername';
@@ -61,7 +62,7 @@ function showModal(action) {
 
             // Creating the container NewPassword
             const formContainerNewPassword = document.createElement('div');
-            formContainerNewPassword.className = 'form-container password-new-password';
+            formContainerNewPassword.className = 'password new-password';
             // Creating the label
             const newPasswordLabel = document.createElement('label');
             newPasswordLabel.htmlFor = 'new-password';
@@ -103,15 +104,9 @@ function showModal(action) {
             });
             newPasswordContainer.append(newPasswordInput);
             newPasswordContainer.append(newPasswordShowHideButton);
-            // Create the error message container
-            const newPasswordErrorContainer = document.createElement('div');
-            newPasswordErrorContainer.id = 'newPasswordErrorContainer';
-            newPasswordErrorContainer.classList.add('error-message-container');
-            newPasswordErrorContainer.classList.add('hidden');
             // Appending all together to the parent container
             formContainerNewPassword.append(newPasswordLabel);
             formContainerNewPassword.append(newPasswordContainer);
-            formContainerNewPassword.append(newPasswordErrorContainer);
 
             //Create the password strength meter
             const formContainerPasswordStrengthMeter = document.createElement('div');
@@ -183,7 +178,7 @@ function showModal(action) {
 
             // Creating the container ConfirmationPassword
             const formContainerConfirmationPassword = document.createElement('div');
-            formContainerConfirmationPassword.className = 'form-container password-confirmation-password';
+            formContainerConfirmationPassword.className = 'password confirmation-password';
             // Creating the label
             const confirmationPasswordLabel = document.createElement('label');
             confirmationPasswordLabel.htmlFor = 'confirmation-password';
@@ -225,15 +220,10 @@ function showModal(action) {
             });
             confirmationPasswordContainer.append(confirmationPasswordInput);
             confirmationPasswordContainer.append(confirmationPasswordShowHideButton);
-            // Create the error message container
-            const confirmationPasswordErrorContainer = document.createElement('div');
-            confirmationPasswordErrorContainer.id = 'confirmationPasswordErrorContainer';
-            confirmationPasswordErrorContainer.classList.add('error-message-container');
-            confirmationPasswordErrorContainer.classList.add('hidden');
+
             // Appending all together to the parent container
             formContainerConfirmationPassword.append(confirmationPasswordLabel);
             formContainerConfirmationPassword.append(confirmationPasswordContainer);
-            formContainerConfirmationPassword.append(confirmationPasswordErrorContainer);
 
             // Appending all together
             formBody.appendChild(hiddenUsername);
@@ -414,10 +404,15 @@ function showModal(action) {
     formButtons.append(btnAnnuler);
     formButtons.append(btnValider);
     
+    // Creating an empty block to store menu for the smallest screens
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+
     form.appendChild(formTitle);
     form.appendChild(btnCloseModal);
     form.appendChild(formBody);
     form.appendChild(formButtons);
+    form.appendChild(empty);
     modal.appendChild(form);
     overlay.appendChild(modal);
 

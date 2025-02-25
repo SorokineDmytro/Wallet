@@ -75,6 +75,7 @@ function renderAccounts(accounts, selectedAccountId) {
         actionsButton.className = 'actions';
         actionsButton.textContent = '...';
         actionsButton.onmouseenter = showAccountMenu;
+        actionsButton.onclick = showAccountMenu;
         // Append actions button to account div
         accountDiv.appendChild(actionsButton);
         // Account title
@@ -206,6 +207,12 @@ function hideModal(event) {
     const overlay = document.getElementById('overlay');
     overlay.classList.add('hidden');
 }
+
+document.addEventListener('click', (event) => {
+    if (!event.target.closest('.account')) {
+        document.querySelectorAll('.account-menu').forEach(menu => menu.classList.add('hidden'));
+    }
+});
 
 //==========================================ACCOUNT MODAL========================================//
 // Function to show the account modal
@@ -695,10 +702,19 @@ function showOperationModal(action, operationId, accountId) {
             if (!compteIdSelect || !compteDestinataireSelect) {
                 return; // Exit if elements are not in the DOM
             }
+            // Event liseners who prohibit the selection of the same account as the target of transfert in the both sides
             compteIdSelect.addEventListener('change', () => {
                 const selectedAccount = compteIdSelect.value;
                 // Iterate over options in the destination select
                 Array.from(compteDestinataireSelect.options).forEach(option => {
+                    // Disable if the value matches the selected account
+                    option.disabled = option.value === selectedAccount;
+                });
+            });
+            compteDestinataireSelect.addEventListener('change', () => {
+                const selectedAccount = compteDestinataireSelect.value;
+                // Iterate over options in the destination select
+                Array.from(compteIdSelect.options).forEach(option => {
                     // Disable if the value matches the selected account
                     option.disabled = option.value === selectedAccount;
                 });
@@ -979,7 +995,8 @@ function showOperationModal(action, operationId, accountId) {
     // Creating the button Valider
     const btnValider =document.createElement('button');
     btnValider.type = 'submit';
-    btnValider.className = 'form-btn btn-submit';
+    btnValider.className = 'form-btn btn-submit disabled';
+    btnValider.disabled = true;
     switch(action) {
         case 'create':
             btnValider.textContent = "Créer";
@@ -1004,6 +1021,7 @@ function showOperationModal(action, operationId, accountId) {
     modalOperation.append(formOperation);
     overlay.append(modalOperation);
     formOperation.dispatchEvent(new MouseEvent("dblclick")); // A workaround to populate sousCategories field
+    validateAmountInput();
 }
 
 // Function that takes a JSON of accounts and make options for a provided select to insert into a modal Operation as acccount for operation and account transfert
@@ -1018,6 +1036,34 @@ function makeOptionsFromAccounts(accountsJSON, selectName, accountId) {
         option.textContent = account.name;
         selectName.append(option);
 })}
+
+// Function that verifies that the input amount is filed in with numbers only and deblocks the submit button
+function validateAmountInput() {
+    let amountInput = document.querySelector('#montant');
+    validateInput(amountInput);
+    amountInput.addEventListener('input',() => validateInput(amountInput) )
+}
+
+function validateInput(input) {
+    if (isNaN(input.value) || input.value.trim() === '') {
+        input.value = '';
+    } else if (input.value < 0) {
+        input.value = 0;
+    }
+    validationCheck();
+}
+
+function validationCheck() {
+    let amountInput = document.querySelector('#montant');
+    let submitBtn = document.querySelector('.btn-submit');
+    if(amountInput.value > 0) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('disabled');
+    } else {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('disabled');
+    }
+}
 
 
 //==========================================OPERATION'S LIST RENDERRING========================================//
@@ -1132,10 +1178,10 @@ if (accountsJSON.length > 0) {
                     <span class="operation-item_amount ${amountClass}">${amountSign}${parseFloat(operation.montant).toFixed(2)} €</span>
                     <div class="operation-buttons">
                         <button class="btn-action btn-modify" onclick="showOperationModal('modify', ${operation.id}, ${operation.compte_id});">
-                            <i class="fa-solid fa-pencil"></i>Modifier
+                            <i class="fa-solid fa-pencil"></i><span>Modifier</span>
                         </button>
                         <button class="btn-action btn-delete" onclick="showOperationModal('delete', ${operation.id}, ${operation.compte_id});">
-                            <i class="fa-solid fa-trash"></i>Supprimer
+                            <i class="fa-solid fa-trash"></i><span>Supprimer</span>
                         </button>
                     </div>
                 `;
@@ -1326,7 +1372,6 @@ const myChart = new Chart(ctx, {
                         return index % 3 === 0 ? this.getLabelForValue(value) : ''; // Show label every 5th index
                     },
                     font: {
-                        size: 16, // Font size for x-axis labels
                         weight: 'bold', // Font weight for x-axis labels
                     },
                 },
@@ -1337,7 +1382,6 @@ const myChart = new Chart(ctx, {
                         return value ? `${ value / 1000 }K` : ''; // Show label / 1000 + K
                     },
                     font: {
-                        size: 16, // Font size for x-axis labels
                         weight: 'bold', // Font weight for x-axis labels
                     },
                 },
