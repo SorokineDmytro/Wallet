@@ -3,7 +3,7 @@
         <p>Calculateur d'intérêt composé d'épargne</p>
     </div>
     <div class="block savings-balance">
-        <p>Total de tous comptes d'épargne en ce moment : <span class="savings-total"></span></p>
+        <p>Total de tous comptes d'épargne : <span class="savings-total"></span></p>
     </div>
     <div class="block form">
         <form>
@@ -55,7 +55,7 @@
             </fieldset>
             <div class="btn-container">
                 <button type="reset">Réinitialiser</button>
-                <button type="submit" id="submitBtn" disabled="true" class="disabled" onclick="calculateCompoundInterest(event)">Calculer</button>
+                <button type="submit" id="submitBtn" disabled="true" class="disabled" onclick="setSavingsData(event)">Calculer</button>
             </div>
         </form>
     </div>
@@ -69,11 +69,15 @@
         </div>
     </div>
     <div id="table" class="table block"></div>
+    <div class="empty"></div>
 </div>
+
 
 <script>
     // Retrieve and parse the accounts in JSON format passed from PHP
     const savingAccounts = JSON.parse('<?php echo $savingAccountsJSON; ?>');
     // Retrieve and parse the operations in JSON format passed from PHP
     const operationsTotalByClient = JSON.parse('<?php echo $operationsTotalByClientJSON; ?>');
+    // Retrieve and parse the epargne data in JSON format passed from PHP
+    const epargneData = JSON.parse('<?php echo $epargneDataJSON; ?>');
 </script>

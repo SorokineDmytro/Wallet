@@ -1603,6 +1603,10 @@ input[type=radio]:checked + label {
 }
 
 @media screen and (max-width: 450px) {
+    main {
+        padding: 0.5rem;
+    }
+
     .main-conatainer {
         display: grid;
         grid-template-areas: 
@@ -1610,7 +1614,7 @@ input[type=radio]:checked + label {
             "statistic"
             "operation"
             "empty";
-        grid-template-rows: 180px 250px 1fr 15vw;
+        grid-template-rows: 180px 250px 1fr 20vw;
         grid-template-columns: 1fr;
         row-gap: 3vw;
         transition: filter 0.3s ease;
@@ -1670,7 +1674,7 @@ input[type=radio]:checked + label {
         grid-area: statistic;
         grid-template-columns: 1fr;
         grid-template-rows: 2fr 2fr;
-        row-gap: 1.5vw;
+        row-gap: 3vw;
         height: 100%;
     }
 

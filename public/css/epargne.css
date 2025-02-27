@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: center;
     padding: 0 10%;;
-    font-size: 1vw;
+    font-size: clamp(12px, 1.2vw, 22px);
 }
 .simulator-title:hover {
     font-weight: 500;
@@ -51,7 +51,7 @@
     align-items: center;
     justify-content: center;
     padding: 0 10%;
-    font-size: 1vw;
+    font-size: clamp(12px, 1.2vw, 22px);
 }
 
 .savings-total {
@@ -82,6 +82,7 @@ legend {
     align-items: center;
     margin-left: 2%;
     position: relative;
+    font-size: clamp(14px, 1.3vw, 18px);
 }
 
 .info-btn {
@@ -112,7 +113,7 @@ legend {
     left: 100%;
     width: max-content;
     height: auto;
-    font-size: 0.5vw;
+    font-size: clamp(10px, 1vw, 14px);
     padding: 7.5px;
     border-radius: 10px;
     background-color: #d0d0d0;
@@ -139,8 +140,8 @@ legend {
 
 .double {
     display: grid;
-    grid-template-columns: repeat(2, 45%);
-    gap: 10%;
+    grid-template-columns: repeat(2, 47.5%);
+    gap: 5%;
 }
 
 .line-input {
@@ -149,12 +150,11 @@ legend {
 }
 
 label {
-    font-size: 0.5vw;
     float: left; 
     width: 40%;
     margin-bottom: 5px;
     margin: auto 0;
-    font-size: 0.6vw;
+    font-size: clamp(10px, 1vw, 16px);
     text-align: center;
 }
 
@@ -164,8 +164,8 @@ input, select {
     width: 60%;
     height: 100%;
     min-height: 40px;
-    padding: 0 3%;
-    font-size: 0.5vw;
+    padding: 0 1rem;
+    font-size: clamp(10px, 1vw, 16px);
     font-weight: 600;
     box-shadow: #e2e2e2 1px 1px 20px 1px;
     transition: 500ms;
@@ -190,7 +190,7 @@ select {
     "chart chart chart";
     grid-template-rows: 15% 1fr;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 0.5vw;
+    grid-gap: 1rem;
     padding: 1.5vw;
 }
 
@@ -204,7 +204,7 @@ select {
 #total, #totalContributions, #totalInterests {
     margin: 0 auto;
     text-align: center;
-    font-size: 0.75vw;
+    font-size: clamp(16px, 1.2vw, 22px);
 }
 
 #chart {
@@ -228,12 +228,13 @@ table {
     border-radius: 10px;
     border: solid 1px transparent;
     overflow: hidden;
+    font-size: clamp(12px, 1vw, 18px);
 }
 
 tr {
     border-bottom: 1px solid #d0d0d0;
     border-top: none;
-    height: 2vw;
+    height: 3.5rem;
     transition: 200ms;
 }
 tr:nth-of-type(even) {
@@ -268,13 +269,13 @@ th {
 
 button {
     border: none;
-    padding: 1.5%;
+    padding: 1rem;
     min-width: 20%;
     border-radius: 10px;
     cursor: pointer;
     opacity: 80%;
     transition: 200ms ease-in-out;
-    font-size: 16px;
+    font-size: clamp(10px, 1vw, 16px);
     color: #fff;
 }
 button:hover {
@@ -291,26 +292,225 @@ button[type=submit] {
     background-color: #377cf6;
 }
 
-@media screen and (max-width: 3840px) {
+@media screen and (max-width: 1920px) {
+    .savings-container{
+        grid-template-columns: 2fr 3fr;
+    }
 
+    .line-input {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    label {
+        float: none;
+        width: 100%;
+        text-align: start;
+        padding-left: 1rem;
+    }
+    
+    input, select {
+        width: 100%;
+    }
+
+    button {
+        min-width: 25%;
+    }
+    
+    #chart {
+        height: 20vw;
+    }
 }
 
 @media screen and (max-width: 1600px) {
-
+    button {
+        min-width: 30%;
+    }
 }
 
 @media screen and (max-width: 1150px) {
+    .savings-container{
+        grid-template-areas: 
+        "simulator savings"
+        "form form"
+        "statistic statistic"
+        "table table";
+        gap: 1.5rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
 
+    .simulator-title, .savings-balance {
+        font-size: clamp(14px, 1.2vw, 18px);
+    }
+
+    fieldset {
+        padding: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .line-input {
+        flex-direction: row;
+    }
+    
+    label {
+        float: left; 
+        width: 50%;
+        margin-bottom: 5px;
+        margin: auto 0;
+        font-size: clamp(14px, 1.3vw, 16px);
+        text-align: center;
+    }
+    
+    input, select {
+        border-radius: 10px;
+        border: none;
+        width: 50%;
+        height: 100%;
+        min-height: 40px;
+        padding: 0 1rem;
+        font-size: clamp(12px, 1.3vw, 16px);
+        font-weight: 600;
+        box-shadow: #e2e2e2 1px 1px 20px 1px;
+        transition: 500ms;
+    }
+
+    .info-text {
+        font-size: clamp(10px, 1.2vw, 14px);
+    }
+
+    button {
+        min-width: 20%;
+        font-size: clamp(10px, 2vw, 16px);
+    }
+
+    .statistic {
+        grid-template-rows: 20% 1fr;
+    }
+
+    #chart {
+        height: 30vw;
+    }
+
+    table {
+        font-size: clamp(14px, 1.2vw, 18px);
+    }
 }
 
 @media screen and (max-width: 950px) {
+    fieldset {
+        padding: 1rem;
+        margin-bottom: 1.2rem;
+    }
 
+    .line-input {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    legend {
+        font-size: clamp(16px, 1.2vw, 16px);
+    }
+
+    label {
+        float: none;
+        width: 100%;
+        text-align: start;
+        padding-left: 1rem;
+        font-size: clamp(14px, 1.2vw, 16px);
+    }
+    
+    input, select {
+        width: 100%;
+        font-size: clamp(16px, 1.2vw, 20px);
+    }
+
+    button {
+        min-width: 25%;
+        padding: 0.75rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
+    .savings-container{
+        gap: 1rem;
+    }
 
+    fieldset {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    table {
+        font-size: clamp(12px, 1.2vw, 18px);
+    }
 }
 
 @media screen and (max-width: 450px) {
+    main {
+        padding: 0.5rem;
+    }
 
+    .savings-container{
+        width: 100%;
+        grid-template-areas: 
+        "simulator savings"
+        "form form"
+        "statistic statistic"
+        "table table"
+        "empty empty";
+    }
+
+    .empty {
+        grid-area: empty;
+        display: block;
+        width: 100%;
+        height: 15vw;
+    }
+    
+    .form {
+        padding: 0.75rem;
+    }
+
+    input, select {
+        width: 100%;
+        font-size: clamp(14px, 1.2vw, 20px);
+    }
+    
+    button {
+        min-width: 30%;
+        padding: 0.75rem;
+        font-size: clamp(12px, 1.2vw, 16px);
+    }
+
+    .statistic {
+        grid-template-rows: 15% 1fr;
+    }
+
+    #chart {
+        height: 70vw;
+    }
+
+    #total, #totalContributions, #totalInterests {
+        margin: 0 auto;
+        text-align: center;
+        font-size: clamp(12px, 1.2vw, 22px);
+    }
+
+    #table {
+        overflow-x: auto; /* Enables horizontal scrolling */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+    }
+
+    table {
+        width: max-content; /* Ensures the table is wider than the screen */
+        display: block;
+        white-space: nowrap; /* Prevents content from wrapping */
+    }
+    td, th {
+        min-width: 100px; /* Ensures each cell is at least 100px wide */
+    }
 }

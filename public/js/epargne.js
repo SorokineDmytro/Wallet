@@ -42,7 +42,6 @@ function calculateAccountBalanceByAccountByDate(accountNumber, timestamp) {
     return parseFloat(initialAmount) + revenus - expenses + transfertsIn - transfertsOut;
 };
 
-
 let totalBalance = 0;
 
 if(savingAccounts) {
@@ -58,12 +57,16 @@ savingsBlock.textContent = ` ${totalBalance.toLocaleString('fr-FR', { minimumFra
 const submitBtn = document.querySelector('#submitBtn');
 const amountInput = document.querySelector('#initialAmount');
 const contributionInput = document.querySelector('#contribution');
+const contributionSelect = document.querySelector('#contributionInterval');
 const interestRateInput = document.querySelector('#interestRate');
+const interestSelect = document.querySelector('#interestInterval');
 const periodInput = document.querySelector('#period');
 
 amountInput.addEventListener('input', () => validateInput(amountInput));
 contributionInput.addEventListener('input', () => validateInput(contributionInput));
+contributionSelect.addEventListener('change', () => validateInput(contributionInput));
 interestRateInput.addEventListener('input', () => validateInput(interestRateInput));
+interestSelect.addEventListener('change', () => validateInput(interestRateInput));
 periodInput.addEventListener('input', () => validateInput(periodInput));
 
 function validateInput(input) {
@@ -85,62 +88,11 @@ function validationCheck() {
     }
 }
 
-// ============================ COOKIE HANDLING ============================
-
-// Save smaller data to cookies and large data to localStorage
-function saveData(key, value) {
-    if (key === "calculationResults") {
-        localStorage.setItem(key, JSON.stringify(value)); // Store large data in localStorage
-    } else {
-        document.cookie = `${key}=${JSON.stringify(value)}; path=/; max-age=31536000`; // 1-year expiry
-    }
-}
-
-// Get data from cookies or localStorage
-function getData(key) {
-    if (key === "calculationResults") {
-        let data = localStorage.getItem(key);
-        return data ? JSON.parse(data) : null;
-    } else {
-        let cookies = document.cookie.split('; ');
-        for (let cookie of cookies) {
-            let [k, value] = cookie.split('=');
-            if (k === key) {
-                return JSON.parse(value);
-            }
-        }
-        return null;
-    }
-}
-
-
-// Function to restore inputs from cookies
-function restoreInputs() {
-    let storedInputs = getData("calculatorInputs");
-    if (storedInputs) {
-        document.getElementById('initialAmount').value = storedInputs.initialAmount;
-        document.getElementById('contribution').value = storedInputs.contribution;
-        document.getElementById('contributionInterval').value = storedInputs.contributionInterval;
-        document.getElementById('interestRate').value = storedInputs.interestRate;
-        document.getElementById('interestInterval').value = storedInputs.interestInterval;
-        document.getElementById('period').value = storedInputs.years;
-    }
-}
-
 // ============================ COMPOUND INTEREST CALCULATION ============================
 
-function calculateCompoundInterest(event) {
+function setSavingsData(event) {
     event.preventDefault();
-    
-    // Get input values
-    const initialAmount = parseFloat(document.getElementById('initialAmount').value);
-    const contribution = parseFloat(document.getElementById('contribution').value);
-    const contributionInterval = document.getElementById('contributionInterval').value;
-    const interestRate = parseFloat(document.getElementById('interestRate').value);
-    const interestInterval = document.getElementById('interestInterval').value;
-    const years = parseInt(document.getElementById('period').value);
 
-    // Store inputs in db
     let data = {
         montant_initial: document.getElementById("initialAmount").value,
         contributions: document.getElementById("contribution").value,
@@ -150,28 +102,39 @@ function calculateCompoundInterest(event) {
         nombre_annees: document.getElementById("period").value,
     };
 
-    fetch("index.php?url=epargne/saveSimulationData", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams(data),
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            alert("Simulation data saved successfully!");
-        } else {
-            alert("Error saving data.");
-        }
-    })
-    .catch(error => console.error("Error:", error));
+    let form = document.createElement("form");
+    form.method = "POST";
+    form.action = "index.php?url=epargne";
 
+    let input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "epargneData";
+    input.value = JSON.stringify(data);
+    form.appendChild(input);
 
-    const yearArray = [];
-    const initialAmountArray = [];
-    const contributionsByYearArray = [];
-    const interestsByYearArray = [];
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function calculateCompoundInterest() {
+    // Get the data came from the controller
+    let data = epargneData;
+
+    // Set the values of the inputs
+    document.getElementById("initialAmount").value = data.montant_initial;
+    document.getElementById("contribution").value = data.contributions;
+    document.getElementById("contributionInterval").value = data.periode_contributions;
+    document.getElementById("interestRate").value = data.taux_interet;
+    document.getElementById("interestInterval").value = data.periode_interet;
+    document.getElementById("period").value = data.nombre_annees;
+
+    // Set the values of variables for the calculation
+    const initialAmount = parseFloat(data.montant_initial);
+    const contribution = parseFloat(data.contributions);
+    const contributionInterval = data.periode_contributions;
+    const interestRate = parseFloat(data.taux_interet) / 100;
+    const interestInterval = data.periode_interet;
+    const years = parseInt(data.nombre_annees);
 
     let periodsPerYear = { month: 12, quarter: 4, halfYear: 2, year: 1 };
     let contributionFrequency = periodsPerYear[contributionInterval]; 
@@ -180,6 +143,12 @@ function calculateCompoundInterest(event) {
     let balance = initialAmount;
     let totalContributions = 0;
     let totalInterests = 0;
+
+    let yearArray = [];
+    let initialAmountArray = [];
+    let contributionsByYearArray = [];
+    let interestsByYearArray = [];
+    let balanceArray = [];
 
     let tableHTML = `
         <table>
@@ -210,7 +179,7 @@ function calculateCompoundInterest(event) {
             }
             
             if (month % (12 / interestFrequency) === 0) {
-                let interestEarned = balance * interestRate / 100; 
+                let interestEarned = balance * interestRate; 
                 balance += interestEarned;
                 yearlyInterest += interestEarned;
                 totalInterests += interestEarned;
@@ -230,43 +199,25 @@ function calculateCompoundInterest(event) {
         `;
 
         yearArray.push(year);
-        initialAmountArray.push(initialAmount);
+        initialAmountArray.push
         contributionsByYearArray.push(totalContributions);
         interestsByYearArray.push(totalInterests);
+        balanceArray.push(balance);
     }
 
     tableHTML += `</tbody></table>`;
+    document.getElementById("table").innerHTML = tableHTML;
+    document.querySelector(".statistic").classList.add('block');
+    document.getElementById("total").classList.add('block');
+    document.getElementById("total").innerHTML = `Solde final <br> <span class="bold">${balance.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
+    document.getElementById("totalContributions").classList.add('block');
+    document.getElementById("totalContributions").innerHTML = `Total contribué <br> <span class="bold">${totalContributions.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
+    document.getElementById("totalInterests").classList.add('block');
+    document.getElementById("totalInterests").innerHTML = `Intérêts gagnés <br> <span class="bold">${totalInterests.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
+    document.getElementById("table").innerHTML = tableHTML;
 
-    // Store calculation results in cookies
-    saveData("calculationResults", {
-        yearArray,
-        initialAmountArray,
-        contributionsByYearArray,
-        interestsByYearArray,
-        balance,
-        totalContributions,
-        totalInterests,
-        tableHTML
-    });
+    createChart(yearArray, initialAmountArray, contributionsByYearArray, interestsByYearArray);
 
-    renderTable();
-}
-
-// ============================ TABLE RENDERING ============================
-
-function renderTable() {
-    let data = getData("calculationResults"); 
-    if (data) {
-        document.querySelector(".statistic").classList.add('block');
-        document.getElementById("total").classList.add('block');
-        document.getElementById("total").innerHTML = `Solde final <br> <span class="bold">${data.balance.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
-        document.getElementById("totalContributions").classList.add('block');
-        document.getElementById("totalContributions").innerHTML = `Total contribué <br> <span class="bold">${data.totalContributions.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
-        document.getElementById("totalInterests").classList.add('block');
-        document.getElementById("totalInterests").innerHTML = `Intérêts gagnés <br> <span class="bold">${data.totalInterests.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
-        document.getElementById("table").innerHTML = data.tableHTML;
-        createChart(data.yearArray, data.initialAmountArray, data.contributionsByYearArray, data.interestsByYearArray);
-    }
 }
 
 // ============================ CHART ============================
@@ -309,6 +260,5 @@ function createChart(yearArray, initialAmountArray, contributionsByYearArray, in
 
 // Restore saved inputs and generate table/chart on page load
 document.addEventListener("DOMContentLoaded", () => {
-    restoreInputs();
-    renderTable();
+    calculateCompoundInterest();
 });

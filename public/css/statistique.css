@@ -283,7 +283,7 @@
     .offset-btn {
         width: 2vw;
         height: 2vw;
-        font-size: 0.6vw;
+        font-size: 1vw;
     }
 
     .offset-text {
@@ -407,7 +407,7 @@
         width: 100%;
         height: 100%;
     }
-
+    
     .statistic-title {
         font-size: 5vw;
     }
