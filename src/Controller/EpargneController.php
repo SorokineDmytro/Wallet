@@ -3,7 +3,6 @@
     
     use App\Model\Manager;
     use App\Model\EntityManager;
-    use function PHPUnit\Framework\isTrue;
 
     class EpargneController extends Manager {
         public function __construct() {

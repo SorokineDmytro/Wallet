@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Model\Manager;
 use App\Model\EntityManager;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class RegisterController extends Manager {
     public function __construct() {
@@ -45,7 +47,8 @@ class RegisterController extends Manager {
             'mot_de_passe' => $hashedPassword,
             'photo' => './public/img/avatars/unknown_user.png',
         ]);
-
+        
+        $this->sendRegisterEmail($input['email']);
         echo json_encode(['success' => true, 'message' => 'Inscription réussie ! Vous serez redirigé.']);
     }
 
@@ -83,5 +86,30 @@ class RegisterController extends Manager {
         }
 
         return $errors;
+    }
+
+    private function sendRegisterEmail($toEmail) {
+        $mail = new PHPMailer(true);
+
+        try {
+            // SMTP Configuration
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'sorokine.dimitri@gmail.com'; // Your Gmail address
+            $mail->Password = POSTKEY; // Use an App Password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            // Email Content
+            $mail->setFrom('sorokine.dimitri@gmail.com', 'Wallet');
+            $mail->addAddress($toEmail);
+            $mail->Subject = 'Bienvenue sur Wallet';
+            $mail->Body = "Bonjour,\n\nMerci de vous être inscrit sur Wallet. Vous pouvez maintenant vous connecter.";
+            $mail->send();
+            
+        } catch (Exception $e) {
+            echo json_encode(["success" => false, "message" => "Erreur d'envoi: {$mail->ErrorInfo}"]);
+        }
     }
 }

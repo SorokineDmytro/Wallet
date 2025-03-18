@@ -1006,6 +1006,8 @@ function showOperationModal(action, operationId, accountId) {
             break;
         case 'delete':
             btnValider.textContent = "Supprimer";
+            btnValider.classList.remove('disabled');
+            btnValider.disabled = false;
             break;
     }
     // Appending all the buttons to the form buttons block

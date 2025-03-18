@@ -2,18 +2,6 @@ CREATE DATABASE wallet ENCODING = 'UTF8';
 
 -------------------------------------------------------------------------------------------------------------
 
-CREATE TABLE operation (
-    id SERIAL PRIMARY KEY,
-    account VARCHAR (255) NOT NULL,
-    date_time TIMESTAMP NOT NULL,
-    amount DECIMAL(10, 2) NOT NULL,
-    type VARCHAR (50) NOT NULL,
-    category VARCHAR (255) NOT NULL
-);
-
-INSERT INTO operation (account, date_time, amount, type, category) VALUES (?, ?, ?, ?, ?);
-
--------------------------------------------------------------------------------------------------------------
 
 -- Création de la table Client
 CREATE TABLE Client (
@@ -24,7 +12,8 @@ CREATE TABLE Client (
     mot_de_passe VARCHAR(255) NOT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     password_reset_token VARCHAR(255),
-    token_expiration TIMESTAMP
+    token_expiration TIMESTAMP,
+    photo VARCHAR(255),
 );
 
 -- indexing the email column to speed up the search
@@ -51,6 +40,7 @@ CREATE TABLE Compte (
     typecompte_id INTEGER NOT NULL,
     montant_initial DECIMAL (12, 2),
     color VARCHAR(7) NOT NULL,
+    date_creation TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     FOREIGN KEY (client_id) REFERENCES Client(id) ON DELETE CASCADE,
     FOREIGN KEY (typecompte_id) REFERENCES typecompte(id) ON DELETE CASCADE
 );
@@ -102,6 +92,8 @@ CREATE TABLE Categorie (
     id SERIAL PRIMARY KEY,
     type_id INTEGER NOT NULL,
     description VARCHAR(50) NOT NULL,
+    color VARCHAR(7),
+    icone VARCHAR(50),
     FOREIGN KEY (type_id) REFERENCES Type(id) ON DELETE CASCADE
 );
 -----
@@ -151,6 +143,7 @@ CREATE TABLE Souscategorie (
     id SERIAL PRIMARY KEY,
     categorie_id INTEGER NOT NULL,
     description VARCHAR(50) NOT NULL,
+    icone VARCHAR(50),
     FOREIGN KEY (categorie_id) REFERENCES Categorie(id) ON DELETE CASCADE
 );
 -----

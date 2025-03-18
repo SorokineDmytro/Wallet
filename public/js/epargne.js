@@ -199,7 +199,7 @@ function calculateCompoundInterest() {
         `;
 
         yearArray.push(year);
-        initialAmountArray.push
+        initialAmountArray.push(initialAmount);
         contributionsByYearArray.push(totalContributions);
         interestsByYearArray.push(totalInterests);
         balanceArray.push(balance);
@@ -215,7 +215,7 @@ function calculateCompoundInterest() {
     document.getElementById("totalInterests").classList.add('block');
     document.getElementById("totalInterests").innerHTML = `Intérêts gagnés <br> <span class="bold">${totalInterests.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>`;
     document.getElementById("table").innerHTML = tableHTML;
-
+    
     createChart(yearArray, initialAmountArray, contributionsByYearArray, interestsByYearArray);
 
 }

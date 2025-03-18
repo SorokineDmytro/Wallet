@@ -79,7 +79,7 @@ function createModal(type) {
         // Create the forgot password button
         const forgotPasswordButton = document.createElement('a');
         forgotPasswordButton.classList.add('forgot-password');
-        forgotPasswordButton.href = '#';
+        forgotPasswordButton.href = 'forgotPassword';
         forgotPasswordButton.textContent = 'Mot de passe oublié ?';
 
         // Create the submit button
@@ -496,7 +496,7 @@ function createModal(type) {
                     errorMessage.classList.remove('hidden');
                     errorMessage.style.color = '#26a18c';
                     errorMessage.textContent = result.message || 'Inscription réussie';
-                    // Wait 2 seconds before switching to the login modal
+                    // Wait 3 seconds before switching to the login modal
                     setTimeout(() => switchModal('login'), 3000); 
                 } else {
                     errorMessage.classList.remove('hidden');

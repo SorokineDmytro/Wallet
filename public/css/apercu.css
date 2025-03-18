@@ -536,6 +536,7 @@ input[type=color]::-moz-color-swatch {
     background-color: #fff;
     color: #fff;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .btn-annul {
@@ -589,8 +590,8 @@ input[type=color]::-moz-color-swatch {
         "title"
         "operations";
     grid-template-columns: 1fr;
-    grid-template-rows: 30px 1fr;
-    row-gap: 2.5vw;
+    grid-template-rows: 3rem 1fr;
+    row-gap: 1.5vw;
 }
 
 .operations-title {
@@ -889,6 +890,7 @@ legend {
     font-size: 14px;
     font-weight: 700;
     color: #fff;
+    cursor: pointer;
 }
 .op-type-radio:nth-of-type(1) label{
     box-shadow: #e2e2e2 1px 1px 20px 1px;
@@ -951,6 +953,7 @@ input[type=radio]:checked + label {
 
 .op-date input {
     width: 65%;
+    cursor: pointer;
 }
 
 .op-acc {
@@ -999,6 +1002,7 @@ input[type=radio]:checked + label {
     border-radius: 50%;
     color: #fff;
     margin-bottom: 0.5vw;
+    cursor: pointer;
 }
 
 .op-cat-radio span, .op-s-cat-radio span {
@@ -1783,7 +1787,7 @@ input[type=radio]:checked + label {
         align-items: center;
         justify-content: space-around;
         font-size: 3.5vw;
-        padding: 5px;
+        padding: 10px;
     }
     
     .operation-add div {
@@ -1879,6 +1883,7 @@ input[type=radio]:checked + label {
         display: block;
         font-size: 5vw;
         grid-area: title;
+        margin-top: 1rem;
     }
 
     .form-body {
@@ -1970,4 +1975,34 @@ input[type=radio]:checked + label {
         font-size: 2.5vw;
     }
 
+    .form-buttons {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+    }
+
+    .form-btn {
+        width: 100%;
+        max-width: 100%;
+        height: 2.5rem;
+    }
+
+    .btn-annul {
+        margin-bottom: 1rem;
+    }
+    .btn-submit {
+        margin-bottom: 5rem;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .form-body {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    .form-op-body {
+        width: 100%;
+        max-width: 260px;
+    }
 }

@@ -121,6 +121,17 @@ aside {
     overflow-x: hidden;
 }
 
+.main-title {
+    display: flex;
+}
+
+.main-logo {
+    width: 1.5vw;
+    height: 1.5vw;
+    margin-right: 0.5rem;
+    background-image: url(../img/wallet.svg);
+}
+
 nav {
     margin-top: 30px;
     width: 100%;
@@ -365,6 +376,17 @@ main {
     .aside-container { 
         width: 10vw;  
         padding: 3.5vh 0; 
+    }
+
+    .main-title h1 {
+        display: none;
+    }
+    
+    .main-logo {
+        width: 3vw;
+        height: 3vw;
+        margin-right: 0.5rem;
+        background-image: url(../img/wallet.svg);
     }
 
     nav {

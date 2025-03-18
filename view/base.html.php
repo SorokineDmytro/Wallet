@@ -35,7 +35,9 @@
         <div class="wrapper">
             <aside>
                 <div class="aside-container">
-                    <h1>Wallet</h1>
+                    <div class="main-title">
+                        <div class="main-logo"></div><h1>Wallet</h1>
+                    </div>
                     <nav>
                         <ul class="nav-list">
                             <h3>MENU</h3>

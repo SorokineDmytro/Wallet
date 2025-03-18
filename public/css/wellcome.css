@@ -108,6 +108,7 @@ main {
     transition: 800ms;
 }
 
+/* --------------------------------------------------- LOGIN / REGISTER FORMS --------------------------------------------------- */
 .form-container {
     max-width: 20vw;
     min-width: 400px;
@@ -166,7 +167,7 @@ input {
     height: 100%;
     min-height: 40px;
     padding: 0 10px;
-    font-size: clamp(12px, 1vw, 18px);
+    font-size: clamp(12px, 1vw, 16px);
 }
 
 .error-message-container {
@@ -193,7 +194,7 @@ input {
 .forgot-password {
     width: fit-content;
     margin: 0 auto;
-    font-size: clamp(0.75rem, 0.75vw, 0.75rem);
+    font-size: clamp(0.75rem, 0.75vw, 1rem);
     text-align: center;
     margin-bottom: 1rem;
     color: #9d9ea2;
@@ -302,6 +303,62 @@ li {
     margin-left: 10px;
 }
 
+/* --------------------------------------------------- PASSWORD FORMS --------------------------------------------------- */
+
+.container {
+    max-width: 20vw;
+    min-width: 400px;
+    height: fit-content;
+    padding: 50px;
+}
+
+.container h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40%;
+    padding: 0.5rem;
+    min-height: 40px;
+    border-radius: 5px;
+    border: none;
+    background-size: 200%; /* Increase background size for a better effect */
+    color: #f5f5f5;
+    font-size: clamp(0.8rem, 0.75vw, 1rem);
+    cursor: pointer;
+    transition: background-position 300ms ease-in-out;
+}
+
+.action-btn:hover {
+    background-position: 100% 0; /* Move the gradient horizontally */
+    transition: background-position 300ms ease-in-out;
+}
+
+#reset-message {
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: center;
+    color: #ee3939;
+}
+
+.reset {
+    background-image: linear-gradient(-225deg, #1dbed7 0%, #1D8FE1 68%, #625EB1 100%);
+}
+
+.back {
+    background-image: linear-gradient(225deg, #cfd9df 0%, #e2ebf0 100%);
+    color:#201f23
+}
+
 @media screen and (max-width: 3840px) {
 
 }
@@ -344,6 +401,15 @@ li {
         padding: 50px;
         z-index: 1;
     }
+
+    .container {
+        max-width: 20vw;
+        min-width: 400px;
+        max-height: max-content;
+        height: max-content;
+        padding: 50px;
+        z-index: 1;
+    }
 }
 
 @media screen and (max-width: 950px) {
@@ -358,6 +424,13 @@ li {
 
 @media screen and (max-width: 450px) {
     .form-container {
+        box-sizing: border-box;
+        min-width: 280px;
+        max-width: 90vw;
+        padding: 30px;
+    }
+
+    .container {
         box-sizing: border-box;
         min-width: 280px;
         max-width: 90vw;
