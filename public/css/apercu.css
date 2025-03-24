@@ -393,7 +393,7 @@
     position: relative;
     width: 60%;
     min-height: 350px;
-    max-height: 600px;
+    max-height: fit-content;
     padding: 3% 5%;
     border-radius: 15px;
     background-color: #fff;
@@ -1877,6 +1877,7 @@ input[type=radio]:checked + label {
         "buttons";
         position: relative;
         width: 90%;
+        height: fit-content;
     }
 
     .form-title {
@@ -1928,6 +1929,7 @@ input[type=radio]:checked + label {
     
     .acc-color input {
         width: 100%;
+        margin-bottom: 10px;
     }
 
     input[type=color]::-webkit-color-swatch {
@@ -1965,6 +1967,10 @@ input[type=radio]:checked + label {
         appearance: none;
     }
 
+    .op-cat-radio, .op-s-cat-radio {
+        min-width: 20%;
+    }
+
     .op-cat-radio label, .op-s-cat-radio label {
         width: 10vw;
         height: 10vw;
@@ -1991,7 +1997,7 @@ input[type=radio]:checked + label {
         margin-bottom: 1rem;
     }
     .btn-submit {
-        margin-bottom: 5rem;
+        margin-bottom: 1rem;
     }
 }
 
@@ -2005,4 +2011,5 @@ input[type=radio]:checked + label {
         width: 100%;
         max-width: 260px;
     }
+
 }

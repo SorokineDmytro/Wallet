@@ -1,5 +1,3 @@
-console.log(clientInfoJSON);
-
 function showModal(action) {
     // Getting overlay
     const overlay = document.getElementById('overlay'); 
