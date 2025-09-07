@@ -62,8 +62,6 @@ class Manager {
         }
         $connexion=$this->getConnexion();
         $sql="select * from $table where $columns $order";
-        // echo "<h1>$sql</h1>";die;
-        // print_r($values) ;die;
         $stmt=$connexion->prepare($sql);
         $stmt->execute($values);
         $resultats=$stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -172,33 +170,11 @@ class Manager {
         $requete->execute($value);
     } 
 
-    // Function to handle user's permissions based on his roles ------ACTUAL NAME control_role!
-    function accessControl($roles){ // can define multiple roles who have permissions (based on an array of roles)
-        $session_roles = $_SESSION['roles'];
-        $ok = false;
-        foreach($roles as $role){
-            if(in_array($role, $session_roles)){
-                $ok = true;
-            }
-        }
-        if($ok==false){
-            header("location:index.php?url=accueil&page=error");
-            exit();
-        }
-    }
-
     // Function to print in easier way to read data
     function printr($array) {
         echo "<pre>";
         print_r($array);
         echo "</pre>";
-    }
-
-    // Function who changes the date in format FR from US
-    function dateFrs($cdate) { //cdate = chaine de characteres
-        $date = new \DateTime($cdate);
-        $dateFrs = $date->format("d-m-Y");
-        return $dateFrs;
     }
 
 }

@@ -24,7 +24,7 @@ function showModal(action) {
             formTitle.textContent = 'Modification de l\'information';
             break;
         case 'photo':
-            formTitle.textContent = 'Modification de photo du profile';
+            formTitle.textContent = 'Modification de photo du profil';
             break;
         case 'delete':
             formTitle.textContent = 'Suppression de compte personnel';

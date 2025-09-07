@@ -47,7 +47,7 @@
                         </ul>
                         <ul class="service-list">
                             <h3>GÉNÉRAL</h3>
-                            <a href="reglages"><li class="nav-list_item"><i class="fa-solid fa-gear"></i><span>Reglages</span></li></a>
+                            <a href="reglages"><li class="nav-list_item"><i class="fa-solid fa-gear"></i><span>Réglages</span></li></a>
                         </ul>
                     </nav>
                 </div>
@@ -55,7 +55,7 @@
             <header>
                 <div class="header-left">
                     <h2>
-                        <?= $title === 'épargne' ? "Épargne" : ucfirst($title) ?>
+                        <?= $title === 'épargne' ? "Épargne" : ($title === 'reglages' ? "Réglages" : ucfirst($title)) ?>
                     </h2>                  
                 </div>
                 <div class="header-right">
@@ -86,7 +86,7 @@
         <script src="./public/js/base.js"></script>
         <!-- Dynamically loaded JS -->
         <?php
-            // Define CSS files based on the current page content
+            // Define JS files based on the current page content
             $pageScripts = [
                 'aperçu' => './public/js/apercu.js',
                 'statistique' => './public/js/statistique.js',

@@ -298,6 +298,7 @@ function showAccountModal(action, accountId) {
         const option3 = document.createElement('option');
         option3.value = '3';
         option3.textContent = 'Credit';
+        option3.disabled = true;
         // Appending the select's options into parent select
         accTypeSelect.append(option1);
         accTypeSelect.append(option2);
@@ -1240,7 +1241,7 @@ function renderWidgets(blockIndex, actualMonthNumber, lastMonthNumber) {
             logo = 'fa-piggy-bank';
             break;
         case 3:
-            title = 'Investisements';
+            title = 'Investissements';
             logo = 'fa-money-bill-trend-up';
             break;
     }

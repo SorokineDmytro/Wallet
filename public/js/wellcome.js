@@ -496,7 +496,7 @@ function createModal(type) {
                     errorMessage.classList.remove('hidden');
                     errorMessage.style.color = '#26a18c';
                     errorMessage.textContent = result.message || 'Inscription réussie';
-                    // Wait 3 seconds before switching to the login modal
+                    // Wait 2 seconds before switching to the login modal
                     setTimeout(() => switchModal('login'), 3000); 
                 } else {
                     errorMessage.classList.remove('hidden');
